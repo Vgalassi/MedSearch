@@ -3,6 +3,7 @@ import {TYPES} from "../dto/types"
 import type { UserRepository } from "../../domain/repositories/UserRepository"
 import type { UserProps } from "../../domain/entities/User";
 import { User } from "../../domain/entities/User"
+import type { HashGenerator } from "../protocols/HashGenerator";
 
 interface CreateUserRequest extends Omit<UserProps, 'id'> {
     password: string; 
@@ -17,7 +18,8 @@ interface CreateUserResponse {
 @injectable()
 export class CreateUserUseCase{
     constructor(
-        @inject(TYPES.UserRepository) private userRepository: UserRepository
+        @inject(TYPES.UserRepository) private userRepository: UserRepository,
+        @inject(TYPES.HashGenerator) private hashGenerator: HashGenerator
 
     ) {}
 
@@ -25,7 +27,7 @@ export class CreateUserUseCase{
         const user = new User({
             name: data.name,
             email: data.email,
-            password: data.password,
+            password: await this.hashGenerator.hash(data.password),
             role: data.role
         })
 
