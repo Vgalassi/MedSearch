@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import "reflect-metadata";
 import userRoutes from './routes/userRoutes.js'
 const app = Fastify({
     logger: true
