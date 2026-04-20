@@ -12,6 +12,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role{
+  PATIENT
+  MEDIC
+  CLINIC
+}
 
 model User {
   id       Int    @id @default(autoincrement())
@@ -23,4 +28,22 @@ model User {
   patient  Patient?
   medic    Medic?
   clinic   Clinic?
+}
+
+model Patient {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Medic {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Clinic {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
 }
