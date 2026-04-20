@@ -5,7 +5,7 @@ import type { UserRepository } from "../../domain/repositories/UserRepository";
 import { PrismaUserRepository } from "../repositories/PrismaUserRepository";
 import { CreateUserUseCase } from "../../app/usecases/createUserUseCase";
 import type{ HashGenerator } from "../../app/protocols/HashGenerator";
-import { BcryptAdapter } from "../cryptography/bcryptAdapter";
+import { BcryptAdapter } from "../cryptography/BcryptAdapter";
 
 const container = new Container();
 
