@@ -3,6 +3,7 @@ import { z }from "zod"
 import { CreateUserUseCase } from "../../app/usecases/createUserUseCase";
 import { injectable,inject } from "inversify";
 import { TYPES } from "../../app/dto/types"
+import type { DeleteUserUseCase } from "../../app/usecases/deleteUserUseCase";
 
 const baseSchema = z.object({
     name: z.string(),
@@ -49,7 +50,8 @@ const userSchema = z.discriminatedUnion("role", [
 @injectable()
 export class UserController{
     constructor(
-        @inject(TYPES.CreateUserUseCase) private createUserUseCase: CreateUserUseCase
+        @inject(TYPES.CreateUserUseCase) private createUserUseCase: CreateUserUseCase,
+        @inject(TYPES.DeleteUserUseCase) private deleteUserUseCase: DeleteUserUseCase
     ){}
     async createUser(req: FastifyRequest, res: FastifyReply){
         const data = userSchema.parse(req.body)
@@ -60,5 +62,19 @@ export class UserController{
             throw err;
         }
      }
-        
+
+    async deleteUser(req: FastifyRequest, res: FastifyReply){
+        const paramsSchema = z.object({
+            id: z.string()
+        })
+        const { id } = paramsSchema.parse(req.params)
+        try{
+             await this.deleteUserUseCase.execute(id)
+             return res.status(204).send()
+        }catch(err: any){
+            throw err;
+        }
     }
+    }
+
+   

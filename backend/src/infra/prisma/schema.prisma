@@ -29,7 +29,7 @@ model User {
 model Patient {
   id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId    String @unique @db.Uuid
-  user      User   @relation(fields: [userId], references: [id])
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   cpf       String @unique
 }
@@ -37,7 +37,7 @@ model Patient {
 model Clinic {
   id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId      String @unique @db.Uuid
-  user        User   @relation(fields: [userId], references: [id])
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   address     String
   cep         String
@@ -51,7 +51,7 @@ model Clinic {
 model Medic {
   id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId     String @unique @db.Uuid
-  user       User   @relation(fields: [userId], references: [id])
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   crm        String  @unique
   speciality String

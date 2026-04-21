@@ -6,11 +6,13 @@ import { PrismaUserRepository } from "../repositories/PrismaUserRepository";
 import { CreateUserUseCase } from "../../app/usecases/createUserUseCase";
 import type{ HashGenerator } from "../../app/protocols/HashGenerator";
 import { BcryptAdapter } from "../cryptography/BcryptAdapter";
+import { DeleteUserUseCase } from "../../app/usecases/deleteUserUseCase";
 
 const container = new Container();
 
 container.bind<UserRepository>(TYPES.UserRepository).to(PrismaUserRepository);
 container.bind<CreateUserUseCase> (TYPES.CreateUserUseCase).to(CreateUserUseCase)
+container.bind<DeleteUserUseCase> (TYPES.DeleteUserUseCase).to(DeleteUserUseCase)
 container.bind<HashGenerator>(TYPES.HashGenerator).to(BcryptAdapter);
 
 export { container };
