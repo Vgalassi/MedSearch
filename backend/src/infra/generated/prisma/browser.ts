@@ -28,12 +28,12 @@ export type User = Prisma.UserModel
  */
 export type Patient = Prisma.PatientModel
 /**
- * Model Medic
- * 
- */
-export type Medic = Prisma.MedicModel
-/**
  * Model Clinic
  * 
  */
 export type Clinic = Prisma.ClinicModel
+/**
+ * Model Medic
+ * 
+ */
+export type Medic = Prisma.MedicModel

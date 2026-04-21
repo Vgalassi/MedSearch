@@ -53,8 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Patient: 'Patient',
-  Medic: 'Medic',
-  Clinic: 'Clinic'
+  Clinic: 'Clinic',
+  Medic: 'Medic'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,6 +78,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  phone: 'phone',
   role: 'role'
 } as const
 
@@ -86,26 +87,35 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const PatientScalarFieldEnum = {
   id: 'id',
-  userId: 'userId'
+  userId: 'userId',
+  cpf: 'cpf'
 } as const
 
 export type PatientScalarFieldEnum = (typeof PatientScalarFieldEnum)[keyof typeof PatientScalarFieldEnum]
 
 
-export const MedicScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId'
-} as const
-
-export type MedicScalarFieldEnum = (typeof MedicScalarFieldEnum)[keyof typeof MedicScalarFieldEnum]
-
-
 export const ClinicScalarFieldEnum = {
   id: 'id',
-  userId: 'userId'
+  userId: 'userId',
+  address: 'address',
+  cep: 'cep',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  description: 'description'
 } as const
 
 export type ClinicScalarFieldEnum = (typeof ClinicScalarFieldEnum)[keyof typeof ClinicScalarFieldEnum]
+
+
+export const MedicScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  crm: 'crm',
+  speciality: 'speciality',
+  clinicId: 'clinicId'
+} as const
+
+export type MedicScalarFieldEnum = (typeof MedicScalarFieldEnum)[keyof typeof MedicScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -122,4 +132,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

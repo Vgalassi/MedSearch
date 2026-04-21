@@ -20,62 +20,58 @@ export type MedicModel = runtime.Types.Result.DefaultSelection<Prisma.$MedicPayl
 
 export type AggregateMedic = {
   _count: MedicCountAggregateOutputType | null
-  _avg: MedicAvgAggregateOutputType | null
-  _sum: MedicSumAggregateOutputType | null
   _min: MedicMinAggregateOutputType | null
   _max: MedicMaxAggregateOutputType | null
 }
 
-export type MedicAvgAggregateOutputType = {
-  id: number | null
-  userId: number | null
-}
-
-export type MedicSumAggregateOutputType = {
-  id: number | null
-  userId: number | null
-}
-
 export type MedicMinAggregateOutputType = {
-  id: number | null
-  userId: number | null
+  id: string | null
+  userId: string | null
+  crm: string | null
+  speciality: string | null
+  clinicId: string | null
 }
 
 export type MedicMaxAggregateOutputType = {
-  id: number | null
-  userId: number | null
+  id: string | null
+  userId: string | null
+  crm: string | null
+  speciality: string | null
+  clinicId: string | null
 }
 
 export type MedicCountAggregateOutputType = {
   id: number
   userId: number
+  crm: number
+  speciality: number
+  clinicId: number
   _all: number
 }
 
 
-export type MedicAvgAggregateInputType = {
-  id?: true
-  userId?: true
-}
-
-export type MedicSumAggregateInputType = {
-  id?: true
-  userId?: true
-}
-
 export type MedicMinAggregateInputType = {
   id?: true
   userId?: true
+  crm?: true
+  speciality?: true
+  clinicId?: true
 }
 
 export type MedicMaxAggregateInputType = {
   id?: true
   userId?: true
+  crm?: true
+  speciality?: true
+  clinicId?: true
 }
 
 export type MedicCountAggregateInputType = {
   id?: true
   userId?: true
+  crm?: true
+  speciality?: true
+  clinicId?: true
   _all?: true
 }
 
@@ -117,18 +113,6 @@ export type MedicAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: MedicAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: MedicSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: MedicMinAggregateInputType
@@ -159,18 +143,17 @@ export type MedicGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: MedicCountAggregateInputType | true
-  _avg?: MedicAvgAggregateInputType
-  _sum?: MedicSumAggregateInputType
   _min?: MedicMinAggregateInputType
   _max?: MedicMaxAggregateInputType
 }
 
 export type MedicGroupByOutputType = {
-  id: number
-  userId: number
+  id: string
+  userId: string
+  crm: string
+  speciality: string
+  clinicId: string | null
   _count: MedicCountAggregateOutputType | null
-  _avg: MedicAvgAggregateOutputType | null
-  _sum: MedicSumAggregateOutputType | null
   _min: MedicMinAggregateOutputType | null
   _max: MedicMaxAggregateOutputType | null
 }
@@ -194,74 +177,112 @@ export type MedicWhereInput = {
   AND?: Prisma.MedicWhereInput | Prisma.MedicWhereInput[]
   OR?: Prisma.MedicWhereInput[]
   NOT?: Prisma.MedicWhereInput | Prisma.MedicWhereInput[]
-  id?: Prisma.IntFilter<"Medic"> | number
-  userId?: Prisma.IntFilter<"Medic"> | number
+  id?: Prisma.UuidFilter<"Medic"> | string
+  userId?: Prisma.UuidFilter<"Medic"> | string
+  crm?: Prisma.StringFilter<"Medic"> | string
+  speciality?: Prisma.StringFilter<"Medic"> | string
+  clinicId?: Prisma.UuidNullableFilter<"Medic"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  clinic?: Prisma.XOR<Prisma.ClinicNullableScalarRelationFilter, Prisma.ClinicWhereInput> | null
 }
 
 export type MedicOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  crm?: Prisma.SortOrder
+  speciality?: Prisma.SortOrder
+  clinicId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  clinic?: Prisma.ClinicOrderByWithRelationInput
 }
 
 export type MedicWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
-  userId?: number
+  id?: string
+  userId?: string
+  crm?: string
   AND?: Prisma.MedicWhereInput | Prisma.MedicWhereInput[]
   OR?: Prisma.MedicWhereInput[]
   NOT?: Prisma.MedicWhereInput | Prisma.MedicWhereInput[]
+  speciality?: Prisma.StringFilter<"Medic"> | string
+  clinicId?: Prisma.UuidNullableFilter<"Medic"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userId">
+  clinic?: Prisma.XOR<Prisma.ClinicNullableScalarRelationFilter, Prisma.ClinicWhereInput> | null
+}, "id" | "userId" | "crm">
 
 export type MedicOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  crm?: Prisma.SortOrder
+  speciality?: Prisma.SortOrder
+  clinicId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MedicCountOrderByAggregateInput
-  _avg?: Prisma.MedicAvgOrderByAggregateInput
   _max?: Prisma.MedicMaxOrderByAggregateInput
   _min?: Prisma.MedicMinOrderByAggregateInput
-  _sum?: Prisma.MedicSumOrderByAggregateInput
 }
 
 export type MedicScalarWhereWithAggregatesInput = {
   AND?: Prisma.MedicScalarWhereWithAggregatesInput | Prisma.MedicScalarWhereWithAggregatesInput[]
   OR?: Prisma.MedicScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MedicScalarWhereWithAggregatesInput | Prisma.MedicScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Medic"> | number
-  userId?: Prisma.IntWithAggregatesFilter<"Medic"> | number
+  id?: Prisma.UuidWithAggregatesFilter<"Medic"> | string
+  userId?: Prisma.UuidWithAggregatesFilter<"Medic"> | string
+  crm?: Prisma.StringWithAggregatesFilter<"Medic"> | string
+  speciality?: Prisma.StringWithAggregatesFilter<"Medic"> | string
+  clinicId?: Prisma.UuidNullableWithAggregatesFilter<"Medic"> | string | null
 }
 
 export type MedicCreateInput = {
+  id?: string
+  crm: string
+  speciality: string
   user: Prisma.UserCreateNestedOneWithoutMedicInput
+  clinic?: Prisma.ClinicCreateNestedOneWithoutMedicsInput
 }
 
 export type MedicUncheckedCreateInput = {
-  id?: number
-  userId: number
+  id?: string
+  userId: string
+  crm: string
+  speciality: string
+  clinicId?: string | null
 }
 
 export type MedicUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneRequiredWithoutMedicNestedInput
+  clinic?: Prisma.ClinicUpdateOneWithoutMedicsNestedInput
 }
 
 export type MedicUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
+  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MedicCreateManyInput = {
-  id?: number
-  userId: number
+  id?: string
+  userId: string
+  crm: string
+  speciality: string
+  clinicId?: string | null
 }
 
 export type MedicUpdateManyMutationInput = {
-
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MedicUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
+  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type MedicNullableScalarRelationFilter = {
@@ -269,29 +290,38 @@ export type MedicNullableScalarRelationFilter = {
   isNot?: Prisma.MedicWhereInput | null
 }
 
+export type MedicListRelationFilter = {
+  every?: Prisma.MedicWhereInput
+  some?: Prisma.MedicWhereInput
+  none?: Prisma.MedicWhereInput
+}
+
+export type MedicOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type MedicCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type MedicAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  crm?: Prisma.SortOrder
+  speciality?: Prisma.SortOrder
+  clinicId?: Prisma.SortOrder
 }
 
 export type MedicMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  crm?: Prisma.SortOrder
+  speciality?: Prisma.SortOrder
+  clinicId?: Prisma.SortOrder
 }
 
 export type MedicMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type MedicSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  crm?: Prisma.SortOrder
+  speciality?: Prisma.SortOrder
+  clinicId?: Prisma.SortOrder
 }
 
 export type MedicCreateNestedOneWithoutUserInput = {
@@ -326,12 +356,64 @@ export type MedicUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MedicUpdateToOneWithWhereWithoutUserInput, Prisma.MedicUpdateWithoutUserInput>, Prisma.MedicUncheckedUpdateWithoutUserInput>
 }
 
-export type MedicCreateWithoutUserInput = {
+export type MedicCreateNestedManyWithoutClinicInput = {
+  create?: Prisma.XOR<Prisma.MedicCreateWithoutClinicInput, Prisma.MedicUncheckedCreateWithoutClinicInput> | Prisma.MedicCreateWithoutClinicInput[] | Prisma.MedicUncheckedCreateWithoutClinicInput[]
+  connectOrCreate?: Prisma.MedicCreateOrConnectWithoutClinicInput | Prisma.MedicCreateOrConnectWithoutClinicInput[]
+  createMany?: Prisma.MedicCreateManyClinicInputEnvelope
+  connect?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+}
 
+export type MedicUncheckedCreateNestedManyWithoutClinicInput = {
+  create?: Prisma.XOR<Prisma.MedicCreateWithoutClinicInput, Prisma.MedicUncheckedCreateWithoutClinicInput> | Prisma.MedicCreateWithoutClinicInput[] | Prisma.MedicUncheckedCreateWithoutClinicInput[]
+  connectOrCreate?: Prisma.MedicCreateOrConnectWithoutClinicInput | Prisma.MedicCreateOrConnectWithoutClinicInput[]
+  createMany?: Prisma.MedicCreateManyClinicInputEnvelope
+  connect?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+}
+
+export type MedicUpdateManyWithoutClinicNestedInput = {
+  create?: Prisma.XOR<Prisma.MedicCreateWithoutClinicInput, Prisma.MedicUncheckedCreateWithoutClinicInput> | Prisma.MedicCreateWithoutClinicInput[] | Prisma.MedicUncheckedCreateWithoutClinicInput[]
+  connectOrCreate?: Prisma.MedicCreateOrConnectWithoutClinicInput | Prisma.MedicCreateOrConnectWithoutClinicInput[]
+  upsert?: Prisma.MedicUpsertWithWhereUniqueWithoutClinicInput | Prisma.MedicUpsertWithWhereUniqueWithoutClinicInput[]
+  createMany?: Prisma.MedicCreateManyClinicInputEnvelope
+  set?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  disconnect?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  delete?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  connect?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  update?: Prisma.MedicUpdateWithWhereUniqueWithoutClinicInput | Prisma.MedicUpdateWithWhereUniqueWithoutClinicInput[]
+  updateMany?: Prisma.MedicUpdateManyWithWhereWithoutClinicInput | Prisma.MedicUpdateManyWithWhereWithoutClinicInput[]
+  deleteMany?: Prisma.MedicScalarWhereInput | Prisma.MedicScalarWhereInput[]
+}
+
+export type MedicUncheckedUpdateManyWithoutClinicNestedInput = {
+  create?: Prisma.XOR<Prisma.MedicCreateWithoutClinicInput, Prisma.MedicUncheckedCreateWithoutClinicInput> | Prisma.MedicCreateWithoutClinicInput[] | Prisma.MedicUncheckedCreateWithoutClinicInput[]
+  connectOrCreate?: Prisma.MedicCreateOrConnectWithoutClinicInput | Prisma.MedicCreateOrConnectWithoutClinicInput[]
+  upsert?: Prisma.MedicUpsertWithWhereUniqueWithoutClinicInput | Prisma.MedicUpsertWithWhereUniqueWithoutClinicInput[]
+  createMany?: Prisma.MedicCreateManyClinicInputEnvelope
+  set?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  disconnect?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  delete?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  connect?: Prisma.MedicWhereUniqueInput | Prisma.MedicWhereUniqueInput[]
+  update?: Prisma.MedicUpdateWithWhereUniqueWithoutClinicInput | Prisma.MedicUpdateWithWhereUniqueWithoutClinicInput[]
+  updateMany?: Prisma.MedicUpdateManyWithWhereWithoutClinicInput | Prisma.MedicUpdateManyWithWhereWithoutClinicInput[]
+  deleteMany?: Prisma.MedicScalarWhereInput | Prisma.MedicScalarWhereInput[]
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type MedicCreateWithoutUserInput = {
+  id?: string
+  crm: string
+  speciality: string
+  clinic?: Prisma.ClinicCreateNestedOneWithoutMedicsInput
 }
 
 export type MedicUncheckedCreateWithoutUserInput = {
-  id?: number
+  id?: string
+  crm: string
+  speciality: string
+  clinicId?: string | null
 }
 
 export type MedicCreateOrConnectWithoutUserInput = {
@@ -351,11 +433,96 @@ export type MedicUpdateToOneWithWhereWithoutUserInput = {
 }
 
 export type MedicUpdateWithoutUserInput = {
-
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
+  clinic?: Prisma.ClinicUpdateOneWithoutMedicsNestedInput
 }
 
 export type MedicUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
+  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type MedicCreateWithoutClinicInput = {
+  id?: string
+  crm: string
+  speciality: string
+  user: Prisma.UserCreateNestedOneWithoutMedicInput
+}
+
+export type MedicUncheckedCreateWithoutClinicInput = {
+  id?: string
+  userId: string
+  crm: string
+  speciality: string
+}
+
+export type MedicCreateOrConnectWithoutClinicInput = {
+  where: Prisma.MedicWhereUniqueInput
+  create: Prisma.XOR<Prisma.MedicCreateWithoutClinicInput, Prisma.MedicUncheckedCreateWithoutClinicInput>
+}
+
+export type MedicCreateManyClinicInputEnvelope = {
+  data: Prisma.MedicCreateManyClinicInput | Prisma.MedicCreateManyClinicInput[]
+  skipDuplicates?: boolean
+}
+
+export type MedicUpsertWithWhereUniqueWithoutClinicInput = {
+  where: Prisma.MedicWhereUniqueInput
+  update: Prisma.XOR<Prisma.MedicUpdateWithoutClinicInput, Prisma.MedicUncheckedUpdateWithoutClinicInput>
+  create: Prisma.XOR<Prisma.MedicCreateWithoutClinicInput, Prisma.MedicUncheckedCreateWithoutClinicInput>
+}
+
+export type MedicUpdateWithWhereUniqueWithoutClinicInput = {
+  where: Prisma.MedicWhereUniqueInput
+  data: Prisma.XOR<Prisma.MedicUpdateWithoutClinicInput, Prisma.MedicUncheckedUpdateWithoutClinicInput>
+}
+
+export type MedicUpdateManyWithWhereWithoutClinicInput = {
+  where: Prisma.MedicScalarWhereInput
+  data: Prisma.XOR<Prisma.MedicUpdateManyMutationInput, Prisma.MedicUncheckedUpdateManyWithoutClinicInput>
+}
+
+export type MedicScalarWhereInput = {
+  AND?: Prisma.MedicScalarWhereInput | Prisma.MedicScalarWhereInput[]
+  OR?: Prisma.MedicScalarWhereInput[]
+  NOT?: Prisma.MedicScalarWhereInput | Prisma.MedicScalarWhereInput[]
+  id?: Prisma.UuidFilter<"Medic"> | string
+  userId?: Prisma.UuidFilter<"Medic"> | string
+  crm?: Prisma.StringFilter<"Medic"> | string
+  speciality?: Prisma.StringFilter<"Medic"> | string
+  clinicId?: Prisma.UuidNullableFilter<"Medic"> | string | null
+}
+
+export type MedicCreateManyClinicInput = {
+  id?: string
+  userId: string
+  crm: string
+  speciality: string
+}
+
+export type MedicUpdateWithoutClinicInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
+  user?: Prisma.UserUpdateOneRequiredWithoutMedicNestedInput
+}
+
+export type MedicUncheckedUpdateWithoutClinicInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type MedicUncheckedUpdateManyWithoutClinicInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  crm?: Prisma.StringFieldUpdateOperationsInput | string
+  speciality?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -363,45 +530,67 @@ export type MedicUncheckedUpdateWithoutUserInput = {
 export type MedicSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  crm?: boolean
+  speciality?: boolean
+  clinicId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  clinic?: boolean | Prisma.Medic$clinicArgs<ExtArgs>
 }, ExtArgs["result"]["medic"]>
 
 export type MedicSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  crm?: boolean
+  speciality?: boolean
+  clinicId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  clinic?: boolean | Prisma.Medic$clinicArgs<ExtArgs>
 }, ExtArgs["result"]["medic"]>
 
 export type MedicSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  crm?: boolean
+  speciality?: boolean
+  clinicId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  clinic?: boolean | Prisma.Medic$clinicArgs<ExtArgs>
 }, ExtArgs["result"]["medic"]>
 
 export type MedicSelectScalar = {
   id?: boolean
   userId?: boolean
+  crm?: boolean
+  speciality?: boolean
+  clinicId?: boolean
 }
 
-export type MedicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId", ExtArgs["result"]["medic"]>
+export type MedicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "crm" | "speciality" | "clinicId", ExtArgs["result"]["medic"]>
 export type MedicInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  clinic?: boolean | Prisma.Medic$clinicArgs<ExtArgs>
 }
 export type MedicIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  clinic?: boolean | Prisma.Medic$clinicArgs<ExtArgs>
 }
 export type MedicIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  clinic?: boolean | Prisma.Medic$clinicArgs<ExtArgs>
 }
 
 export type $MedicPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Medic"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    clinic: Prisma.$ClinicPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    userId: number
+    id: string
+    userId: string
+    crm: string
+    speciality: string
+    clinicId: string | null
   }, ExtArgs["result"]["medic"]>
   composites: {}
 }
@@ -797,6 +986,7 @@ readonly fields: MedicFieldRefs;
 export interface Prisma__MedicClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  clinic<T extends Prisma.Medic$clinicArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Medic$clinicArgs<ExtArgs>>): Prisma.Prisma__ClinicClient<runtime.Types.Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -826,8 +1016,11 @@ export interface Prisma__MedicClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Medic model
  */
 export interface MedicFieldRefs {
-  readonly id: Prisma.FieldRef<"Medic", 'Int'>
-  readonly userId: Prisma.FieldRef<"Medic", 'Int'>
+  readonly id: Prisma.FieldRef<"Medic", 'String'>
+  readonly userId: Prisma.FieldRef<"Medic", 'String'>
+  readonly crm: Prisma.FieldRef<"Medic", 'String'>
+  readonly speciality: Prisma.FieldRef<"Medic", 'String'>
+  readonly clinicId: Prisma.FieldRef<"Medic", 'String'>
 }
     
 
@@ -1226,6 +1419,25 @@ export type MedicDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Medics to delete.
    */
   limit?: number
+}
+
+/**
+ * Medic.clinic
+ */
+export type Medic$clinicArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Clinic
+   */
+  select?: Prisma.ClinicSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Clinic
+   */
+  omit?: Prisma.ClinicOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClinicInclude<ExtArgs> | null
+  where?: Prisma.ClinicWhereInput
 }
 
 /**

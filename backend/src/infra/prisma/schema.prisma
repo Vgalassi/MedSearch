@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -12,17 +7,18 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role{
+enum Role {
   PATIENT
   MEDIC
   CLINIC
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name     String
   email    String @unique
   password String
+  phone    String
   role     Role
 
   patient  Patient?
@@ -31,19 +27,35 @@ model User {
 }
 
 model Patient {
-  id     Int  @id @default(autoincrement())
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
-}
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String @unique @db.Uuid
+  user      User   @relation(fields: [userId], references: [id])
 
-model Medic {
-  id     Int  @id @default(autoincrement())
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
+  cpf       String @unique
 }
 
 model Clinic {
-  id     Int  @id @default(autoincrement())
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String @unique @db.Uuid
+  user        User   @relation(fields: [userId], references: [id])
+
+  address     String
+  cep         String
+  latitude    Float
+  longitude   Float
+  description String
+
+  medics      Medic[]
+}
+
+model Medic {
+  id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String @unique @db.Uuid
+  user       User   @relation(fields: [userId], references: [id])
+
+  crm        String  @unique
+  speciality String
+
+  clinicId   String? @db.Uuid
+  clinic     Clinic? @relation(fields: [clinicId], references: [id])
 }

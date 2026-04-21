@@ -1,35 +1,32 @@
-import { injectable, inject} from "inversify"
-import {TYPES} from "../dto/types"
+import { injectable, inject } from "inversify"
+import { TYPES } from "../dto/types"
 import type { UserRepository } from "../../domain/repositories/UserRepository"
 import type { UserProps } from "../../domain/entities/User";
 import { User } from "../../domain/entities/User"
 import type { HashGenerator } from "../protocols/HashGenerator";
 
-interface CreateUserRequest extends Omit<UserProps, 'id'> {
-    password: string; 
-}
 
-interface CreateUserResponse {
-    id: number;
-    name: string;
-    email: string;
-}
+
 
 @injectable()
-export class CreateUserUseCase{
+export class CreateUserUseCase {
     constructor(
         @inject(TYPES.UserRepository) private userRepository: UserRepository,
         @inject(TYPES.HashGenerator) private hashGenerator: HashGenerator
 
-    ) {}
+    ) { }
 
-    async execute(data: CreateUserRequest){
-        const user = new User({
-            name: data.name,
-            email: data.email,
-            password: await this.hashGenerator.hash(data.password),
-            role: data.role
-        })
+    async execute(data: UserProps) {
+
+        const hashedPassword = await this.hashGenerator.hash(data.password)
+
+
+        const userData: UserProps = {
+            ...data,
+            password: hashedPassword
+        }
+
+        const user = new User(userData)
 
         await this.userRepository.create(user)
 
