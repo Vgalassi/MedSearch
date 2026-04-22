@@ -6,10 +6,10 @@ import { TYPES } from "../../app/dto/types"
 import type { DeleteUserUseCase } from "../../app/usecases/deleteUserUseCase";
 
 const baseSchema = z.object({
-    name: z.string(),
-    email: z.string(),
+    name: z.string().min(3),
+    email: z.string().min(3),
     password: z.string().min(6),
-    phone: z.string(),
+    phone: z.string().min(3),
     role: z.enum(['PATIENT','MEDIC','CLINIC']),
     
 })
@@ -58,8 +58,13 @@ export class UserController{
 
         try{
             await this.createUserUseCase.execute(data) 
+            res.status(201).send({
+                message: "User created"
+            })
         }catch(err: any){
-            throw err;
+            res.status(400).send({
+                message: "Error"
+            })
         }
      }
 
