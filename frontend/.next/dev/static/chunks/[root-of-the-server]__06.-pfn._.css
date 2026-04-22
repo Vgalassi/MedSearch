@@ -133,9 +133,9 @@
   @supports (color: lab(0% 0 0)) {
     :root, :host {
       --color-red-500: lab(55.4814% 75.0732 48.8528);
-      --color-blue-500: lab(54.1736% 13.3369 -74.6839);
+      --color-blue-500: lab(54.1736% 13.3368 -74.6839);
       --color-blue-600: lab(44.0605% 29.0279 -86.0352);
-      --color-gray-100: lab(96.1596% -.0823438 -1.13575);
+      --color-gray-100: lab(96.1596% -.082314 -1.13575);
     }
   }
 }
@@ -436,10 +436,6 @@
     margin-block: calc(var(--spacing) * 4);
   }
 
-  .my-auto {
-    margin-block: auto;
-  }
-
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
@@ -539,10 +535,6 @@
     color: var(--color-red-500);
   }
 
-  .text-white {
-    color: var(--color-white);
-  }
-
   .antialiased {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -551,12 +543,6 @@
   .shadow-lg {
     --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, #0000001a), 0 4px 6px -4px var(--tw-shadow-color, #0000001a);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-
-  @media (hover: hover) {
-    .hover\:inline:hover {
-      display: inline;
-    }
   }
 
   @media (hover: hover) {
