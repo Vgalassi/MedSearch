@@ -1,6 +1,6 @@
 
-
-export default async function createUser(data: object): Promise<string>{
+import { UserCreateFormData } from "../types/UserFormData"
+export default async function createUser(data: UserCreateFormData): Promise<string>{
 
     const response = await fetch('http://localhost:3000/create',{
         method: 'POST',
@@ -10,10 +10,10 @@ export default async function createUser(data: object): Promise<string>{
         }
     })
     const resData = await response.json()
-    /*
-    if(!response.ok){
-        throw new Error('failed to post data')
+
+    if(response.status != 201){
+        throw new Error('failed to create data')
     }
-    */
+    
     return resData.message
 }

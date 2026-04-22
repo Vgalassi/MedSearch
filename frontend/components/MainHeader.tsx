@@ -4,11 +4,11 @@ export default function MainHeader(){
     const registerUrls = 
     [
         {
-            href: "/user/register",
+            href: "/patient/register",
             label: "Sou paciente"
         },
         {
-            href: "/meidc/register",
+            href: "/medic/register",
             label: "Sou médico"
         },
         {

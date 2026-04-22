@@ -2,11 +2,11 @@
 import { useActionState } from "react"
 import createUser from "@/components/utils/CreateUser"
 import { checkUserErrors } from "@/components/utils/checkUserErrors"
-import { ClinicCreateFormData } from "@/components/types/UserFormData"
+import { MedicCreateFormData } from "@/components/types/UserFormData"
 
 type FormState = {
   errors: string[] | null,
-  enteredValues: ClinicCreateFormData | null
+  enteredValues: MedicCreateFormData | null
 }
 
 export default function LoginPage() {
@@ -17,17 +17,10 @@ export default function LoginPage() {
     const password = formData.get("password") as string
     const confirmPassword = formData.get("confirm-password") as string
     const phone = formData.get("phone") as string
-    const cep = formData.get("cep") as string
-    const description = formData.get("description") as string
-    const enteredValues: ClinicCreateFormData = 
-    { name, email, password, confirmPassword, phone,role: "CLINIC",
-      roleData:{
-        cep,
-        description,
-        latitude: 0.1,
-        longitude: 0.1,
-        address: "teste"
-      }}
+    const crm = formData.get("crm") as string
+    const speciality = formData.get("speciality") as string
+
+    const enteredValues: MedicCreateFormData = { name, email, password, confirmPassword, phone,role:"MEDIC",roleData:{crm,speciality}}
 
     checkUserErrors(enteredValues,errors)
     if (errors.length > 0) {
@@ -55,7 +48,7 @@ export default function LoginPage() {
     <div className="mx-auto my-4">
       <div className="border w-80 p-4 rounded">
         <form action={formAction}>
-          <h1>Nova Clínica</h1>
+          <h1>Novo Médico</h1>
 
           <label htmlFor="name">Nome</label>
           <input type="text" className="border block mb-2 p-1 w-full" name="name" id="name" defaultValue={formState.enteredValues?.name} />
@@ -72,11 +65,11 @@ export default function LoginPage() {
           <label htmlFor="confirm-password">Confirmar senha</label>
           <input type="password" className="border block mb-2 p-1 w-full" name="confirm-password" id="confirm-password" defaultValue={formState.enteredValues?.confirmPassword} />
 
-          <label htmlFor="cep">CEP</label>
-          <input type="text" className="border block mb-2 p-1 w-full" name="cep" id="cep" defaultValue={formState.enteredValues?.roleData.cep} />
+          <label htmlFor="crm">CRM</label>
+          <input type="text" className="border block mb-2 p-1 w-full" name="crm" id="crm" defaultValue={formState.enteredValues?.roleData.crm} />
 
-          <label htmlFor="description">Descrição</label>
-          <textarea className="border block mb-2 p-1 w-full" id="description" name="description" defaultValue={formState.enteredValues?.roleData.description} />
+          <label htmlFor="speciality">Especialidade</label>
+          <textarea className="border block mb-2 p-1 w-full" id="speciality" name="speciality" defaultValue={formState.enteredValues?.roleData.speciality} />
 
           <input
             className="border p-2 mt-4 w-full cursor-pointer hover:bg-black hover:text-white transition-colors"
