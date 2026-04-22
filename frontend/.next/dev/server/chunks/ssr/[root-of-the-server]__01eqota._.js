@@ -38,7 +38,7 @@ function Home() {
         children: "oi"
     }, void 0, false, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 5,
+        lineNumber: 4,
         columnNumber: 5
     }, this);
 }
