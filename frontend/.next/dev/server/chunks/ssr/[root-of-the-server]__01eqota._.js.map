@@ -2,6 +2,6 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/vinicius.galassi_v4c/Documents/repos/tcc-consultas/frontend/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":["src","width","height"],"mappings":";;;;AAAA;;uCACe;IAAEA,KAAAA,mIAAG;IAAEC,OAAO;IAAKC,QAAQ;AAAI"}},
-    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/vinicius.galassi_v4c/Documents/repos/tcc-consultas/frontend/app/page.tsx"],"sourcesContent":["\r\nexport default function Home() {\r\n  return (\r\n    <p className=\"bg-white\">oi</p>\r\n  );\r\n}\r\n"],"names":["Home","className"],"mappings":";;;;;;AACe,SAASA;IACtB,qBACE,8OAAC;QAAEC,WAAU;kBAAW;;;;;;AAE5B"}}]
+    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":["file:///home/galassi/Documentos/tcc-consultas/frontend/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":["src","width","height"],"mappings":";;;;AAAA;;uCACe;IAAEA,KAAAA,mIAAG;IAAEC,OAAO;IAAKC,QAAQ;AAAI"}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":["file:///home/galassi/Documentos/tcc-consultas/frontend/app/page.tsx"],"sourcesContent":["\nexport default function Home() {\n  return (\n    <p className=\"bg-white\">oi</p>\n  );\n}\n"],"names":["Home","className"],"mappings":";;;;;;AACe,SAASA;IACtB,qBACE,8OAAC;QAAEC,WAAU;kBAAW;;;;;;AAE5B"}}]
 }
