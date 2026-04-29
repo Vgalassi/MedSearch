@@ -1,8 +1,10 @@
 
 export const TYPES = {
     UserRepository: Symbol.for("UserRepository"),
-    CreateUserUseCase: Symbol.for("CreateUserUseCase"),
-    DeleteUserUseCase: Symbol.for("DeleteUserUseCase"),
-    HashGenerator: Symbol.for("HashGenerator")
+    DoctorRepository: Symbol.for("DoctorRepository"),
+    PatientRepository: Symbol.for("PatientRepository"),
+    ClinicRepository: Symbol.for("ClinicRepository"),
+    RegisterUserUseCase: Symbol.for("RegisterUserUseCase"),
+    HashGenerator: Symbol.for("HashGenerator"),
     
 };

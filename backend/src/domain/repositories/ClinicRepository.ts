@@ -1,5 +1,5 @@
-import { Clinic } from "../entities/Clinic"
+import { Clinic } from "../Aggregates/Clinic"
 
 export interface ClinicRepository{
-    getClinics():Clinic[]
+    save(clinic: Clinic): Promise<Clinic>
 }

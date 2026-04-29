@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -54,7 +54,7 @@ export const ModelName = {
   User: 'User',
   Patient: 'Patient',
   Clinic: 'Clinic',
-  Medic: 'Medic'
+  Doctor: 'Doctor'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,10 +75,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   email: 'email',
   password: 'password',
-  phone: 'phone',
   role: 'role'
 } as const
 
@@ -88,6 +86,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const PatientScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  name: 'name',
+  phone: 'phone',
   cpf: 'cpf'
 } as const
 
@@ -97,6 +97,8 @@ export type PatientScalarFieldEnum = (typeof PatientScalarFieldEnum)[keyof typeo
 export const ClinicScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  name: 'name',
+  phone: 'phone',
   address: 'address',
   cep: 'cep',
   latitude: 'latitude',
@@ -107,15 +109,17 @@ export const ClinicScalarFieldEnum = {
 export type ClinicScalarFieldEnum = (typeof ClinicScalarFieldEnum)[keyof typeof ClinicScalarFieldEnum]
 
 
-export const MedicScalarFieldEnum = {
+export const DoctorScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  name: 'name',
+  phone: 'phone',
   crm: 'crm',
   speciality: 'speciality',
   clinicId: 'clinicId'
 } as const
 
-export type MedicScalarFieldEnum = (typeof MedicScalarFieldEnum)[keyof typeof MedicScalarFieldEnum]
+export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
 
 
 export const SortOrder = {

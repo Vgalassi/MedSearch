@@ -11,7 +11,7 @@
 
 export const Role = {
   PATIENT: 'PATIENT',
-  MEDIC: 'MEDIC',
+  DOCTOR: 'DOCTOR',
   CLINIC: 'CLINIC'
 } as const
 

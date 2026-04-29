@@ -9,35 +9,42 @@ datasource db {
 
 enum Role {
   PATIENT
-  MEDIC
+  DOCTOR
   CLINIC
 }
 
 model User {
-  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name     String
+  id       String @id @db.Uuid
   email    String @unique
   password String
-  phone    String
   role     Role
 
   patient  Patient?
-  medic    Medic?
+  doctor   Doctor?
   clinic   Clinic?
+
+  @@map("users")
 }
 
 model Patient {
-  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String @unique @db.Uuid
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      String @id @db.Uuid
+  userId  String @unique @db.Uuid
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  cpf       String @unique
+  name    String
+  phone   String
+  cpf     String @unique
+
+  @@map("patients")
 }
 
 model Clinic {
-  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          String @id @db.Uuid
   userId      String @unique @db.Uuid
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  phone       String
 
   address     String
   cep         String
@@ -45,17 +52,24 @@ model Clinic {
   longitude   Float
   description String
 
-  medics      Medic[]
+  doctors     Doctor[]
+
+  @@map("clinics")
 }
 
-model Medic {
-  id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+model Doctor {
+  id         String @id @db.Uuid
   userId     String @unique @db.Uuid
   user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name       String
+  phone      String
 
   crm        String  @unique
   speciality String
 
   clinicId   String? @db.Uuid
   clinic     Clinic? @relation(fields: [clinicId], references: [id])
+
+  @@map("doctors")
 }

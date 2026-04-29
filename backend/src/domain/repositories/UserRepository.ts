@@ -1,8 +1,6 @@
-import { User } from "../entities/User"
+import { User } from "../Aggregates/User"
 
 export interface UserRepository {
-    create(user: User): Promise<void>
-    getById(id: string): Promise<User | null>
-    delete(id: string): Promise<void>
-    update(user: User): Promise<User>
+    save(user: User): Promise<User>
+    findByEmail(email: string): Promise<User | null>
 }
