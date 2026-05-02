@@ -15,4 +15,29 @@ export class PrismaDoctorRepository implements DoctorRepository {
 
     return DoctorMapper.toDomain(createdDoctor as never);
   }
+
+  async findById(id: string): Promise<Doctor | null> {
+    const doctor = await prisma.doctor.findUnique({
+      where: { id },
+    });
+
+    if (!doctor) {
+      return null;
+    }
+
+    return DoctorMapper.toDomain(doctor as never);
+  }
+
+  async update(doctor: Doctor): Promise<Doctor> {
+    const data = DoctorMapper.toPersistence(doctor);
+
+    const updatedDoctor = await prisma.doctor.update({
+      where: { id: doctor.id.value },
+      data: {
+        clinicId: data.clinicId,
+      },
+    });
+
+    return DoctorMapper.toDomain(updatedDoctor as never);
+  }
 }

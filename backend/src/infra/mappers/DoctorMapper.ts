@@ -20,7 +20,7 @@ export class DoctorMapper {
         phone: raw.phone,
         crm: raw.crm,
         speciality: raw.speciality,
-        clinicId: raw.clinicId ? new Identifier() : new Identifier()
+        clinicId: raw.clinicId ? new Identifier(raw.clinicId) : null
       },
       new Identifier(raw.id),
     );

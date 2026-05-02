@@ -7,7 +7,7 @@ export type DoctorProps = {
   phone: string;
   crm: string;
   speciality: string;
-  clinicId?: Identifier;
+  clinicId?: Identifier | null;
 };
 
 export class Doctor extends AgregateRoot<DoctorProps> {

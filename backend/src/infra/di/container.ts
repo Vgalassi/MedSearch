@@ -12,6 +12,8 @@ import type { PatientRepository } from "../../domain/repositories/PatientReposit
 import { PrismaPatientRepository } from "../repositories/PrismaPatientRepository";
 import type { ClinicRepository } from "../../domain/repositories/ClinicRepository";
 import { PrismaClinicRepository } from "../repositories/PrismaClinicRepository";
+import { AddDoctorToClinicUseCase } from "../../app/usecases/AddDoctorToClinicUseCase";
+import { RemoveDoctorFromClinicUseCase } from "../../app/usecases/RemoveDoctorFromClinicUseCase";
 
 const container = new Container();
 
@@ -20,6 +22,8 @@ container.bind<DoctorRepository>(TYPES.DoctorRepository).to(PrismaDoctorReposito
 container.bind<PatientRepository>(TYPES.PatientRepository).to(PrismaPatientRepository);
 container.bind<ClinicRepository>(TYPES.ClinicRepository).to(PrismaClinicRepository);
 container.bind<RegisterUserUseCase>(TYPES.RegisterUserUseCase).to(RegisterUserUseCase)
+container.bind<AddDoctorToClinicUseCase>(TYPES.AddDoctorToClinicUseCase).to(AddDoctorToClinicUseCase)
+container.bind<RemoveDoctorFromClinicUseCase>(TYPES.RemoveDoctorFromClinicUseCase).to(RemoveDoctorFromClinicUseCase)
 container.bind<HashGenerator>(TYPES.HashGenerator).to(BcryptAdapter);
 
 export { container };
