@@ -20,7 +20,7 @@ export default function LoginPage() {
     const cpf = formData.get("cpf") as string
    
 
-    const enteredValues: PatientCreateFormData = { name, email, password, confirmPassword, phone,role:"PATIENT",roleData:{cpf}}
+    const enteredValues: PatientCreateFormData = { name, email, password, confirmPassword, phone,role:"PATIENT",cpf}
 
     checkUserErrors(enteredValues,errors)
     if (errors.length > 0) {
@@ -66,7 +66,7 @@ export default function LoginPage() {
           <input type="password" className="border block mb-2 p-1 w-full" name="confirm-password" id="confirm-password" defaultValue={formState.enteredValues?.confirmPassword} />
 
           <label htmlFor="cpf">CPF</label>
-          <input type="text" className="border block mb-2 p-1 w-full" name="cpf" id="cpf" defaultValue={formState.enteredValues?.roleData.cpf} />
+          <input type="text" className="border block mb-2 p-1 w-full" name="cpf" id="cpf" defaultValue={formState.enteredValues?.cpf} />
 
           <input
             className="border p-2 mt-4 w-full cursor-pointer hover:bg-black hover:text-white transition-colors"

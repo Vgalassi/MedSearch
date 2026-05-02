@@ -20,7 +20,7 @@ export default function LoginPage() {
     const crm = formData.get("crm") as string
     const speciality = formData.get("speciality") as string
 
-    const enteredValues: MedicCreateFormData = { name, email, password, confirmPassword, phone,role:"MEDIC",roleData:{crm,speciality}}
+    const enteredValues: MedicCreateFormData = { name, email, password, confirmPassword, phone,role:"DOCTOR", crm, speciality}
 
     checkUserErrors(enteredValues,errors)
     if (errors.length > 0) {
@@ -66,10 +66,10 @@ export default function LoginPage() {
           <input type="password" className="border block mb-2 p-1 w-full" name="confirm-password" id="confirm-password" defaultValue={formState.enteredValues?.confirmPassword} />
 
           <label htmlFor="crm">CRM</label>
-          <input type="text" className="border block mb-2 p-1 w-full" name="crm" id="crm" defaultValue={formState.enteredValues?.roleData.crm} />
+          <input type="text" className="border block mb-2 p-1 w-full" name="crm" id="crm" defaultValue={formState.enteredValues?.crm} />
 
           <label htmlFor="speciality">Especialidade</label>
-          <textarea className="border block mb-2 p-1 w-full" id="speciality" name="speciality" defaultValue={formState.enteredValues?.roleData.speciality} />
+          <textarea className="border block mb-2 p-1 w-full" id="speciality" name="speciality" defaultValue={formState.enteredValues?.speciality} />
 
           <input
             className="border p-2 mt-4 w-full cursor-pointer hover:bg-black hover:text-white transition-colors"

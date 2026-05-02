@@ -9,6 +9,13 @@ const app = Fastify({
 await app.register(cors, {
   origin: true, // permite qualquer origem
 })
+
+app.setErrorHandler((error, request, reply) => {
+  console.error(error)
+  reply.status(500).send({ message: 'Internal server error' })
+})
+
+
 app.register(userRoutes)
 
 

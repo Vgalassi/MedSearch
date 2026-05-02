@@ -2,7 +2,7 @@
 import { UserCreateFormData } from "../types/UserFormData"
 export default async function createUser(data: UserCreateFormData): Promise<string>{
 
-    const response = await fetch('http://localhost:3000/create',{
+    const response = await fetch('http://localhost:3000/users/register',{
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

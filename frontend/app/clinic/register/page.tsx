@@ -21,13 +21,13 @@ export default function LoginPage() {
     const description = formData.get("description") as string
     const enteredValues: ClinicCreateFormData = 
     { name, email, password, confirmPassword, phone,role: "CLINIC",
-      roleData:{
+     
         cep,
         description,
         latitude: 0.1,
         longitude: 0.1,
         address: "teste"
-      }}
+    }
 
     checkUserErrors(enteredValues,errors)
     if (errors.length > 0) {
@@ -73,10 +73,10 @@ export default function LoginPage() {
           <input type="password" className="border block mb-2 p-1 w-full" name="confirm-password" id="confirm-password" defaultValue={formState.enteredValues?.confirmPassword} />
 
           <label htmlFor="cep">CEP</label>
-          <input type="text" className="border block mb-2 p-1 w-full" name="cep" id="cep" defaultValue={formState.enteredValues?.roleData.cep} />
+          <input type="text" className="border block mb-2 p-1 w-full" name="cep" id="cep" defaultValue={formState.enteredValues?.cep} />
 
           <label htmlFor="description">Descrição</label>
-          <textarea className="border block mb-2 p-1 w-full" id="description" name="description" defaultValue={formState.enteredValues?.roleData.description} />
+          <textarea className="border block mb-2 p-1 w-full" id="description" name="description" defaultValue={formState.enteredValues?.description} />
 
           <input
             className="border p-2 mt-4 w-full cursor-pointer hover:bg-black hover:text-white transition-colors"

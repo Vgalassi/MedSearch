@@ -1,20 +1,3 @@
-type ClinicData = {
-    cep: string,
-    description: string,
-    address: string,
-    latitude: number,
-    longitude: number
-}
-
-type PatientData = {
-    cpf: string
-}
-
-type MedicData = {
-    crm: string,
-    speciality: string
- 
-}
 
 
 export type MedicCreateFormData={
@@ -23,8 +6,10 @@ export type MedicCreateFormData={
     password: string,
     confirmPassword: string,
     phone: string,
-    role: "MEDIC"
-    roleData: MedicData
+    role: "DOCTOR",
+    crm: string,
+    speciality: string
+    
 } 
 
 export type PatientCreateFormData= {
@@ -34,7 +19,7 @@ export type PatientCreateFormData= {
     confirmPassword: string,
     phone: string,
     role: "PATIENT"
-    roleData: PatientData
+    cpf: string
 } 
 export type ClinicCreateFormData = {
     name: string,
@@ -43,7 +28,11 @@ export type ClinicCreateFormData = {
     confirmPassword: string,
     phone: string,
     role: "CLINIC"
-    roleData: ClinicData
+    cep: string,
+    description: string,
+    address: string,
+    latitude: number,
+    longitude: number
 } 
 
 export type UserCreateFormData =
