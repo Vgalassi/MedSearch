@@ -28,6 +28,14 @@ export class PrismaDoctorRepository implements DoctorRepository {
     return DoctorMapper.toDomain(doctor as never);
   }
 
+  async findByClinicId(clinicId: string): Promise<Doctor[]> {
+    const doctors = await prisma.doctor.findMany({
+      where: { clinicId },
+    });
+
+    return doctors.map((doctor) => DoctorMapper.toDomain(doctor as never));
+  }
+
   async update(doctor: Doctor): Promise<Doctor> {
     const data = DoctorMapper.toPersistence(doctor);
 

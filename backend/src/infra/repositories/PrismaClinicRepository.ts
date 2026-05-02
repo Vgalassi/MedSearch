@@ -27,4 +27,9 @@ export class PrismaClinicRepository implements ClinicRepository {
 
     return ClinicMapper.toDomain(clinic as never);
   }
+
+  async findAll(): Promise<Clinic[]> {
+    const clinics = await prisma.clinic.findMany();
+    return clinics.map((clinic) => ClinicMapper.toDomain(clinic as never));
+  }
 }

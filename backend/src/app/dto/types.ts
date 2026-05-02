@@ -7,6 +7,8 @@ export const TYPES = {
     RegisterUserUseCase: Symbol.for("RegisterUserUseCase"),
     AddDoctorToClinicUseCase: Symbol.for("AddDoctorToClinicUseCase"),
     RemoveDoctorFromClinicUseCase: Symbol.for("RemoveDoctorFromClinicUseCase"),
+    GetClinicDoctorsUseCase: Symbol.for("GetClinicDoctorsUseCase"),
+    GetAllClinicsUseCase: Symbol.for("GetAllClinicsUseCase"),
     HashGenerator: Symbol.for("HashGenerator"),
     
 };

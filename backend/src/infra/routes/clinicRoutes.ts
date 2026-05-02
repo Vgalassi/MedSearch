@@ -4,6 +4,8 @@ import { container } from "../di/container";
 import { TYPES } from "../../app/dto/types";
 import { AddDoctorToClinicUseCase } from "../../app/usecases/AddDoctorToClinicUseCase";
 import { RemoveDoctorFromClinicUseCase } from "../../app/usecases/RemoveDoctorFromClinicUseCase";
+import { GetClinicDoctorsUseCase } from "../../app/usecases/GetClinicDoctorsUseCase";
+import { GetAllClinicsUseCase } from "../../app/usecases/GetAllClinicsUseCase";
 
 const addDoctorToClinicUseCase = container.get<AddDoctorToClinicUseCase>(
   TYPES.AddDoctorToClinicUseCase,
@@ -12,10 +14,18 @@ const removeDoctorFromClinicUseCase =
   container.get<RemoveDoctorFromClinicUseCase>(
     TYPES.RemoveDoctorFromClinicUseCase,
   );
+const getClinicDoctorsUseCase = container.get<GetClinicDoctorsUseCase>(
+  TYPES.GetClinicDoctorsUseCase,
+);
+const getAllClinicsUseCase = container.get<GetAllClinicsUseCase>(
+  TYPES.GetAllClinicsUseCase,
+);
 
 const clinicController = new ClinicController(
   addDoctorToClinicUseCase,
   removeDoctorFromClinicUseCase,
+  getClinicDoctorsUseCase,
+  getAllClinicsUseCase,
 );
 
 export default async function clinicRoutes(app: FastifyInstance) {
@@ -32,4 +42,15 @@ export default async function clinicRoutes(app: FastifyInstance) {
       await clinicController.removeDoctor(req, res);
     },
   );
+
+  app.get(
+    "/clinics/doctors/:id",
+    async (req: FastifyRequest, res: FastifyReply) => {
+      await clinicController.getClinicDoctors(req, res);
+    },
+  );
+
+  app.get("/clinics/all", async (req: FastifyRequest, res: FastifyReply) => {
+    await clinicController.getAllClinics(req, res);
+  });
 }
