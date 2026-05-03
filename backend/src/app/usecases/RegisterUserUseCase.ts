@@ -47,7 +47,7 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
                 throw new Error("Doctor data is required");
             }
 
-            const doctor = new Doctor(
+            const doctor = Doctor.create(
                 {
                     userId: createdUser.id,
                     name: input.name,

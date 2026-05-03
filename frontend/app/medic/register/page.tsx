@@ -1,91 +1,131 @@
-'use client'
-import { useActionState } from "react"
-import createUser from "@/components/utils/CreateUser"
-import { checkUserErrors } from "@/components/utils/checkUserErrors"
-import { MedicCreateFormData } from "@/components/types/UserFormData"
+"use client";
+
+import { useActionState } from "react";
+import createUser from "@/components/utils/CreateUser";
+import { checkUserErrors } from "@/components/utils/checkUserErrors";
+import { MedicCreateFormData } from "@/components/types/UserFormData";
+import { RegisterPageShell } from "@/components/ui/RegisterPageShell";
+import { FormErrors } from "@/components/ui/FormErrors";
+import { FormField } from "@/components/ui/FormField";
+import { FormTextarea } from "@/components/ui/FormTextarea";
+import { FormTitle } from "@/components/ui/FormTitle";
 
 type FormState = {
-  errors: string[] | null,
-  enteredValues: MedicCreateFormData | null
-}
+  errors: string[] | null;
+  enteredValues: MedicCreateFormData | null;
+};
 
-export default function LoginPage() {
-  async function handleSubmit(prevFormState: FormState, formData: FormData): Promise<FormState> {
-    const errors: string[] = []
-    const name = formData.get("name") as string
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
-    const confirmPassword = formData.get("confirm-password") as string
-    const phone = formData.get("phone") as string
-    const crm = formData.get("crm") as string
-    const speciality = formData.get("speciality") as string
+export default function MedicRegisterPage() {
+  async function handleSubmit(
+    prevFormState: FormState,
+    formData: FormData,
+  ): Promise<FormState> {
+    const errors: string[] = [];
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirm-password") as string;
+    const phone = formData.get("phone") as string;
+    const crm = formData.get("crm") as string;
+    const speciality = formData.get("speciality") as string;
 
-    const enteredValues: MedicCreateFormData = { name, email, password, confirmPassword, phone,role:"DOCTOR", crm, speciality}
+    const enteredValues: MedicCreateFormData = {
+      name,
+      email,
+      password,
+      confirmPassword,
+      phone,
+      role: "DOCTOR",
+      crm,
+      speciality,
+    };
 
-    checkUserErrors(enteredValues,errors)
+    checkUserErrors(enteredValues, errors);
     if (errors.length > 0) {
-      return { errors, enteredValues }
+      return { errors, enteredValues };
     }
 
     try {
-      await createUser(enteredValues)
-      
-      return { errors: null, enteredValues: null }
-    } catch (err: any) {
-      return { 
-        errors: ["Ocorreu um erro na hora de registrar"], 
-        enteredValues 
-      }
+      await createUser(enteredValues);
+
+      return { errors: null, enteredValues: null };
+    } catch {
+      return {
+        errors: ["Ocorreu um erro na hora de registrar"],
+        enteredValues,
+      };
     }
   }
 
-  const [formState, formAction,pending] = useActionState(handleSubmit, {
+  const [formState, formAction, pending] = useActionState(handleSubmit, {
     errors: null,
-    enteredValues: null
-  })
+    enteredValues: null,
+  });
 
   return (
-    <div className="mx-auto my-4">
-      <div className="border w-80 p-4 rounded">
-        <form action={formAction}>
-          <h1>Novo Médico</h1>
+    <RegisterPageShell
+      introTitle="Cadastre seu perfil medico"
+      introText="Fique visivel para clinicas e pacientes, com especialidade e CRM organizados dentro do MedSearch."
+    >
+      <form action={formAction}>
+        <FormTitle kicker="Medico" title="Novo medico" />
 
-          <label htmlFor="name">Nome</label>
-          <input type="text" className="border block mb-2 p-1 w-full" name="name" id="name" defaultValue={formState.enteredValues?.name} />
-
-          <label htmlFor="email">Email</label>
-          <input type="email" className="border block mb-2 p-1 w-full" name="email" id="email" defaultValue={formState.enteredValues?.email} />
-
-          <label htmlFor="phone">Telefone</label>
-          <input className="border block mb-2 p-1 w-full" name="phone" id="phone" defaultValue={formState.enteredValues?.phone} />
-
-          <label htmlFor="password">Senha</label>
-          <input type="password" className="border block mb-2 p-1 w-full" name="password" id="password" defaultValue={formState.enteredValues?.password}/>
-
-          <label htmlFor="confirm-password">Confirmar senha</label>
-          <input type="password" className="border block mb-2 p-1 w-full" name="confirm-password" id="confirm-password" defaultValue={formState.enteredValues?.confirmPassword} />
-
-          <label htmlFor="crm">CRM</label>
-          <input type="text" className="border block mb-2 p-1 w-full" name="crm" id="crm" defaultValue={formState.enteredValues?.crm} />
-
-          <label htmlFor="speciality">Especialidade</label>
-          <textarea className="border block mb-2 p-1 w-full" id="speciality" name="speciality" defaultValue={formState.enteredValues?.speciality} />
-
-          <input
-            className="border p-2 mt-4 w-full cursor-pointer hover:bg-black hover:text-white transition-colors"
-            type="submit"
-            value={pending ? "criando..." : "Registrar"}
+        <div className="mt-8 grid gap-5 sm:grid-cols-2">
+          <FormField
+            defaultValue={formState.enteredValues?.name}
+            id="name"
+            label="Nome"
+            name="name"
           />
-        </form>
-
-        {formState.errors && (
-          <div className="mt-4 p-2 bg-red-100 border border-red-400 rounded">
-            {formState.errors.map((error, index) => (
-              <p className="text-red-600 text-sm" key={index}>{error}</p>
-            ))}
+          <FormField
+            defaultValue={formState.enteredValues?.email}
+            id="email"
+            label="Email"
+            name="email"
+            type="email"
+          />
+          <FormField
+            defaultValue={formState.enteredValues?.phone}
+            id="phone"
+            label="Telefone"
+            name="phone"
+          />
+          <FormField
+            defaultValue={formState.enteredValues?.crm}
+            id="crm"
+            label="CRM"
+            name="crm"
+          />
+          <FormField
+            defaultValue={formState.enteredValues?.password}
+            id="password"
+            label="Senha"
+            name="password"
+            type="password"
+          />
+          <FormField
+            defaultValue={formState.enteredValues?.confirmPassword}
+            id="confirm-password"
+            label="Confirmar senha"
+            name="confirm-password"
+            type="password"
+          />
+          <div className="sm:col-span-2">
+            <FormTextarea
+              defaultValue={formState.enteredValues?.speciality}
+              id="speciality"
+              label="Especialidade"
+              name="speciality"
+            />
           </div>
-        )}
-      </div>
-    </div>
-  )
+        </div>
+
+        <button className="btn-primary mt-7 w-full" disabled={pending} type="submit">
+          {pending ? "Criando..." : "Registrar medico"}
+        </button>
+      </form>
+
+      <FormErrors errors={formState.errors} />
+    </RegisterPageShell>
+  );
 }

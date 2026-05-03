@@ -15,4 +15,14 @@ export class PrismaPatientRepository implements PatientRepository {
 
     return PatientMapper.toDomain(createdPatient as never);
   }
+
+  async findById(id: string): Promise<Patient | null> {
+    const patient = await prisma.patient.findUnique({
+      where: { id },
+    });
+    if (!patient) {
+      return null;
+    }
+    return PatientMapper.toDomain(patient as never);
+  }
 }

@@ -10,7 +10,31 @@ export class PrismaDoctorRepository implements DoctorRepository {
     const data = DoctorMapper.toPersistence(doctor);
 
     const createdDoctor = await prisma.doctor.create({
-      data,
+      data: {
+        id: data.id,
+        userId: data.userId,
+        name: data.name,
+        phone: data.phone,
+        crm: data.crm,
+        speciality: data.speciality,
+        clinicId: data.clinicId,
+        ...(data.settings
+          ? {
+              settings: {
+                create: {
+                  id: data.settings.id,
+                  minAppointmentTime: data.settings.minAppointmentTime,
+                  maxAppointmentTime: data.settings.maxAppointmentTime,
+                  defaultDuration: data.settings.defaultDuration,
+                  bufferBetween: data.settings.bufferBetween,
+                  advanceBookingHours: data.settings.advanceBookingHours,
+                  maxDailyAppointments: data.settings.maxDailyAppointments,
+                },
+              },
+            }
+          : {}),
+      },
+      include: { settings: true },
     });
 
     return DoctorMapper.toDomain(createdDoctor as never);
@@ -19,6 +43,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
   async findById(id: string): Promise<Doctor | null> {
     const doctor = await prisma.doctor.findUnique({
       where: { id },
+      include: { settings: true },
     });
 
     if (!doctor) {
@@ -31,8 +56,16 @@ export class PrismaDoctorRepository implements DoctorRepository {
   async findByClinicId(clinicId: string): Promise<Doctor[]> {
     const doctors = await prisma.doctor.findMany({
       where: { clinicId },
+      include: { settings: true },
     });
 
+    return doctors.map((doctor) => DoctorMapper.toDomain(doctor as never));
+  }
+
+  async findAll(): Promise<Doctor[]> {
+    const doctors = await prisma.doctor.findMany({
+      include: { settings: true },
+    });
     return doctors.map((doctor) => DoctorMapper.toDomain(doctor as never));
   }
 
@@ -44,6 +77,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
       data: {
         clinicId: data.clinicId,
       },
+      include: { settings: true },
     });
 
     return DoctorMapper.toDomain(updatedDoctor as never);

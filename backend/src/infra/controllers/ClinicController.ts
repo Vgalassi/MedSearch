@@ -9,6 +9,7 @@ import {
   clinicDoctorBodySchema,
   clinicDoctorParamsSchema,
 } from "../schemas/clinicDoctorSchema";
+import type { FindClinicByIdUseCase } from "../../app/usecases/FindClinicByIdUseCase";
 
 @injectable()
 export class ClinicController {
@@ -21,6 +22,8 @@ export class ClinicController {
     private readonly getClinicDoctorsUseCase: GetClinicDoctorsUseCase,
     @inject(TYPES.GetAllClinicsUseCase)
     private readonly getAllClinicsUseCase: GetAllClinicsUseCase,
+    @inject(TYPES.FindClinicByIdUseCase)
+    private readonly findClinicsByIdUseCase: FindClinicByIdUseCase
   ) {}
 
   async addDoctor(req: FastifyRequest, res: FastifyReply) {
@@ -89,5 +92,21 @@ export class ClinicController {
         description: clinic.props.description,
       })),
     });
+  }
+
+  async findClinicById(req: FastifyRequest, res: FastifyReply){
+    const params =  clinicDoctorParamsSchema.parse(req.params);
+    const clinic = await this.findClinicsByIdUseCase.execute(params.id);
+
+    return res.status(200).send({
+        id: clinic.id.value,
+        name: clinic.props.name,
+        phone: clinic.props.phone,
+        address: clinic.props.address,
+        cep: clinic.props.cep,
+        latitude: clinic.props.latitude,
+        longitude: clinic.props.longitude,
+        description: clinic.props.description,
+      })
   }
 }

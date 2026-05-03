@@ -16,6 +16,19 @@ import { AddDoctorToClinicUseCase } from "../../app/usecases/AddDoctorToClinicUs
 import { RemoveDoctorFromClinicUseCase } from "../../app/usecases/RemoveDoctorFromClinicUseCase";
 import { GetClinicDoctorsUseCase } from "../../app/usecases/GetClinicDoctorsUseCase";
 import { GetAllClinicsUseCase } from "../../app/usecases/GetAllClinicsUseCase";
+import { FindClinicByIdUseCase } from "../../app/usecases/FindClinicByIdUseCase";
+import { GetAllDoctorsUseCase } from "../../app/usecases/GetAllDoctorsUseCase";
+import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
+import { PrismaAppointmentRepository } from "../repositories/PrismaAppointmentRepository";
+import type { DoctorSettingsRepository } from "../../domain/repositories/DoctorSettingsRepository";
+import { PrismaDoctorSettingsRepository } from "../repositories/PrismaDoctorSettingsRepository";
+import type { AvailabilityRepository } from "../../domain/repositories/AvailabilityRepository";
+import { PrismaAvailabilityRepository } from "../repositories/PrismaAvailabilityRepository";
+import { CreateAppointmentUseCase } from "../../app/usecases/CreateAppointmentUseCase";
+import { CancelAppointmentUseCase } from "../../app/usecases/CancelAppointmentUseCase";
+import { ListPatientAppointmentsUseCase } from "../../app/usecases/ListPatientAppointmentsUseCase";
+import { ListDoctorAppointmentsUseCase } from "../../app/usecases/ListDoctorAppointmentsUseCase";
+import { ListDoctorAvailableSlotsUseCase } from "../../app/usecases/ListDoctorAvailableSlotsUseCase";
 
 const container = new Container();
 
@@ -28,6 +41,34 @@ container.bind<AddDoctorToClinicUseCase>(TYPES.AddDoctorToClinicUseCase).to(AddD
 container.bind<RemoveDoctorFromClinicUseCase>(TYPES.RemoveDoctorFromClinicUseCase).to(RemoveDoctorFromClinicUseCase)
 container.bind<GetClinicDoctorsUseCase>(TYPES.GetClinicDoctorsUseCase).to(GetClinicDoctorsUseCase)
 container.bind<GetAllClinicsUseCase>(TYPES.GetAllClinicsUseCase).to(GetAllClinicsUseCase)
+container.bind<FindClinicByIdUseCase>(TYPES.FindClinicByIdUseCase).to(FindClinicByIdUseCase)
+container.bind<GetAllDoctorsUseCase>(TYPES.GetAllDoctorsUseCase).to(GetAllDoctorsUseCase)
+container
+  .bind<AppointmentRepository>(TYPES.AppointmentRepository)
+  .to(PrismaAppointmentRepository);
+container
+  .bind<DoctorSettingsRepository>(TYPES.DoctorSettingsRepository)
+  .to(PrismaDoctorSettingsRepository);
+container
+  .bind<AvailabilityRepository>(TYPES.AvailabilityRepository)
+  .to(PrismaAvailabilityRepository);
+container
+  .bind<CreateAppointmentUseCase>(TYPES.CreateAppointmentUseCase)
+  .to(CreateAppointmentUseCase);
+container
+  .bind<CancelAppointmentUseCase>(TYPES.CancelAppointmentUseCase)
+  .to(CancelAppointmentUseCase);
+container
+  .bind<ListPatientAppointmentsUseCase>(TYPES.ListPatientAppointmentsUseCase)
+  .to(ListPatientAppointmentsUseCase);
+container
+  .bind<ListDoctorAppointmentsUseCase>(TYPES.ListDoctorAppointmentsUseCase)
+  .to(ListDoctorAppointmentsUseCase);
+container
+  .bind<ListDoctorAvailableSlotsUseCase>(
+    TYPES.ListDoctorAvailableSlotsUseCase,
+  )
+  .to(ListDoctorAvailableSlotsUseCase);
 container.bind<HashGenerator>(TYPES.HashGenerator).to(BcryptAdapter);
 
 export { container };

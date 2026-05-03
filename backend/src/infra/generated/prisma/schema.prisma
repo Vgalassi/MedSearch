@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  PATIENT
+  DOCTOR
+  CLINIC
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CANCELED
+  COMPLETED
+  NO_SHOW
+}
+
+model User {
+  id       String @id @db.Uuid
+  email    String @unique
+  password String
+  role     Role
+
+  patient Patient?
+  doctor  Doctor?
+  clinic  Clinic?
+
+  @@map("users")
+}
+
+model Patient {
+  id     String @id @db.Uuid
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name  String
+  phone String
+  cpf   String @unique
+
+  appointments Appointment[]
+
+  @@map("patients")
+}
+
+model Clinic {
+  id     String @id @db.Uuid
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name  String
+  phone String
+
+  address     String
+  cep         String
+  latitude    Float
+  longitude   Float
+  description String
+
+  doctors Doctor[]
+
+  @@map("clinics")
+}
+
+model Doctor {
+  id     String @id @db.Uuid
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name  String
+  phone String
+
+  crm        String @unique
+  speciality String
+
+  clinicId String? @db.Uuid
+  clinic   Clinic? @relation(fields: [clinicId], references: [id])
+
+  appointments Appointment[]
+  settings     DoctorSettings?
+  availability Availability[]
+
+  @@map("doctors")
+}
+
+model Appointment {
+  id String @id @db.Uuid
+
+  patientId String  @db.Uuid
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  doctorId String @db.Uuid
+  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  startTime DateTime
+  endTime   DateTime
+
+  status AppointmentStatus @default(SCHEDULED)
+
+  reason String?
+  notes  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([doctorId, startTime])
+  @@index([patientId, startTime])
+  @@map("appointments")
+}
+
+model DoctorSettings {
+  id String @id @db.Uuid
+
+  doctorId String @unique @db.Uuid
+  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  minAppointmentTime Int // em minutos (ex: 15)
+  maxAppointmentTime Int // ex: 120
+  defaultDuration    Int // ex: 30
+
+  bufferBetween Int // tempo entre consultas (ex: 10 min)
+
+  advanceBookingHours Int // antecedência mínima (ex: 24h)
+
+  maxDailyAppointments Int? // limite diário (opcional)
+
+  @@map("doctor_settings")
+}
+
+model Availability {
+  id String @id @db.Uuid
+
+  doctorId String @db.Uuid
+  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  weekday Int // 0 = domingo, 6 = sábado
+
+  startTime String // "08:00"
+  endTime   String // "18:00"
+
+  @@map("availability")
+}
