@@ -10,8 +10,7 @@ export default function LoginPage() {
             Entre para acompanhar consultas, medicos e clinicas.
           </h1>
           <p className="mt-5 leading-7 text-teal-50/80">
-            A funcionalidade de login ainda sera conectada, mas a experiencia ja
-            esta preparada para pacientes, medicos e clinicas.
+            
           </p>
         </section>
 

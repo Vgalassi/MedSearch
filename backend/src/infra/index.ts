@@ -30,6 +30,7 @@ await app.register(cors, {
 })
 
 app.setErrorHandler((error, request, reply) => {
+  console.log(error)
   if (
     error instanceof NotfoundError ||
     error instanceof DoctorAlreadyOnClinic ||
@@ -55,7 +56,7 @@ app.setErrorHandler((error, request, reply) => {
   }
 
   console.error(error)
-  reply.status(500).send({ message: 'Internal server error' })
+  reply.status(500).send({ message: "Erro no servidor" })
 })
 
 

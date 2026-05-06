@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Doctor } from "@/components/types/Doctor";
 import { ClinicDoctorSection } from "@/components/ClinicDoctorSection";
 
-const CLINIC_ID = "36851874-6cc1-4118-82db-c2c4ad2f2d6f";
+const CLINIC_ID = "26df81a4-f818-4043-ac31-5dc44a615c79";
 
 export default function ClinicHomePage() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -110,14 +110,14 @@ export default function ClinicHomePage() {
             <div>
               <h1 className="text-3xl font-bold">Gerencie seu corpo medico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Adicione medicos disponiveis a clinica ou remova profissionais
+                Adicione médicos disponiíveis a clínica ou remova profissionais
                 que nao fazem mais parte da equipe.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 text-center">
               <span className="rounded-md bg-white/10 px-4 py-3">
                 <strong className="block text-2xl">{myDoctors.length}</strong>
-                <span className="text-sm text-teal-50/80">na clinica</span>
+                <span className="text-sm text-teal-50/80">na clínica</span>
               </span>
               <span className="rounded-md bg-white/10 px-4 py-3">
                 <strong className="block text-2xl">{availableDoctors.length}</strong>
@@ -129,7 +129,7 @@ export default function ClinicHomePage() {
 
         {isFetching && (
           <p className="mt-8 rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-teal-800">
-            Carregando medicos...
+            Carregando médicos...
           </p>
         )}
 

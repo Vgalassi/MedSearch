@@ -42,16 +42,15 @@ export default function PatientRegisterPage() {
       return { errors, enteredValues };
     }
 
-    try {
-      await createUser(enteredValues);
+    const response =  await createUser(enteredValues);
 
-      return { errors: null, enteredValues: null };
-    } catch {
+    if( response.status == false){
       return {
-        errors: ["Ocorreu um erro na hora de registrar"],
+        errors: [response.message],
         enteredValues,
       };
     }
+    return { errors: null, enteredValues: null };
   }
 
   const [formState, formAction, pending] = useActionState(handleSubmit, {

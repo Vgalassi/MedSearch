@@ -53,31 +53,24 @@ export default function ClinicDetails() {
               <p className="section-kicker text-teal-200">Detalhes da clinica</p>
               <h1 className="mt-4 text-4xl font-bold">{clinic.name}</h1>
               <p className="mt-5 max-w-3xl leading-8 text-teal-50/85">
-                {clinic.description ||
-                  "Clinica cadastrada na rede MedSearch para atendimento e agendamento online."}
+                {clinic.description}
               </p>
             </div>
 
             <aside className="surface p-6">
-              <h2 className="text-xl font-bold text-slate-950">Informacoes</h2>
+              <h2 className="text-xl font-bold text-slate-950">Informações</h2>
               <dl className="mt-5 space-y-4 text-sm">
                 <div>
                   <dt className="font-semibold text-slate-500">Telefone</dt>
                   <dd className="mt-1 text-slate-900">{clinic.phone}</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-slate-500">Endereco</dt>
+                  <dt className="font-semibold text-slate-500">Endereço</dt>
                   <dd className="mt-1 text-slate-900">{clinic.address}</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-slate-500">CEP</dt>
                   <dd className="mt-1 text-slate-900">{clinic.cep}</dd>
-                </div>
-                <div>
-                  <dt className="font-semibold text-slate-500">Coordenadas</dt>
-                  <dd className="mt-1 text-slate-900">
-                    {clinic.latitude}, {clinic.longitude}
-                  </dd>
                 </div>
               </dl>
             </aside>
@@ -87,13 +80,13 @@ export default function ClinicDetails() {
         <section className="mt-8">
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div>
-              <p className="section-kicker">Corpo medico</p>
+              <p className="section-kicker">Corpo médico</p>
               <h2 className="mt-2 text-2xl font-bold text-slate-950">
-                Medicos desta clinica
+                Médicos desta clínica
               </h2>
             </div>
             <span className="rounded-md bg-teal-50 px-4 py-2 text-sm font-semibold text-teal-700">
-              {doctors.length} medicos
+              {doctors.length} médicos
             </span>
           </div>
 

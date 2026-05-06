@@ -7,7 +7,6 @@ import { MedicCreateFormData } from "@/components/types/UserFormData";
 import { RegisterPageShell } from "@/components/ui/RegisterPageShell";
 import { FormErrors } from "@/components/ui/FormErrors";
 import { FormField } from "@/components/ui/FormField";
-import { FormTextarea } from "@/components/ui/FormTextarea";
 import { FormTitle } from "@/components/ui/FormTitle";
 
 type FormState = {
@@ -29,6 +28,7 @@ export default function MedicRegisterPage() {
     const crm = formData.get("crm") as string;
     const speciality = formData.get("speciality") as string;
 
+
     const enteredValues: MedicCreateFormData = {
       name,
       email,
@@ -45,16 +45,15 @@ export default function MedicRegisterPage() {
       return { errors, enteredValues };
     }
 
-    try {
-      await createUser(enteredValues);
+    const response =  await createUser(enteredValues);
 
-      return { errors: null, enteredValues: null };
-    } catch {
+    if( response.status == false){
       return {
-        errors: ["Ocorreu um erro na hora de registrar"],
+        errors: [response.message],
         enteredValues,
       };
     }
+    return { errors: null, enteredValues: null };
   }
 
   const [formState, formAction, pending] = useActionState(handleSubmit, {
@@ -111,12 +110,26 @@ export default function MedicRegisterPage() {
             type="password"
           />
           <div className="sm:col-span-2">
-            <FormTextarea
-              defaultValue={formState.enteredValues?.speciality}
-              id="speciality"
-              label="Especialidade"
-              name="speciality"
-            />
+              <label htmlFor="speciality" className="block text-sm font-medium">
+                Especialidade
+              </label>
+
+              <select
+                id="speciality"
+                name="speciality"
+                defaultValue={formState.enteredValues?.speciality || ""}
+                className="mt-1 block w-full rounded-md border px-3 py-2"
+              >
+                <option value="">Selecione uma especialidade</option>
+                <option value="CARDIOLOGIA">Cardiologia</option>
+                <option value="DERMATOLOGIA">Dermatologia</option>
+                <option value="PEDIATRIA">Pediatria</option>
+                <option value="ORTOPEDIA">Ortopedia</option>
+                <option value="NEUROLOGIA">Neurologia</option>
+                <option value="GINECOLOGIA">Ginecologia</option>
+                <option value="PSIQUIATRIA">Psiquiatria</option>
+                <option value="CLINICO_GERAL">Clínico Geral</option>
+              </select>
           </div>
         </div>
 

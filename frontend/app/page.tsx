@@ -14,7 +14,7 @@ export default function Home() {
             <p className="mt-6 max-w-xl text-base leading-8 text-teal-50/85 sm:text-lg">
               Uma plataforma para pacientes encontrarem clinicas, conhecerem
               medicos disponiveis e acompanharem o agendamento online. Para
-              clinicas, o MedSearch organiza o corpo medico e simplifica a
+              clinicas, o MedSearch organiza suas consultas e simplifica a
               rotina de atendimento.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
