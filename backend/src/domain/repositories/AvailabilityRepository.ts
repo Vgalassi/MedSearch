@@ -1,11 +1,6 @@
-export type AvailabilityRecord = {
-  id: string;
-  doctorId: string;
-  weekday: number;
-  startTime: string;
-  endTime: string;
-};
+import type { Availability } from "../entities/Availability";
+
 
 export interface AvailabilityRepository {
-  findByDoctorId(doctorId: string): Promise<AvailabilityRecord[]>;
+  findByDoctorId(doctorId: string): Promise<Availability | null>;
 }

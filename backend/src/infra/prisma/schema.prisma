@@ -140,8 +140,8 @@ model Availability {
 
   weekday   Int    // 0 = domingo, 6 = sábado
 
-  startTime String // "08:00"
-  endTime   String // "18:00"
+  startTime Int // "08:00"
+  endTime   Int // "18:00"
 
   @@map("availability")
 }
