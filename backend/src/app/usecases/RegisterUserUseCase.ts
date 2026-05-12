@@ -13,6 +13,9 @@ import { User as UserAggregate } from "../../domain/Aggregates/User";
 import { Doctor } from "../../domain/Aggregates/Doctor";
 import { Patient } from "../../domain/Aggregates/Patient";
 import { Clinic } from "../../domain/Aggregates/Clinic";
+import { Email } from "../../domain/value-objects/Email";
+import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
+import { CPF } from "../../domain/value-objects/Cpf";
 
 @injectable()
 export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User>>{
@@ -25,7 +28,10 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
     ){}
 
     async execute(input: RegisterUserDto): Promise<User> {
-        const userAlreadyExists = await this.userRepository.findByEmail(input.email);
+        const email = new Email(input.email);
+        const phone = new PhoneNumber(input.phone);
+
+        const userAlreadyExists = await this.userRepository.findByEmail(email);
         if (userAlreadyExists) {
             throw new Error("User already exists");
         }
@@ -33,7 +39,7 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
         const passwordHash = await this.hashGenerator.hash(input.password);
         const user = new UserAggregate(
             {
-                email: input.email,
+                email,
                 password: passwordHash,
                 role: input.role,
             },
@@ -51,7 +57,7 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
                 {
                     userId: createdUser.id,
                     name: input.name,
-                    phone: input.phone,
+                    phone,
                     crm: input.crm,
                     speciality: input.speciality,
                     ...(input.clinicId ? { clinicId: new Identifier(input.clinicId) } : {}),
@@ -72,8 +78,8 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
                 {
                     userId: createdUser.id,
                     name: input.name,
-                    phone: input.phone,
-                    cpf: input.cpf,
+                    phone,
+                    cpf: new CPF(input.cpf),
                 },
                 new Identifier(),
             );
@@ -90,7 +96,7 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
             {
                 userId: createdUser.id,
                 name: input.name,
-                phone: input.phone,
+                phone,
                 address: input.address,
                 cep: input.cep,
                 latitude: input.latitude,

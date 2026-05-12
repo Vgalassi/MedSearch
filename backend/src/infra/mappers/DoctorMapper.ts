@@ -1,6 +1,7 @@
 import { Doctor } from "../../domain/Aggregates/Doctor";
 import { DoctorSchedulingSettings } from "../../domain/entities/DoctorSchedulingSettings";
 import { Identifier } from "../../domain/value-objects/Identifier";
+import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 
 type PrismaDoctorSettings = {
   id: string;
@@ -32,7 +33,7 @@ export class DoctorMapper {
       {
         userId: new Identifier(raw.userId),
         name: raw.name,
-        phone: raw.phone,
+        phone: new PhoneNumber(raw.phone),
         crm: raw.crm,
         speciality: raw.speciality,
         clinicId: raw.clinicId ? new Identifier(raw.clinicId) : null,
@@ -62,7 +63,7 @@ export class DoctorMapper {
       id: doctor.id.value,
       userId: doctor.props.userId.value,
       name: doctor.props.name,
-      phone: doctor.props.phone,
+      phone: doctor.props.phone.value,
       crm: doctor.props.crm,
       speciality: doctor.props.speciality,
       clinicId: doctor.props.clinicId?.value ?? null,

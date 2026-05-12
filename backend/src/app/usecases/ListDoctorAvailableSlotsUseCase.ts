@@ -10,6 +10,7 @@ import type { DoctorRepository } from "../../domain/repositories/DoctorRepositor
 import {
   assertAdvanceBooking,
   assertNotInPast,
+  availabilityWindowsForWeekday,
   conflictsWithBuffer,
   slotGridStepMinutes,
   utcDayBounds,
@@ -67,7 +68,7 @@ export class ListDoctorAvailableSlotsUseCase {
     const d = parts[2]!;
     const anchor = new Date(Date.UTC(y, m - 1, d, 12, 0, 0, 0));
     const weekday = anchor.getUTCDay();
-    const windows = availability.filter((a) => a.weekday === weekday);
+    const windows = availabilityWindowsForWeekday(availability, weekday);
     if (windows.length === 0) {
       return [];
     }

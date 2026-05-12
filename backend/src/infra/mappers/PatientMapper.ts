@@ -1,5 +1,7 @@
 import { Patient } from "../../domain/Aggregates/Patient";
+import { CPF } from "../../domain/value-objects/Cpf";
 import { Identifier } from "../../domain/value-objects/Identifier";
+import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 
 type PrismaPatient = {
   id: string;
@@ -15,8 +17,8 @@ export class PatientMapper {
       {
         userId: new Identifier(raw.userId),
         name: raw.name,
-        phone: raw.phone,
-        cpf: raw.cpf,
+        phone: new PhoneNumber(raw.phone),
+        cpf: new CPF(raw.cpf),
       },
       new Identifier(raw.id),
     );
@@ -27,8 +29,8 @@ export class PatientMapper {
       id: patient.id.value,
       userId: patient.props.userId.value,
       name: patient.props.name,
-      phone: patient.props.phone,
-      cpf: patient.props.cpf,
+      phone: patient.props.phone.value,
+      cpf: patient.props.cpf.cpf,
     };
   }
 }

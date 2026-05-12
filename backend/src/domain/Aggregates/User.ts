@@ -1,8 +1,9 @@
 import { AgregateRoot } from "../value-objects/AgregateRoot";
+import type { Email } from "../value-objects/Email";
 import type { Identifier } from "../value-objects/Identifier";
 
 type UserProps = {
-    email: string,
+    email: Email,
     password: string,
     role: "DOCTOR" | "PATIENT" | "CLINIC"
 }

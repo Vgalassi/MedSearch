@@ -18,7 +18,7 @@ export class DoctorController {
         id: doctor.id.value,
         userId: doctor.props.userId.value,
         name: doctor.props.name,
-        phone: doctor.props.phone,
+        phone: doctor.props.phone.value,
         crm: doctor.props.crm,
         speciality: doctor.props.speciality,
         clinicId: doctor.props.clinicId?.value ?? null,

@@ -1,11 +1,12 @@
 import { AgregateRoot } from "../value-objects/AgregateRoot";
 import { DoctorSchedulingSettings } from "../entities/DoctorSchedulingSettings";
 import type { Identifier } from "../value-objects/Identifier";
+import type { PhoneNumber } from "../value-objects/PhoneNumber";
 
 export type DoctorProps = {
   userId: Identifier;
   name: string;
-  phone: string;
+  phone: PhoneNumber;
   crm: string;
   speciality: string;
   clinicId?: Identifier | null;
