@@ -2,6 +2,7 @@ import { AgregateRoot } from "../value-objects/AgregateRoot";
 import { DoctorSchedulingSettings } from "../entities/DoctorSchedulingSettings";
 import type { Identifier } from "../value-objects/Identifier";
 import type { PhoneNumber } from "../value-objects/PhoneNumber";
+import { Availability } from "../entities/Availability";
 
 export type DoctorProps = {
   userId: Identifier;
@@ -10,20 +11,15 @@ export type DoctorProps = {
   crm: string;
   speciality: string;
   clinicId?: Identifier | null;
-  schedulingSettings?: DoctorSchedulingSettings | null;
+  schedulingSettings: DoctorSchedulingSettings | null;
+  Availabilities: Availability[] | null
 };
 
 export class Doctor extends AgregateRoot<DoctorProps> {
-  static create(
-    props: Omit<DoctorProps, "schedulingSettings"> & {
-      schedulingSettings?: DoctorSchedulingSettings | null;
-    },
-    id?: Identifier,
-  ): Doctor {
+  static create(props: DoctorProps ,id?: Identifier): Doctor {
     const doctor = new Doctor(
       {
         ...props,
-        schedulingSettings: props.schedulingSettings ?? null,
       },
       id,
     );
@@ -31,6 +27,10 @@ export class Doctor extends AgregateRoot<DoctorProps> {
     if (!doctor.props.schedulingSettings) {
       doctor.props.schedulingSettings =
         DoctorSchedulingSettings.createDefault(doctor.id);
+    }
+
+    if(!doctor.props.Availabilities){
+      doctor.props.Availabilities = [Availability.createDefault(doctor.id)]
     }
 
     return doctor;

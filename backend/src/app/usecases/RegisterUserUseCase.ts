@@ -57,10 +57,12 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
                 {
                     userId: createdUser.id,
                     name: input.name,
-                    phone,
+                    phone: new PhoneNumber(input.phone),
                     crm: input.crm,
                     speciality: input.speciality,
                     ...(input.clinicId ? { clinicId: new Identifier(input.clinicId) } : {}),
+                    Availabilities: null,
+                    schedulingSettings: null
                 },
                 new Identifier(),
             );

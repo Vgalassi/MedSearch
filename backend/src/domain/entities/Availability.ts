@@ -7,7 +7,6 @@ import { WeekDay } from "../value-objects/WeekDay";
 
 export type AvailabilityProps = {
     doctorId: Identifier,
-    isAvailable: boolean,
     weekDayRange: WeekDayRange,
     startTime: Time,
     endTime: Time
@@ -18,7 +17,6 @@ export class Availability extends Entity<AvailabilityProps>{
         return new Availability(
             {
                 doctorId,
-                isAvailable: true,
                 weekDayRange: new WeekDayRange([
                     new WeekDay("MONDAY"),
                     new WeekDay("TUESDAY"),

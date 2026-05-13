@@ -1,12 +1,13 @@
 export class Time {
   private readonly _hour: number;
   private readonly _minute: number;
+  private readonly _value: number
 
   constructor(hour: number, minute: number) {
     this.validate(hour, minute);
-
     this._hour = hour;
     this._minute = minute;
+    this._value = this.hour * 3600 + this.minute * 60
   }
 
   private validate(hour: number, minute: number): void {
@@ -19,13 +20,20 @@ export class Time {
     }
   }
 
+  public static createWithSeconds(seconds: number){
+     const hours = Math.floor(seconds/ 3600);
+     const minutes = Math.floor((seconds% 3600) / 60);
+     return new Time(hours,minutes)
+  }
+  
+
   public isBehind(comparedTime: Time): boolean{
     const seconds = this.hour * 3600 + this.minute * 60
     const comparedSeconds = comparedTime.hour * 3600 + comparedTime.minute * 60
     if(comparedSeconds < seconds){
-        return true
+        return false
     }
-    return false 
+    return true
   }
 
   public get hour(): number {
@@ -34,6 +42,10 @@ export class Time {
 
   public get minute(): number {
     return this._minute;
+  }
+
+  public get value(): number {
+    return this._value;
   }
 
   public toString(): string {

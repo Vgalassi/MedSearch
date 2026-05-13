@@ -20,6 +20,16 @@ enum AppointmentStatus {
   NO_SHOW
 }
 
+enum WeekDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
 model User {
   id       String @id @db.Uuid
   email    String @unique
@@ -80,9 +90,9 @@ model Doctor {
   clinicId String? @db.Uuid
   clinic   Clinic? @relation(fields: [clinicId], references: [id])
 
-  appointments Appointment[]
-  settings     DoctorSettings?
-  availability Availability[]
+  appointments   Appointment[]
+  settings       DoctorSettings?
+  availabilities Availability[]
 
   @@map("doctors")
 }
@@ -115,18 +125,18 @@ model Appointment {
 model DoctorSettings {
   id String @id @db.Uuid
 
-  doctorId String @unique @db.Uuid
-  doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  doctorId           String  @unique @db.Uuid
+  doctor             Doctor  @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  isAvaliable        Boolean
+  minAppointmentTime Int
+  maxAppointmentTime Int
+  defaultDuration    Int
 
-  minAppointmentTime Int // em minutos (ex: 15)
-  maxAppointmentTime Int // ex: 120
-  defaultDuration    Int // ex: 30
+  bufferBetween Int
 
-  bufferBetween Int // tempo entre consultas (ex: 10 min)
+  advanceBookingHours Int
 
-  advanceBookingHours Int // antecedência mínima (ex: 24h)
-
-  maxDailyAppointments Int? // limite diário (opcional)
+  maxDailyAppointments Int?
 
   @@map("doctor_settings")
 }
@@ -137,10 +147,13 @@ model Availability {
   doctorId String @db.Uuid
   doctor   Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 
-  weekday Int // 0 = domingo, 6 = sábado
+  weekdays WeekDay[]
 
-  startTime String // "08:00"
-  endTime   String // "18:00"
+  startMinutes Int
+  endMinutes   Int
 
-  @@map("availability")
+  createdAt DateTime @default(now())
+
+  @@index([doctorId])
+  @@map("availabilities")
 }

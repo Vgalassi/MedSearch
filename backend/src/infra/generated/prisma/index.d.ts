@@ -71,6 +71,19 @@ export const AppointmentStatus: {
 
 export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]
 
+
+export const WeekDay: {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY'
+};
+
+export type WeekDay = (typeof WeekDay)[keyof typeof WeekDay]
+
 }
 
 export type Role = $Enums.Role
@@ -80,6 +93,10 @@ export const Role: typeof $Enums.Role
 export type AppointmentStatus = $Enums.AppointmentStatus
 
 export const AppointmentStatus: typeof $Enums.AppointmentStatus
+
+export type WeekDay = $Enums.WeekDay
+
+export const WeekDay: typeof $Enums.WeekDay
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1507,12 +1524,12 @@ export namespace Prisma {
 
   export type DoctorCountOutputType = {
     appointments: number
-    availability: number
+    availabilities: number
   }
 
   export type DoctorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     appointments?: boolean | DoctorCountOutputTypeCountAppointmentsArgs
-    availability?: boolean | DoctorCountOutputTypeCountAvailabilityArgs
+    availabilities?: boolean | DoctorCountOutputTypeCountAvailabilitiesArgs
   }
 
   // Custom InputTypes
@@ -1536,7 +1553,7 @@ export namespace Prisma {
   /**
    * DoctorCountOutputType without action
    */
-  export type DoctorCountOutputTypeCountAvailabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DoctorCountOutputTypeCountAvailabilitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AvailabilityWhereInput
   }
 
@@ -5106,7 +5123,7 @@ export namespace Prisma {
     clinic?: boolean | Doctor$clinicArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
     settings?: boolean | Doctor$settingsArgs<ExtArgs>
-    availability?: boolean | Doctor$availabilityArgs<ExtArgs>
+    availabilities?: boolean | Doctor$availabilitiesArgs<ExtArgs>
     _count?: boolean | DoctorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctor"]>
 
@@ -5150,7 +5167,7 @@ export namespace Prisma {
     clinic?: boolean | Doctor$clinicArgs<ExtArgs>
     appointments?: boolean | Doctor$appointmentsArgs<ExtArgs>
     settings?: boolean | Doctor$settingsArgs<ExtArgs>
-    availability?: boolean | Doctor$availabilityArgs<ExtArgs>
+    availabilities?: boolean | Doctor$availabilitiesArgs<ExtArgs>
     _count?: boolean | DoctorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DoctorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5169,7 +5186,7 @@ export namespace Prisma {
       clinic: Prisma.$ClinicPayload<ExtArgs> | null
       appointments: Prisma.$AppointmentPayload<ExtArgs>[]
       settings: Prisma.$DoctorSettingsPayload<ExtArgs> | null
-      availability: Prisma.$AvailabilityPayload<ExtArgs>[]
+      availabilities: Prisma.$AvailabilityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5577,7 +5594,7 @@ export namespace Prisma {
     clinic<T extends Doctor$clinicArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$clinicArgs<ExtArgs>>): Prisma__ClinicClient<$Result.GetResult<Prisma.$ClinicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     appointments<T extends Doctor$appointmentsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     settings<T extends Doctor$settingsArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$settingsArgs<ExtArgs>>): Prisma__DoctorSettingsClient<$Result.GetResult<Prisma.$DoctorSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    availability<T extends Doctor$availabilityArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    availabilities<T extends Doctor$availabilitiesArgs<ExtArgs> = {}>(args?: Subset<T, Doctor$availabilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6077,9 +6094,9 @@ export namespace Prisma {
   }
 
   /**
-   * Doctor.availability
+   * Doctor.availabilities
    */
-  export type Doctor$availabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Doctor$availabilitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Availability
      */
@@ -7288,6 +7305,7 @@ export namespace Prisma {
   export type DoctorSettingsMinAggregateOutputType = {
     id: string | null
     doctorId: string | null
+    isAvaliable: boolean | null
     minAppointmentTime: number | null
     maxAppointmentTime: number | null
     defaultDuration: number | null
@@ -7299,6 +7317,7 @@ export namespace Prisma {
   export type DoctorSettingsMaxAggregateOutputType = {
     id: string | null
     doctorId: string | null
+    isAvaliable: boolean | null
     minAppointmentTime: number | null
     maxAppointmentTime: number | null
     defaultDuration: number | null
@@ -7310,6 +7329,7 @@ export namespace Prisma {
   export type DoctorSettingsCountAggregateOutputType = {
     id: number
     doctorId: number
+    isAvaliable: number
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -7341,6 +7361,7 @@ export namespace Prisma {
   export type DoctorSettingsMinAggregateInputType = {
     id?: true
     doctorId?: true
+    isAvaliable?: true
     minAppointmentTime?: true
     maxAppointmentTime?: true
     defaultDuration?: true
@@ -7352,6 +7373,7 @@ export namespace Prisma {
   export type DoctorSettingsMaxAggregateInputType = {
     id?: true
     doctorId?: true
+    isAvaliable?: true
     minAppointmentTime?: true
     maxAppointmentTime?: true
     defaultDuration?: true
@@ -7363,6 +7385,7 @@ export namespace Prisma {
   export type DoctorSettingsCountAggregateInputType = {
     id?: true
     doctorId?: true
+    isAvaliable?: true
     minAppointmentTime?: true
     maxAppointmentTime?: true
     defaultDuration?: true
@@ -7461,6 +7484,7 @@ export namespace Prisma {
   export type DoctorSettingsGroupByOutputType = {
     id: string
     doctorId: string
+    isAvaliable: boolean
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -7491,6 +7515,7 @@ export namespace Prisma {
   export type DoctorSettingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     doctorId?: boolean
+    isAvaliable?: boolean
     minAppointmentTime?: boolean
     maxAppointmentTime?: boolean
     defaultDuration?: boolean
@@ -7503,6 +7528,7 @@ export namespace Prisma {
   export type DoctorSettingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     doctorId?: boolean
+    isAvaliable?: boolean
     minAppointmentTime?: boolean
     maxAppointmentTime?: boolean
     defaultDuration?: boolean
@@ -7515,6 +7541,7 @@ export namespace Prisma {
   export type DoctorSettingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     doctorId?: boolean
+    isAvaliable?: boolean
     minAppointmentTime?: boolean
     maxAppointmentTime?: boolean
     defaultDuration?: boolean
@@ -7527,6 +7554,7 @@ export namespace Prisma {
   export type DoctorSettingsSelectScalar = {
     id?: boolean
     doctorId?: boolean
+    isAvaliable?: boolean
     minAppointmentTime?: boolean
     maxAppointmentTime?: boolean
     defaultDuration?: boolean
@@ -7535,7 +7563,7 @@ export namespace Prisma {
     maxDailyAppointments?: boolean
   }
 
-  export type DoctorSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "minAppointmentTime" | "maxAppointmentTime" | "defaultDuration" | "bufferBetween" | "advanceBookingHours" | "maxDailyAppointments", ExtArgs["result"]["doctorSettings"]>
+  export type DoctorSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "isAvaliable" | "minAppointmentTime" | "maxAppointmentTime" | "defaultDuration" | "bufferBetween" | "advanceBookingHours" | "maxDailyAppointments", ExtArgs["result"]["doctorSettings"]>
   export type DoctorSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }
@@ -7554,6 +7582,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       doctorId: string
+      isAvaliable: boolean
       minAppointmentTime: number
       maxAppointmentTime: number
       defaultDuration: number
@@ -7986,6 +8015,7 @@ export namespace Prisma {
   interface DoctorSettingsFieldRefs {
     readonly id: FieldRef<"DoctorSettings", 'String'>
     readonly doctorId: FieldRef<"DoctorSettings", 'String'>
+    readonly isAvaliable: FieldRef<"DoctorSettings", 'Boolean'>
     readonly minAppointmentTime: FieldRef<"DoctorSettings", 'Int'>
     readonly maxAppointmentTime: FieldRef<"DoctorSettings", 'Int'>
     readonly defaultDuration: FieldRef<"DoctorSettings", 'Int'>
@@ -8424,69 +8454,75 @@ export namespace Prisma {
   }
 
   export type AvailabilityAvgAggregateOutputType = {
-    weekday: number | null
+    startMinutes: number | null
+    endMinutes: number | null
   }
 
   export type AvailabilitySumAggregateOutputType = {
-    weekday: number | null
+    startMinutes: number | null
+    endMinutes: number | null
   }
 
   export type AvailabilityMinAggregateOutputType = {
     id: string | null
     doctorId: string | null
-    weekday: number | null
-    startTime: string | null
-    endTime: string | null
+    startMinutes: number | null
+    endMinutes: number | null
+    createdAt: Date | null
   }
 
   export type AvailabilityMaxAggregateOutputType = {
     id: string | null
     doctorId: string | null
-    weekday: number | null
-    startTime: string | null
-    endTime: string | null
+    startMinutes: number | null
+    endMinutes: number | null
+    createdAt: Date | null
   }
 
   export type AvailabilityCountAggregateOutputType = {
     id: number
     doctorId: number
-    weekday: number
-    startTime: number
-    endTime: number
+    weekdays: number
+    startMinutes: number
+    endMinutes: number
+    createdAt: number
     _all: number
   }
 
 
   export type AvailabilityAvgAggregateInputType = {
-    weekday?: true
+    startMinutes?: true
+    endMinutes?: true
   }
 
   export type AvailabilitySumAggregateInputType = {
-    weekday?: true
+    startMinutes?: true
+    endMinutes?: true
   }
 
   export type AvailabilityMinAggregateInputType = {
     id?: true
     doctorId?: true
-    weekday?: true
-    startTime?: true
-    endTime?: true
+    startMinutes?: true
+    endMinutes?: true
+    createdAt?: true
   }
 
   export type AvailabilityMaxAggregateInputType = {
     id?: true
     doctorId?: true
-    weekday?: true
-    startTime?: true
-    endTime?: true
+    startMinutes?: true
+    endMinutes?: true
+    createdAt?: true
   }
 
   export type AvailabilityCountAggregateInputType = {
     id?: true
     doctorId?: true
-    weekday?: true
-    startTime?: true
-    endTime?: true
+    weekdays?: true
+    startMinutes?: true
+    endMinutes?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -8579,9 +8615,10 @@ export namespace Prisma {
   export type AvailabilityGroupByOutputType = {
     id: string
     doctorId: string
-    weekday: number
-    startTime: string
-    endTime: string
+    weekdays: $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt: Date
     _count: AvailabilityCountAggregateOutputType | null
     _avg: AvailabilityAvgAggregateOutputType | null
     _sum: AvailabilitySumAggregateOutputType | null
@@ -8606,39 +8643,43 @@ export namespace Prisma {
   export type AvailabilitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     doctorId?: boolean
-    weekday?: boolean
-    startTime?: boolean
-    endTime?: boolean
+    weekdays?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    createdAt?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["availability"]>
 
   export type AvailabilitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     doctorId?: boolean
-    weekday?: boolean
-    startTime?: boolean
-    endTime?: boolean
+    weekdays?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    createdAt?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["availability"]>
 
   export type AvailabilitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     doctorId?: boolean
-    weekday?: boolean
-    startTime?: boolean
-    endTime?: boolean
+    weekdays?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    createdAt?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["availability"]>
 
   export type AvailabilitySelectScalar = {
     id?: boolean
     doctorId?: boolean
-    weekday?: boolean
-    startTime?: boolean
-    endTime?: boolean
+    weekdays?: boolean
+    startMinutes?: boolean
+    endMinutes?: boolean
+    createdAt?: boolean
   }
 
-  export type AvailabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "weekday" | "startTime" | "endTime", ExtArgs["result"]["availability"]>
+  export type AvailabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "weekdays" | "startMinutes" | "endMinutes" | "createdAt", ExtArgs["result"]["availability"]>
   export type AvailabilityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }
@@ -8657,9 +8698,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       doctorId: string
-      weekday: number
-      startTime: string
-      endTime: string
+      weekdays: $Enums.WeekDay[]
+      startMinutes: number
+      endMinutes: number
+      createdAt: Date
     }, ExtArgs["result"]["availability"]>
     composites: {}
   }
@@ -9086,9 +9128,10 @@ export namespace Prisma {
   interface AvailabilityFieldRefs {
     readonly id: FieldRef<"Availability", 'String'>
     readonly doctorId: FieldRef<"Availability", 'String'>
-    readonly weekday: FieldRef<"Availability", 'Int'>
-    readonly startTime: FieldRef<"Availability", 'String'>
-    readonly endTime: FieldRef<"Availability", 'String'>
+    readonly weekdays: FieldRef<"Availability", 'WeekDay[]'>
+    readonly startMinutes: FieldRef<"Availability", 'Int'>
+    readonly endMinutes: FieldRef<"Availability", 'Int'>
+    readonly createdAt: FieldRef<"Availability", 'DateTime'>
   }
     
 
@@ -9590,6 +9633,7 @@ export namespace Prisma {
   export const DoctorSettingsScalarFieldEnum: {
     id: 'id',
     doctorId: 'doctorId',
+    isAvaliable: 'isAvaliable',
     minAppointmentTime: 'minAppointmentTime',
     maxAppointmentTime: 'maxAppointmentTime',
     defaultDuration: 'defaultDuration',
@@ -9604,9 +9648,10 @@ export namespace Prisma {
   export const AvailabilityScalarFieldEnum: {
     id: 'id',
     doctorId: 'doctorId',
-    weekday: 'weekday',
-    startTime: 'startTime',
-    endTime: 'endTime'
+    weekdays: 'weekdays',
+    startMinutes: 'startMinutes',
+    endMinutes: 'endMinutes',
+    createdAt: 'createdAt'
   };
 
   export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[keyof typeof AvailabilityScalarFieldEnum]
@@ -9712,6 +9757,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -9722,6 +9774,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WeekDay[]'
+   */
+  export type ListEnumWeekDayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WeekDay[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WeekDay'
+   */
+  export type EnumWeekDayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WeekDay'>
     
   /**
    * Deep Input Types
@@ -9937,7 +10003,7 @@ export namespace Prisma {
     clinic?: XOR<ClinicNullableScalarRelationFilter, ClinicWhereInput> | null
     appointments?: AppointmentListRelationFilter
     settings?: XOR<DoctorSettingsNullableScalarRelationFilter, DoctorSettingsWhereInput> | null
-    availability?: AvailabilityListRelationFilter
+    availabilities?: AvailabilityListRelationFilter
   }
 
   export type DoctorOrderByWithRelationInput = {
@@ -9952,7 +10018,7 @@ export namespace Prisma {
     clinic?: ClinicOrderByWithRelationInput
     appointments?: AppointmentOrderByRelationAggregateInput
     settings?: DoctorSettingsOrderByWithRelationInput
-    availability?: AvailabilityOrderByRelationAggregateInput
+    availabilities?: AvailabilityOrderByRelationAggregateInput
   }
 
   export type DoctorWhereUniqueInput = Prisma.AtLeast<{
@@ -9970,7 +10036,7 @@ export namespace Prisma {
     clinic?: XOR<ClinicNullableScalarRelationFilter, ClinicWhereInput> | null
     appointments?: AppointmentListRelationFilter
     settings?: XOR<DoctorSettingsNullableScalarRelationFilter, DoctorSettingsWhereInput> | null
-    availability?: AvailabilityListRelationFilter
+    availabilities?: AvailabilityListRelationFilter
   }, "id" | "userId" | "crm">
 
   export type DoctorOrderByWithAggregationInput = {
@@ -10088,6 +10154,7 @@ export namespace Prisma {
     NOT?: DoctorSettingsWhereInput | DoctorSettingsWhereInput[]
     id?: UuidFilter<"DoctorSettings"> | string
     doctorId?: UuidFilter<"DoctorSettings"> | string
+    isAvaliable?: BoolFilter<"DoctorSettings"> | boolean
     minAppointmentTime?: IntFilter<"DoctorSettings"> | number
     maxAppointmentTime?: IntFilter<"DoctorSettings"> | number
     defaultDuration?: IntFilter<"DoctorSettings"> | number
@@ -10100,6 +10167,7 @@ export namespace Prisma {
   export type DoctorSettingsOrderByWithRelationInput = {
     id?: SortOrder
     doctorId?: SortOrder
+    isAvaliable?: SortOrder
     minAppointmentTime?: SortOrder
     maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
@@ -10115,6 +10183,7 @@ export namespace Prisma {
     AND?: DoctorSettingsWhereInput | DoctorSettingsWhereInput[]
     OR?: DoctorSettingsWhereInput[]
     NOT?: DoctorSettingsWhereInput | DoctorSettingsWhereInput[]
+    isAvaliable?: BoolFilter<"DoctorSettings"> | boolean
     minAppointmentTime?: IntFilter<"DoctorSettings"> | number
     maxAppointmentTime?: IntFilter<"DoctorSettings"> | number
     defaultDuration?: IntFilter<"DoctorSettings"> | number
@@ -10127,6 +10196,7 @@ export namespace Prisma {
   export type DoctorSettingsOrderByWithAggregationInput = {
     id?: SortOrder
     doctorId?: SortOrder
+    isAvaliable?: SortOrder
     minAppointmentTime?: SortOrder
     maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
@@ -10146,6 +10216,7 @@ export namespace Prisma {
     NOT?: DoctorSettingsScalarWhereWithAggregatesInput | DoctorSettingsScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"DoctorSettings"> | string
     doctorId?: UuidWithAggregatesFilter<"DoctorSettings"> | string
+    isAvaliable?: BoolWithAggregatesFilter<"DoctorSettings"> | boolean
     minAppointmentTime?: IntWithAggregatesFilter<"DoctorSettings"> | number
     maxAppointmentTime?: IntWithAggregatesFilter<"DoctorSettings"> | number
     defaultDuration?: IntWithAggregatesFilter<"DoctorSettings"> | number
@@ -10160,18 +10231,20 @@ export namespace Prisma {
     NOT?: AvailabilityWhereInput | AvailabilityWhereInput[]
     id?: UuidFilter<"Availability"> | string
     doctorId?: UuidFilter<"Availability"> | string
-    weekday?: IntFilter<"Availability"> | number
-    startTime?: StringFilter<"Availability"> | string
-    endTime?: StringFilter<"Availability"> | string
+    weekdays?: EnumWeekDayNullableListFilter<"Availability">
+    startMinutes?: IntFilter<"Availability"> | number
+    endMinutes?: IntFilter<"Availability"> | number
+    createdAt?: DateTimeFilter<"Availability"> | Date | string
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
   }
 
   export type AvailabilityOrderByWithRelationInput = {
     id?: SortOrder
     doctorId?: SortOrder
-    weekday?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
+    weekdays?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    createdAt?: SortOrder
     doctor?: DoctorOrderByWithRelationInput
   }
 
@@ -10181,18 +10254,20 @@ export namespace Prisma {
     OR?: AvailabilityWhereInput[]
     NOT?: AvailabilityWhereInput | AvailabilityWhereInput[]
     doctorId?: UuidFilter<"Availability"> | string
-    weekday?: IntFilter<"Availability"> | number
-    startTime?: StringFilter<"Availability"> | string
-    endTime?: StringFilter<"Availability"> | string
+    weekdays?: EnumWeekDayNullableListFilter<"Availability">
+    startMinutes?: IntFilter<"Availability"> | number
+    endMinutes?: IntFilter<"Availability"> | number
+    createdAt?: DateTimeFilter<"Availability"> | Date | string
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
   }, "id">
 
   export type AvailabilityOrderByWithAggregationInput = {
     id?: SortOrder
     doctorId?: SortOrder
-    weekday?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
+    weekdays?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    createdAt?: SortOrder
     _count?: AvailabilityCountOrderByAggregateInput
     _avg?: AvailabilityAvgOrderByAggregateInput
     _max?: AvailabilityMaxOrderByAggregateInput
@@ -10206,9 +10281,10 @@ export namespace Prisma {
     NOT?: AvailabilityScalarWhereWithAggregatesInput | AvailabilityScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Availability"> | string
     doctorId?: UuidWithAggregatesFilter<"Availability"> | string
-    weekday?: IntWithAggregatesFilter<"Availability"> | number
-    startTime?: StringWithAggregatesFilter<"Availability"> | string
-    endTime?: StringWithAggregatesFilter<"Availability"> | string
+    weekdays?: EnumWeekDayNullableListFilter<"Availability">
+    startMinutes?: IntWithAggregatesFilter<"Availability"> | number
+    endMinutes?: IntWithAggregatesFilter<"Availability"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Availability"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -10428,7 +10504,7 @@ export namespace Prisma {
     clinic?: ClinicCreateNestedOneWithoutDoctorsInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     settings?: DoctorSettingsCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateInput = {
@@ -10441,7 +10517,7 @@ export namespace Prisma {
     clinicId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     settings?: DoctorSettingsUncheckedCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUpdateInput = {
@@ -10454,7 +10530,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneWithoutDoctorsNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     settings?: DoctorSettingsUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateInput = {
@@ -10467,7 +10543,7 @@ export namespace Prisma {
     clinicId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     settings?: DoctorSettingsUncheckedUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorCreateManyInput = {
@@ -10589,6 +10665,7 @@ export namespace Prisma {
 
   export type DoctorSettingsCreateInput = {
     id: string
+    isAvaliable: boolean
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -10601,6 +10678,7 @@ export namespace Prisma {
   export type DoctorSettingsUncheckedCreateInput = {
     id: string
     doctorId: string
+    isAvaliable: boolean
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -10611,6 +10689,7 @@ export namespace Prisma {
 
   export type DoctorSettingsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isAvaliable?: BoolFieldUpdateOperationsInput | boolean
     minAppointmentTime?: IntFieldUpdateOperationsInput | number
     maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
@@ -10623,6 +10702,7 @@ export namespace Prisma {
   export type DoctorSettingsUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     doctorId?: StringFieldUpdateOperationsInput | string
+    isAvaliable?: BoolFieldUpdateOperationsInput | boolean
     minAppointmentTime?: IntFieldUpdateOperationsInput | number
     maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
@@ -10634,6 +10714,7 @@ export namespace Prisma {
   export type DoctorSettingsCreateManyInput = {
     id: string
     doctorId: string
+    isAvaliable: boolean
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -10644,6 +10725,7 @@ export namespace Prisma {
 
   export type DoctorSettingsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isAvaliable?: BoolFieldUpdateOperationsInput | boolean
     minAppointmentTime?: IntFieldUpdateOperationsInput | number
     maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
@@ -10655,6 +10737,7 @@ export namespace Prisma {
   export type DoctorSettingsUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     doctorId?: StringFieldUpdateOperationsInput | string
+    isAvaliable?: BoolFieldUpdateOperationsInput | boolean
     minAppointmentTime?: IntFieldUpdateOperationsInput | number
     maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
@@ -10665,57 +10748,64 @@ export namespace Prisma {
 
   export type AvailabilityCreateInput = {
     id: string
-    weekday: number
-    startTime: string
-    endTime: string
-    doctor: DoctorCreateNestedOneWithoutAvailabilityInput
+    weekdays?: AvailabilityCreateweekdaysInput | $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt?: Date | string
+    doctor: DoctorCreateNestedOneWithoutAvailabilitiesInput
   }
 
   export type AvailabilityUncheckedCreateInput = {
     id: string
     doctorId: string
-    weekday: number
-    startTime: string
-    endTime: string
+    weekdays?: AvailabilityCreateweekdaysInput | $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt?: Date | string
   }
 
   export type AvailabilityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
-    doctor?: DoctorUpdateOneRequiredWithoutAvailabilityNestedInput
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doctor?: DoctorUpdateOneRequiredWithoutAvailabilitiesNestedInput
   }
 
   export type AvailabilityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     doctorId?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AvailabilityCreateManyInput = {
     id: string
     doctorId: string
-    weekday: number
-    startTime: string
-    endTime: string
+    weekdays?: AvailabilityCreateweekdaysInput | $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt?: Date | string
   }
 
   export type AvailabilityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AvailabilityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     doctorId?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -11154,6 +11244,11 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11179,6 +11274,7 @@ export namespace Prisma {
   export type DoctorSettingsCountOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
+    isAvaliable?: SortOrder
     minAppointmentTime?: SortOrder
     maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
@@ -11199,6 +11295,7 @@ export namespace Prisma {
   export type DoctorSettingsMaxOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
+    isAvaliable?: SortOrder
     minAppointmentTime?: SortOrder
     maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
@@ -11210,6 +11307,7 @@ export namespace Prisma {
   export type DoctorSettingsMinOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
+    isAvaliable?: SortOrder
     minAppointmentTime?: SortOrder
     maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
@@ -11225,6 +11323,14 @@ export namespace Prisma {
     bufferBetween?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -11259,36 +11365,47 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type EnumWeekDayNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.WeekDay[] | ListEnumWeekDayFieldRefInput<$PrismaModel> | null
+    has?: $Enums.WeekDay | EnumWeekDayFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.WeekDay[] | ListEnumWeekDayFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.WeekDay[] | ListEnumWeekDayFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type AvailabilityCountOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
-    weekday?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
+    weekdays?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AvailabilityAvgOrderByAggregateInput = {
-    weekday?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
   }
 
   export type AvailabilityMaxOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
-    weekday?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AvailabilityMinOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
-    weekday?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AvailabilitySumOrderByAggregateInput = {
-    weekday?: SortOrder
+    startMinutes?: SortOrder
+    endMinutes?: SortOrder
   }
 
   export type PatientCreateNestedOneWithoutUserInput = {
@@ -11707,6 +11824,10 @@ export namespace Prisma {
     connect?: DoctorWhereUniqueInput
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -11731,18 +11852,27 @@ export namespace Prisma {
     update?: XOR<XOR<DoctorUpdateToOneWithWhereWithoutSettingsInput, DoctorUpdateWithoutSettingsInput>, DoctorUncheckedUpdateWithoutSettingsInput>
   }
 
-  export type DoctorCreateNestedOneWithoutAvailabilityInput = {
-    create?: XOR<DoctorCreateWithoutAvailabilityInput, DoctorUncheckedCreateWithoutAvailabilityInput>
-    connectOrCreate?: DoctorCreateOrConnectWithoutAvailabilityInput
+  export type AvailabilityCreateweekdaysInput = {
+    set: $Enums.WeekDay[]
+  }
+
+  export type DoctorCreateNestedOneWithoutAvailabilitiesInput = {
+    create?: XOR<DoctorCreateWithoutAvailabilitiesInput, DoctorUncheckedCreateWithoutAvailabilitiesInput>
+    connectOrCreate?: DoctorCreateOrConnectWithoutAvailabilitiesInput
     connect?: DoctorWhereUniqueInput
   }
 
-  export type DoctorUpdateOneRequiredWithoutAvailabilityNestedInput = {
-    create?: XOR<DoctorCreateWithoutAvailabilityInput, DoctorUncheckedCreateWithoutAvailabilityInput>
-    connectOrCreate?: DoctorCreateOrConnectWithoutAvailabilityInput
-    upsert?: DoctorUpsertWithoutAvailabilityInput
+  export type AvailabilityUpdateweekdaysInput = {
+    set?: $Enums.WeekDay[]
+    push?: $Enums.WeekDay | $Enums.WeekDay[]
+  }
+
+  export type DoctorUpdateOneRequiredWithoutAvailabilitiesNestedInput = {
+    create?: XOR<DoctorCreateWithoutAvailabilitiesInput, DoctorUncheckedCreateWithoutAvailabilitiesInput>
+    connectOrCreate?: DoctorCreateOrConnectWithoutAvailabilitiesInput
+    upsert?: DoctorUpsertWithoutAvailabilitiesInput
     connect?: DoctorWhereUniqueInput
-    update?: XOR<XOR<DoctorUpdateToOneWithWhereWithoutAvailabilityInput, DoctorUpdateWithoutAvailabilityInput>, DoctorUncheckedUpdateWithoutAvailabilityInput>
+    update?: XOR<XOR<DoctorUpdateToOneWithWhereWithoutAvailabilitiesInput, DoctorUpdateWithoutAvailabilitiesInput>, DoctorUncheckedUpdateWithoutAvailabilitiesInput>
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -11965,6 +12095,19 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -12038,7 +12181,7 @@ export namespace Prisma {
     clinic?: ClinicCreateNestedOneWithoutDoctorsInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     settings?: DoctorSettingsCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutUserInput = {
@@ -12050,7 +12193,7 @@ export namespace Prisma {
     clinicId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     settings?: DoctorSettingsUncheckedCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutUserInput = {
@@ -12134,7 +12277,7 @@ export namespace Prisma {
     clinic?: ClinicUpdateOneWithoutDoctorsNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     settings?: DoctorSettingsUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutUserInput = {
@@ -12146,7 +12289,7 @@ export namespace Prisma {
     clinicId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     settings?: DoctorSettingsUncheckedUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type ClinicUpsertWithoutUserInput = {
@@ -12334,7 +12477,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutDoctorInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
     settings?: DoctorSettingsCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutClinicInput = {
@@ -12346,7 +12489,7 @@ export namespace Prisma {
     speciality: string
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
     settings?: DoctorSettingsUncheckedCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutClinicInput = {
@@ -12505,6 +12648,7 @@ export namespace Prisma {
 
   export type DoctorSettingsCreateWithoutDoctorInput = {
     id: string
+    isAvaliable: boolean
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -12515,6 +12659,7 @@ export namespace Prisma {
 
   export type DoctorSettingsUncheckedCreateWithoutDoctorInput = {
     id: string
+    isAvaliable: boolean
     minAppointmentTime: number
     maxAppointmentTime: number
     defaultDuration: number
@@ -12530,16 +12675,18 @@ export namespace Prisma {
 
   export type AvailabilityCreateWithoutDoctorInput = {
     id: string
-    weekday: number
-    startTime: string
-    endTime: string
+    weekdays?: AvailabilityCreateweekdaysInput | $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt?: Date | string
   }
 
   export type AvailabilityUncheckedCreateWithoutDoctorInput = {
     id: string
-    weekday: number
-    startTime: string
-    endTime: string
+    weekdays?: AvailabilityCreateweekdaysInput | $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt?: Date | string
   }
 
   export type AvailabilityCreateOrConnectWithoutDoctorInput = {
@@ -12645,6 +12792,7 @@ export namespace Prisma {
 
   export type DoctorSettingsUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isAvaliable?: BoolFieldUpdateOperationsInput | boolean
     minAppointmentTime?: IntFieldUpdateOperationsInput | number
     maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
@@ -12655,6 +12803,7 @@ export namespace Prisma {
 
   export type DoctorSettingsUncheckedUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isAvaliable?: BoolFieldUpdateOperationsInput | boolean
     minAppointmentTime?: IntFieldUpdateOperationsInput | number
     maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
@@ -12685,9 +12834,10 @@ export namespace Prisma {
     NOT?: AvailabilityScalarWhereInput | AvailabilityScalarWhereInput[]
     id?: UuidFilter<"Availability"> | string
     doctorId?: UuidFilter<"Availability"> | string
-    weekday?: IntFilter<"Availability"> | number
-    startTime?: StringFilter<"Availability"> | string
-    endTime?: StringFilter<"Availability"> | string
+    weekdays?: EnumWeekDayNullableListFilter<"Availability">
+    startMinutes?: IntFilter<"Availability"> | number
+    endMinutes?: IntFilter<"Availability"> | number
+    createdAt?: DateTimeFilter<"Availability"> | Date | string
   }
 
   export type PatientCreateWithoutAppointmentsInput = {
@@ -12720,7 +12870,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutDoctorInput
     clinic?: ClinicCreateNestedOneWithoutDoctorsInput
     settings?: DoctorSettingsCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutAppointmentsInput = {
@@ -12732,7 +12882,7 @@ export namespace Prisma {
     speciality: string
     clinicId?: string | null
     settings?: DoctorSettingsUncheckedCreateNestedOneWithoutDoctorInput
-    availability?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutAppointmentsInput = {
@@ -12787,7 +12937,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutDoctorNestedInput
     clinic?: ClinicUpdateOneWithoutDoctorsNestedInput
     settings?: DoctorSettingsUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutAppointmentsInput = {
@@ -12799,7 +12949,7 @@ export namespace Prisma {
     speciality?: StringFieldUpdateOperationsInput | string
     clinicId?: NullableStringFieldUpdateOperationsInput | string | null
     settings?: DoctorSettingsUncheckedUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorCreateWithoutSettingsInput = {
@@ -12811,7 +12961,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutDoctorInput
     clinic?: ClinicCreateNestedOneWithoutDoctorsInput
     appointments?: AppointmentCreateNestedManyWithoutDoctorInput
-    availability?: AvailabilityCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorUncheckedCreateWithoutSettingsInput = {
@@ -12823,7 +12973,7 @@ export namespace Prisma {
     speciality: string
     clinicId?: string | null
     appointments?: AppointmentUncheckedCreateNestedManyWithoutDoctorInput
-    availability?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
+    availabilities?: AvailabilityUncheckedCreateNestedManyWithoutDoctorInput
   }
 
   export type DoctorCreateOrConnectWithoutSettingsInput = {
@@ -12851,7 +13001,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutDoctorNestedInput
     clinic?: ClinicUpdateOneWithoutDoctorsNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
-    availability?: AvailabilityUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutSettingsInput = {
@@ -12863,10 +13013,10 @@ export namespace Prisma {
     speciality?: StringFieldUpdateOperationsInput | string
     clinicId?: NullableStringFieldUpdateOperationsInput | string | null
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
-    availability?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
-  export type DoctorCreateWithoutAvailabilityInput = {
+  export type DoctorCreateWithoutAvailabilitiesInput = {
     id: string
     name: string
     phone: string
@@ -12878,7 +13028,7 @@ export namespace Prisma {
     settings?: DoctorSettingsCreateNestedOneWithoutDoctorInput
   }
 
-  export type DoctorUncheckedCreateWithoutAvailabilityInput = {
+  export type DoctorUncheckedCreateWithoutAvailabilitiesInput = {
     id: string
     userId: string
     name: string
@@ -12890,23 +13040,23 @@ export namespace Prisma {
     settings?: DoctorSettingsUncheckedCreateNestedOneWithoutDoctorInput
   }
 
-  export type DoctorCreateOrConnectWithoutAvailabilityInput = {
+  export type DoctorCreateOrConnectWithoutAvailabilitiesInput = {
     where: DoctorWhereUniqueInput
-    create: XOR<DoctorCreateWithoutAvailabilityInput, DoctorUncheckedCreateWithoutAvailabilityInput>
+    create: XOR<DoctorCreateWithoutAvailabilitiesInput, DoctorUncheckedCreateWithoutAvailabilitiesInput>
   }
 
-  export type DoctorUpsertWithoutAvailabilityInput = {
-    update: XOR<DoctorUpdateWithoutAvailabilityInput, DoctorUncheckedUpdateWithoutAvailabilityInput>
-    create: XOR<DoctorCreateWithoutAvailabilityInput, DoctorUncheckedCreateWithoutAvailabilityInput>
+  export type DoctorUpsertWithoutAvailabilitiesInput = {
+    update: XOR<DoctorUpdateWithoutAvailabilitiesInput, DoctorUncheckedUpdateWithoutAvailabilitiesInput>
+    create: XOR<DoctorCreateWithoutAvailabilitiesInput, DoctorUncheckedCreateWithoutAvailabilitiesInput>
     where?: DoctorWhereInput
   }
 
-  export type DoctorUpdateToOneWithWhereWithoutAvailabilityInput = {
+  export type DoctorUpdateToOneWithWhereWithoutAvailabilitiesInput = {
     where?: DoctorWhereInput
-    data: XOR<DoctorUpdateWithoutAvailabilityInput, DoctorUncheckedUpdateWithoutAvailabilityInput>
+    data: XOR<DoctorUpdateWithoutAvailabilitiesInput, DoctorUncheckedUpdateWithoutAvailabilitiesInput>
   }
 
-  export type DoctorUpdateWithoutAvailabilityInput = {
+  export type DoctorUpdateWithoutAvailabilitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -12918,7 +13068,7 @@ export namespace Prisma {
     settings?: DoctorSettingsUpdateOneWithoutDoctorNestedInput
   }
 
-  export type DoctorUncheckedUpdateWithoutAvailabilityInput = {
+  export type DoctorUncheckedUpdateWithoutAvailabilitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -12996,7 +13146,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutDoctorNestedInput
     appointments?: AppointmentUpdateManyWithoutDoctorNestedInput
     settings?: DoctorSettingsUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateWithoutClinicInput = {
@@ -13008,7 +13158,7 @@ export namespace Prisma {
     speciality?: StringFieldUpdateOperationsInput | string
     appointments?: AppointmentUncheckedUpdateManyWithoutDoctorNestedInput
     settings?: DoctorSettingsUncheckedUpdateOneWithoutDoctorNestedInput
-    availability?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
+    availabilities?: AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput
   }
 
   export type DoctorUncheckedUpdateManyWithoutClinicInput = {
@@ -13034,9 +13184,10 @@ export namespace Prisma {
 
   export type AvailabilityCreateManyDoctorInput = {
     id: string
-    weekday: number
-    startTime: string
-    endTime: string
+    weekdays?: AvailabilityCreateweekdaysInput | $Enums.WeekDay[]
+    startMinutes: number
+    endMinutes: number
+    createdAt?: Date | string
   }
 
   export type AppointmentUpdateWithoutDoctorInput = {
@@ -13077,23 +13228,26 @@ export namespace Prisma {
 
   export type AvailabilityUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AvailabilityUncheckedUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AvailabilityUncheckedUpdateManyWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    weekday?: IntFieldUpdateOperationsInput | number
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
+    weekdays?: AvailabilityUpdateweekdaysInput | $Enums.WeekDay[]
+    startMinutes?: IntFieldUpdateOperationsInput | number
+    endMinutes?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
