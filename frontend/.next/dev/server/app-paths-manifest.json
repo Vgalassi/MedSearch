@@ -1,3 +1,6 @@
 {
-  "/page": "app/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/medic/appointment-config/page": "app/medic/appointment-config/page.js",
+  "/page": "app/page.js",
+  "/patient/home/page": "app/patient/home/page.js"
 }
