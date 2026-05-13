@@ -15,7 +15,7 @@ export class UserController{
 
        return res.status(201).send({
         id: createdUser.id.value,
-        email: createdUser.props.email,
+        email: createdUser.props.email.email,
         role: createdUser.props.role,
        });
     }

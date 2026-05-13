@@ -1,14 +1,15 @@
-import { toMinutes } from "../services/times";
+
+import { WeekDayRange } from "../value-objects/WeekDayRange";
 import { Entity } from "../value-objects/Entity";
 import { Identifier } from "../value-objects/Identifier";
-
+import { Time } from "../value-objects/Time";
+import { WeekDay } from "../value-objects/WeekDay";
 
 export type AvailabilityProps = {
     doctorId: Identifier,
-    isAvailable: boolean,
-    weekDay: number,
-    startTime: number,
-    endTime: number
+    weekDayRange: WeekDayRange,
+    startTime: Time,
+    endTime: Time
 }
 
 export class Availability extends Entity<AvailabilityProps>{
@@ -16,10 +17,15 @@ export class Availability extends Entity<AvailabilityProps>{
         return new Availability(
             {
                 doctorId,
-                isAvailable: true,
-                weekDay: 6,
-                startTime: toMinutes(8,0),
-                endTime: toMinutes(17,30)
+                weekDayRange: new WeekDayRange([
+                    new WeekDay("MONDAY"),
+                    new WeekDay("TUESDAY"),
+                    new WeekDay("WEDNESDAY"),
+                    new WeekDay("THURSDAY"),
+                    new WeekDay("FRIDAY")
+                ]),
+                startTime: new Time(8,0),
+                endTime: new Time(17,30)
             }
         )
 

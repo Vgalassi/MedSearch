@@ -1,5 +1,6 @@
 import { Clinic } from "../../domain/Aggregates/Clinic";
 import { Identifier } from "../../domain/value-objects/Identifier";
+import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 
 type PrismaClinic = {
   id: string;
@@ -24,7 +25,7 @@ export class ClinicMapper {
         latitude: raw.latitude,
         longitude: raw.longitude,
         description: raw.description,
-        phone: raw.phone,
+        phone: new PhoneNumber(raw.phone),
       },
       new Identifier(raw.id),
     );
@@ -40,7 +41,7 @@ export class ClinicMapper {
       latitude: clinic.props.latitude,
       longitude: clinic.props.longitude,
       description: clinic.props.description,
-      phone: clinic.props.phone,
+      phone: clinic.props.phone.value,
     };
   }
 }

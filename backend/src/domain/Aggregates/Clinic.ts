@@ -2,6 +2,7 @@ import { DoctorAlreadyOnClinic } from "../errors/DoctorAlreadyOnClinic";
 import { DoctorNotOnClinic } from "../errors/DoctorNotOnClinic";
 import { AgregateRoot } from "../value-objects/AgregateRoot";
 import type { Identifier } from "../value-objects/Identifier";
+import type { PhoneNumber } from "../value-objects/PhoneNumber";
 import { Doctor } from "./Doctor";
 export type ClinicProps = {
   userId: Identifier
@@ -11,7 +12,7 @@ export type ClinicProps = {
   latitude: number,
   longitude: number,
   description: string,
-  phone: string,
+  phone: PhoneNumber,
 }
 
 

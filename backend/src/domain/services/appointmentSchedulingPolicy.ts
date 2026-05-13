@@ -2,7 +2,22 @@ import { AdvanceBookingViolationError } from "../errors/AdvanceBookingViolationE
 import { AppointmentInPastError } from "../errors/AppointmentInPastError";
 import { AppointmentOutsideAvailabilityError } from "../errors/AppointmentOutsideAvailabilityError";
 import { InvalidAppointmentDurationError } from "../errors/InvalidAppointmentDurationError";
-import type { AvailabilityRecord } from "../repositories/AvailabilityRepository";
+import type { Availability } from "../entities/Availability";
+
+export type AvailabilityWindow = {
+  startTime: string;
+  endTime: string;
+};
+
+const WEEKDAY_TO_UTC_DAY: Record<string, number> = {
+  SUNDAY: 0,
+  MONDAY: 1,
+  TUESDAY: 2,
+  WEDNESDAY: 3,
+  THURSDAY: 4,
+  FRIDAY: 5,
+  SATURDAY: 6,
+};
 
 export function durationMinutes(start: Date, end: Date): number {
   return Math.round((end.getTime() - start.getTime()) / 60_000);
@@ -63,13 +78,27 @@ export function utcTimeOnDate(anchor: Date, hhmm: string): Date {
   );
 }
 
+export function availabilityWindowsForWeekday(
+  availability: Availability[],
+  weekday: number,
+): AvailabilityWindow[] {
+  return availability.flatMap((item) =>
+    item.props.weekDayRange.range
+      .filter((day) => WEEKDAY_TO_UTC_DAY[day.value] === weekday)
+      .map(() => ({
+        startTime: item.props.startTime.toString(),
+        endTime: item.props.endTime.toString(),
+      })),
+  );
+}
+
 export function assertWithinAvailability(
   start: Date,
   end: Date,
-  availability: AvailabilityRecord[],
+  availability: Availability[],
 ): void {
   const weekday = start.getUTCDay();
-  const dayWindows = availability.filter((a) => a.weekday === weekday);
+  const dayWindows = availabilityWindowsForWeekday(availability, weekday);
   if (dayWindows.length === 0) {
     throw new AppointmentOutsideAvailabilityError();
   }

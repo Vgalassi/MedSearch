@@ -10,6 +10,7 @@ import type { DoctorRepository } from "../../domain/repositories/DoctorRepositor
 import {
   assertAdvanceBooking,
   assertNotInPast,
+  availabilityWindowsForWeekday,
   conflictsWithBuffer,
   slotGridStepMinutes,
   utcDayBounds,
@@ -67,7 +68,7 @@ export class ListDoctorAvailableSlotsUseCase {
     const d = parts[2]!;
     const anchor = new Date(Date.UTC(y, m - 1, d, 12, 0, 0, 0));
     const weekday = anchor.getUTCDay();
-    const windows = availability.filter((a) => a.weekday === weekday);
+    const windows = availabilityWindowsForWeekday(availability, weekday);
     if (windows.length === 0) {
       return [];
     }
@@ -86,22 +87,25 @@ export class ListDoctorAvailableSlotsUseCase {
       return [];
     }
 
+    const minAppointmentMinutes =
+      schedulingSettings.minAppointmentTime.value / 60;
+    const maxAppointmentMinutes =
+      schedulingSettings.maxAppointmentTime.value / 60;
     const duration =
-      input.durationMinutes ?? schedulingSettings.defaultDuration;
+      input.durationMinutes ?? schedulingSettings.defaultDuration.value / 60;
     if (
-      duration < schedulingSettings.minAppointmentTime ||
-      duration > schedulingSettings.maxAppointmentTime
+      duration < minAppointmentMinutes ||
+      duration > maxAppointmentMinutes
     ) {
       throw new InvalidAppointmentDurationError(
-        schedulingSettings.minAppointmentTime,
-        schedulingSettings.maxAppointmentTime,
+        minAppointmentMinutes,
+        maxAppointmentMinutes,
         duration,
       );
     }
 
     const durationMs = duration * 60_000;
-    const stepMs =
-      slotGridStepMinutes(schedulingSettings.minAppointmentTime) * 60_000;
+    const stepMs = slotGridStepMinutes(minAppointmentMinutes) * 60_000;
     const now = new Date();
     const slots: AvailableSlotDto[] = [];
 
@@ -131,7 +135,7 @@ export class ListDoctorAvailableSlotsUseCase {
               slotEnd,
               ap.props.startTime,
               ap.props.endTime,
-              schedulingSettings.bufferBetween,
+              schedulingSettings.bufferBetween.value / 60,
             )
           ) {
             blocked = true;

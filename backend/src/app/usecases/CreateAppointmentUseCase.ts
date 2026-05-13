@@ -79,8 +79,8 @@ export class CreateAppointmentUseCase {
     assertAdvanceBooking(start, now, schedulingSettings.advanceBookingHours);
     assertDurationInRange(
       duration,
-      schedulingSettings.minAppointmentTime,
-      schedulingSettings.maxAppointmentTime,
+      schedulingSettings.minAppointmentTime.value / 60,
+      schedulingSettings.maxAppointmentTime.value / 60,
     );
     assertWithinAvailability(start, end, availability);
 
@@ -96,7 +96,7 @@ export class CreateAppointmentUseCase {
     });
 
     return this.appointmentRepository.createWithConcurrencyGuard(appointment, {
-      bufferBetweenMinutes: schedulingSettings.bufferBetween,
+      bufferBetweenMinutes: schedulingSettings.bufferBetween.value / 60,
       maxDailyAppointments: schedulingSettings.maxDailyAppointments,
       dayStartUtc: dayStart,
       dayEndUtc: dayEnd,

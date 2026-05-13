@@ -23,6 +23,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
               settings: {
                 create: {
                   id: data.settings.id,
+                  isAvaliable: data.settings.isAvaliable,
                   minAppointmentTime: data.settings.minAppointmentTime,
                   maxAppointmentTime: data.settings.maxAppointmentTime,
                   defaultDuration: data.settings.defaultDuration,
@@ -33,8 +34,20 @@ export class PrismaDoctorRepository implements DoctorRepository {
               },
             }
           : {}),
+        ...(data.availabilities?.length
+          ? {
+              availabilities: {
+                create: data.availabilities.map((availability) => ({
+                  id: availability.id,
+                  weekdays: availability.weekdays,
+                  startMinutes: availability.startMinutes,
+                  endMinutes: availability.endMinutes,
+                })),
+              },
+            }
+          : {}),
       },
-      include: { settings: true },
+      include: { settings: true, availabilities: true },
     });
 
     return DoctorMapper.toDomain(createdDoctor as never);
@@ -43,7 +56,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
   async findById(id: string): Promise<Doctor | null> {
     const doctor = await prisma.doctor.findUnique({
       where: { id },
-      include: { settings: true },
+      include: { settings: true, availabilities: true },
     });
 
     if (!doctor) {
@@ -56,7 +69,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
   async findByClinicId(clinicId: string): Promise<Doctor[]> {
     const doctors = await prisma.doctor.findMany({
       where: { clinicId },
-      include: { settings: true },
+      include: { settings: true, availabilities: true },
     });
 
     return doctors.map((doctor) => DoctorMapper.toDomain(doctor as never));
@@ -64,7 +77,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
 
   async findAll(): Promise<Doctor[]> {
     const doctors = await prisma.doctor.findMany({
-      include: { settings: true },
+      include: { settings: true, availabilities: true },
     });
     return doctors.map((doctor) => DoctorMapper.toDomain(doctor as never));
   }
@@ -77,7 +90,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
       data: {
         clinicId: data.clinicId,
       },
-      include: { settings: true },
+      include: { settings: true, availabilities: true },
     });
 
     return DoctorMapper.toDomain(updatedDoctor as never);

@@ -3,7 +3,7 @@ import type { DoctorSettingsRepository } from "../../domain/repositories/DoctorS
 import { DoctorSchedulingSettings } from "../../domain/entities/DoctorSchedulingSettings";
 import { Identifier } from "../../domain/value-objects/Identifier";
 import { prisma } from "../../lib/prisma";
-
+import { Time } from "../../domain/value-objects/Time";
 @injectable()
 export class PrismaDoctorSettingsRepository implements DoctorSettingsRepository {
   async findByDoctorId(
@@ -17,11 +17,12 @@ export class PrismaDoctorSettingsRepository implements DoctorSettingsRepository 
     }
     return new DoctorSchedulingSettings(
       {
+        isAvaliable: row.isAvaliable,
         doctorId: new Identifier(row.doctorId),
-        minAppointmentTime: row.minAppointmentTime,
-        maxAppointmentTime: row.maxAppointmentTime,
-        defaultDuration: row.defaultDuration,
-        bufferBetween: row.bufferBetween,
+        minAppointmentTime: Time.createWithSeconds(row.minAppointmentTime),
+        maxAppointmentTime: Time.createWithSeconds(row.maxAppointmentTime),
+        defaultDuration: Time.createWithSeconds(row.defaultDuration),
+        bufferBetween: Time.createWithSeconds(row.bufferBetween),
         advanceBookingHours: row.advanceBookingHours,
         maxDailyAppointments: row.maxDailyAppointments,
       },

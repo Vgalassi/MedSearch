@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { User } from "../../domain/Aggregates/User";
 import type { UserRepository } from "../../domain/repositories/UserRepository";
+import type { Email } from "../../domain/value-objects/Email";
 import { prisma } from "../../lib/prisma";
 import { UserMapper } from "../mappers/UserMapper";
 
@@ -16,9 +17,9 @@ export class PrismaUserRepository implements UserRepository {
     return UserMapper.toDomain(createdUser as never);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: Email): Promise<User | null> {
     const foundUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email: email.email },
     });
 
     if (!foundUser) {

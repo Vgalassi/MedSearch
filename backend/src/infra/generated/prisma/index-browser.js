@@ -173,6 +173,7 @@ exports.Prisma.AppointmentScalarFieldEnum = {
 exports.Prisma.DoctorSettingsScalarFieldEnum = {
   id: 'id',
   doctorId: 'doctorId',
+  isAvaliable: 'isAvaliable',
   minAppointmentTime: 'minAppointmentTime',
   maxAppointmentTime: 'maxAppointmentTime',
   defaultDuration: 'defaultDuration',
@@ -184,9 +185,10 @@ exports.Prisma.DoctorSettingsScalarFieldEnum = {
 exports.Prisma.AvailabilityScalarFieldEnum = {
   id: 'id',
   doctorId: 'doctorId',
-  weekday: 'weekday',
-  startTime: 'startTime',
-  endTime: 'endTime'
+  weekdays: 'weekdays',
+  startMinutes: 'startMinutes',
+  endMinutes: 'endMinutes',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -214,6 +216,16 @@ exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
   CANCELED: 'CANCELED',
   COMPLETED: 'COMPLETED',
   NO_SHOW: 'NO_SHOW'
+};
+
+exports.WeekDay = exports.$Enums.WeekDay = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY'
 };
 
 exports.Prisma.ModelName = {

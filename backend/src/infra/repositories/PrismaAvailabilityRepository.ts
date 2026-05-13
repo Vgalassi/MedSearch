@@ -3,22 +3,27 @@ import { Availability } from "../../domain/entities/Availability";
 import { prisma } from "../../lib/prisma";
 import type { AvailabilityRepository } from "../../domain/repositories/AvailabilityRepository";
 import { Identifier } from "../../domain/value-objects/Identifier";
+import { Time } from "../../domain/value-objects/Time";
+import { WeekDay } from "../../domain/value-objects/WeekDay";
+import { WeekDayRange } from "../../domain/value-objects/WeekDayRange";
+
 @injectable()
 export class PrismaAvailabilityRepository implements AvailabilityRepository {
-  async findByDoctorId(doctorId: string): Promise<Availability | null>  {
-    const row = await prisma.availability.findFirst({
+  async findByDoctorId(doctorId: string): Promise<Availability[]>  {
+    const rows = await prisma.availability.findMany({
       where: { doctorId },
     });
-    if(!row){
-      return null
-    }
-    return new Availability({
-      doctorId: new Identifier(row.doctorId),
-      isAvailable: row.isAvaliable,
-      weekDay: row.weekday,
-      startTime: row.startTime,
-      endTime: row.endTime
 
-    },row.id)
-    }
+    return rows.map((row) => new Availability(
+      {
+        doctorId: new Identifier(row.doctorId),
+        weekDayRange: new WeekDayRange(
+          row.weekdays.map((weekday) => new WeekDay(weekday)),
+        ),
+        startTime: Time.createWithSeconds(row.startMinutes),
+        endTime: Time.createWithSeconds(row.endMinutes),
+      },
+      new Identifier(row.id),
+    ));
+  }
 }
