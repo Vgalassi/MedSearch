@@ -4,12 +4,12 @@ import { Time } from "../value-objects/Time";
 export type DoctorSchedulingSettingsProps = {
   doctorId: Identifier;
   isAvaliable: boolean;
-  minAppointmentTime: Time;
-  maxAppointmentTime: Time;
   defaultDuration: Time;
   bufferBetween: Time;
   advanceBookingHours: number;
+  maxSchedulingDays: number;
   maxDailyAppointments: number | null;
+
 };
 
 export class DoctorSchedulingSettings extends Entity<DoctorSchedulingSettingsProps> {
@@ -17,11 +17,10 @@ export class DoctorSchedulingSettings extends Entity<DoctorSchedulingSettingsPro
     return new DoctorSchedulingSettings({
       doctorId,
       isAvaliable: true,
-      minAppointmentTime: new Time(0,30),
-      maxAppointmentTime: new Time(1,0),
       defaultDuration: new Time(0,30),
       bufferBetween: new Time(0,10),
       advanceBookingHours: 24,
+      maxSchedulingDays: 90,
       maxDailyAppointments: null,
     });
   }

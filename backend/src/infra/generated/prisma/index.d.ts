@@ -7285,19 +7285,17 @@ export namespace Prisma {
   }
 
   export type DoctorSettingsAvgAggregateOutputType = {
-    minAppointmentTime: number | null
-    maxAppointmentTime: number | null
     defaultDuration: number | null
     bufferBetween: number | null
+    maxSchedullingDays: number | null
     advanceBookingHours: number | null
     maxDailyAppointments: number | null
   }
 
   export type DoctorSettingsSumAggregateOutputType = {
-    minAppointmentTime: number | null
-    maxAppointmentTime: number | null
     defaultDuration: number | null
     bufferBetween: number | null
+    maxSchedullingDays: number | null
     advanceBookingHours: number | null
     maxDailyAppointments: number | null
   }
@@ -7306,10 +7304,9 @@ export namespace Prisma {
     id: string | null
     doctorId: string | null
     isAvaliable: boolean | null
-    minAppointmentTime: number | null
-    maxAppointmentTime: number | null
     defaultDuration: number | null
     bufferBetween: number | null
+    maxSchedullingDays: number | null
     advanceBookingHours: number | null
     maxDailyAppointments: number | null
   }
@@ -7318,10 +7315,9 @@ export namespace Prisma {
     id: string | null
     doctorId: string | null
     isAvaliable: boolean | null
-    minAppointmentTime: number | null
-    maxAppointmentTime: number | null
     defaultDuration: number | null
     bufferBetween: number | null
+    maxSchedullingDays: number | null
     advanceBookingHours: number | null
     maxDailyAppointments: number | null
   }
@@ -7330,10 +7326,9 @@ export namespace Prisma {
     id: number
     doctorId: number
     isAvaliable: number
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments: number
     _all: number
@@ -7341,19 +7336,17 @@ export namespace Prisma {
 
 
   export type DoctorSettingsAvgAggregateInputType = {
-    minAppointmentTime?: true
-    maxAppointmentTime?: true
     defaultDuration?: true
     bufferBetween?: true
+    maxSchedullingDays?: true
     advanceBookingHours?: true
     maxDailyAppointments?: true
   }
 
   export type DoctorSettingsSumAggregateInputType = {
-    minAppointmentTime?: true
-    maxAppointmentTime?: true
     defaultDuration?: true
     bufferBetween?: true
+    maxSchedullingDays?: true
     advanceBookingHours?: true
     maxDailyAppointments?: true
   }
@@ -7362,10 +7355,9 @@ export namespace Prisma {
     id?: true
     doctorId?: true
     isAvaliable?: true
-    minAppointmentTime?: true
-    maxAppointmentTime?: true
     defaultDuration?: true
     bufferBetween?: true
+    maxSchedullingDays?: true
     advanceBookingHours?: true
     maxDailyAppointments?: true
   }
@@ -7374,10 +7366,9 @@ export namespace Prisma {
     id?: true
     doctorId?: true
     isAvaliable?: true
-    minAppointmentTime?: true
-    maxAppointmentTime?: true
     defaultDuration?: true
     bufferBetween?: true
+    maxSchedullingDays?: true
     advanceBookingHours?: true
     maxDailyAppointments?: true
   }
@@ -7386,10 +7377,9 @@ export namespace Prisma {
     id?: true
     doctorId?: true
     isAvaliable?: true
-    minAppointmentTime?: true
-    maxAppointmentTime?: true
     defaultDuration?: true
     bufferBetween?: true
+    maxSchedullingDays?: true
     advanceBookingHours?: true
     maxDailyAppointments?: true
     _all?: true
@@ -7485,10 +7475,9 @@ export namespace Prisma {
     id: string
     doctorId: string
     isAvaliable: boolean
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments: number | null
     _count: DoctorSettingsCountAggregateOutputType | null
@@ -7516,10 +7505,9 @@ export namespace Prisma {
     id?: boolean
     doctorId?: boolean
     isAvaliable?: boolean
-    minAppointmentTime?: boolean
-    maxAppointmentTime?: boolean
     defaultDuration?: boolean
     bufferBetween?: boolean
+    maxSchedullingDays?: boolean
     advanceBookingHours?: boolean
     maxDailyAppointments?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
@@ -7529,10 +7517,9 @@ export namespace Prisma {
     id?: boolean
     doctorId?: boolean
     isAvaliable?: boolean
-    minAppointmentTime?: boolean
-    maxAppointmentTime?: boolean
     defaultDuration?: boolean
     bufferBetween?: boolean
+    maxSchedullingDays?: boolean
     advanceBookingHours?: boolean
     maxDailyAppointments?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
@@ -7542,10 +7529,9 @@ export namespace Prisma {
     id?: boolean
     doctorId?: boolean
     isAvaliable?: boolean
-    minAppointmentTime?: boolean
-    maxAppointmentTime?: boolean
     defaultDuration?: boolean
     bufferBetween?: boolean
+    maxSchedullingDays?: boolean
     advanceBookingHours?: boolean
     maxDailyAppointments?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
@@ -7555,15 +7541,14 @@ export namespace Prisma {
     id?: boolean
     doctorId?: boolean
     isAvaliable?: boolean
-    minAppointmentTime?: boolean
-    maxAppointmentTime?: boolean
     defaultDuration?: boolean
     bufferBetween?: boolean
+    maxSchedullingDays?: boolean
     advanceBookingHours?: boolean
     maxDailyAppointments?: boolean
   }
 
-  export type DoctorSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "isAvaliable" | "minAppointmentTime" | "maxAppointmentTime" | "defaultDuration" | "bufferBetween" | "advanceBookingHours" | "maxDailyAppointments", ExtArgs["result"]["doctorSettings"]>
+  export type DoctorSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "isAvaliable" | "defaultDuration" | "bufferBetween" | "maxSchedullingDays" | "advanceBookingHours" | "maxDailyAppointments", ExtArgs["result"]["doctorSettings"]>
   export type DoctorSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }
@@ -7583,10 +7568,9 @@ export namespace Prisma {
       id: string
       doctorId: string
       isAvaliable: boolean
-      minAppointmentTime: number
-      maxAppointmentTime: number
       defaultDuration: number
       bufferBetween: number
+      maxSchedullingDays: number
       advanceBookingHours: number
       maxDailyAppointments: number | null
     }, ExtArgs["result"]["doctorSettings"]>
@@ -8016,10 +8000,9 @@ export namespace Prisma {
     readonly id: FieldRef<"DoctorSettings", 'String'>
     readonly doctorId: FieldRef<"DoctorSettings", 'String'>
     readonly isAvaliable: FieldRef<"DoctorSettings", 'Boolean'>
-    readonly minAppointmentTime: FieldRef<"DoctorSettings", 'Int'>
-    readonly maxAppointmentTime: FieldRef<"DoctorSettings", 'Int'>
     readonly defaultDuration: FieldRef<"DoctorSettings", 'Int'>
     readonly bufferBetween: FieldRef<"DoctorSettings", 'Int'>
+    readonly maxSchedullingDays: FieldRef<"DoctorSettings", 'Int'>
     readonly advanceBookingHours: FieldRef<"DoctorSettings", 'Int'>
     readonly maxDailyAppointments: FieldRef<"DoctorSettings", 'Int'>
   }
@@ -9634,10 +9617,9 @@ export namespace Prisma {
     id: 'id',
     doctorId: 'doctorId',
     isAvaliable: 'isAvaliable',
-    minAppointmentTime: 'minAppointmentTime',
-    maxAppointmentTime: 'maxAppointmentTime',
     defaultDuration: 'defaultDuration',
     bufferBetween: 'bufferBetween',
+    maxSchedullingDays: 'maxSchedullingDays',
     advanceBookingHours: 'advanceBookingHours',
     maxDailyAppointments: 'maxDailyAppointments'
   };
@@ -10155,10 +10137,9 @@ export namespace Prisma {
     id?: UuidFilter<"DoctorSettings"> | string
     doctorId?: UuidFilter<"DoctorSettings"> | string
     isAvaliable?: BoolFilter<"DoctorSettings"> | boolean
-    minAppointmentTime?: IntFilter<"DoctorSettings"> | number
-    maxAppointmentTime?: IntFilter<"DoctorSettings"> | number
     defaultDuration?: IntFilter<"DoctorSettings"> | number
     bufferBetween?: IntFilter<"DoctorSettings"> | number
+    maxSchedullingDays?: IntFilter<"DoctorSettings"> | number
     advanceBookingHours?: IntFilter<"DoctorSettings"> | number
     maxDailyAppointments?: IntNullableFilter<"DoctorSettings"> | number | null
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
@@ -10168,10 +10149,9 @@ export namespace Prisma {
     id?: SortOrder
     doctorId?: SortOrder
     isAvaliable?: SortOrder
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrderInput | SortOrder
     doctor?: DoctorOrderByWithRelationInput
@@ -10184,10 +10164,9 @@ export namespace Prisma {
     OR?: DoctorSettingsWhereInput[]
     NOT?: DoctorSettingsWhereInput | DoctorSettingsWhereInput[]
     isAvaliable?: BoolFilter<"DoctorSettings"> | boolean
-    minAppointmentTime?: IntFilter<"DoctorSettings"> | number
-    maxAppointmentTime?: IntFilter<"DoctorSettings"> | number
     defaultDuration?: IntFilter<"DoctorSettings"> | number
     bufferBetween?: IntFilter<"DoctorSettings"> | number
+    maxSchedullingDays?: IntFilter<"DoctorSettings"> | number
     advanceBookingHours?: IntFilter<"DoctorSettings"> | number
     maxDailyAppointments?: IntNullableFilter<"DoctorSettings"> | number | null
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
@@ -10197,10 +10176,9 @@ export namespace Prisma {
     id?: SortOrder
     doctorId?: SortOrder
     isAvaliable?: SortOrder
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrderInput | SortOrder
     _count?: DoctorSettingsCountOrderByAggregateInput
@@ -10217,10 +10195,9 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"DoctorSettings"> | string
     doctorId?: UuidWithAggregatesFilter<"DoctorSettings"> | string
     isAvaliable?: BoolWithAggregatesFilter<"DoctorSettings"> | boolean
-    minAppointmentTime?: IntWithAggregatesFilter<"DoctorSettings"> | number
-    maxAppointmentTime?: IntWithAggregatesFilter<"DoctorSettings"> | number
     defaultDuration?: IntWithAggregatesFilter<"DoctorSettings"> | number
     bufferBetween?: IntWithAggregatesFilter<"DoctorSettings"> | number
+    maxSchedullingDays?: IntWithAggregatesFilter<"DoctorSettings"> | number
     advanceBookingHours?: IntWithAggregatesFilter<"DoctorSettings"> | number
     maxDailyAppointments?: IntNullableWithAggregatesFilter<"DoctorSettings"> | number | null
   }
@@ -10666,10 +10643,9 @@ export namespace Prisma {
   export type DoctorSettingsCreateInput = {
     id: string
     isAvaliable: boolean
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments?: number | null
     doctor: DoctorCreateNestedOneWithoutSettingsInput
@@ -10679,10 +10655,9 @@ export namespace Prisma {
     id: string
     doctorId: string
     isAvaliable: boolean
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments?: number | null
   }
@@ -10690,10 +10665,9 @@ export namespace Prisma {
   export type DoctorSettingsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     isAvaliable?: BoolFieldUpdateOperationsInput | boolean
-    minAppointmentTime?: IntFieldUpdateOperationsInput | number
-    maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
+    maxSchedullingDays?: IntFieldUpdateOperationsInput | number
     advanceBookingHours?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     doctor?: DoctorUpdateOneRequiredWithoutSettingsNestedInput
@@ -10703,10 +10677,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     doctorId?: StringFieldUpdateOperationsInput | string
     isAvaliable?: BoolFieldUpdateOperationsInput | boolean
-    minAppointmentTime?: IntFieldUpdateOperationsInput | number
-    maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
+    maxSchedullingDays?: IntFieldUpdateOperationsInput | number
     advanceBookingHours?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -10715,10 +10688,9 @@ export namespace Prisma {
     id: string
     doctorId: string
     isAvaliable: boolean
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments?: number | null
   }
@@ -10726,10 +10698,9 @@ export namespace Prisma {
   export type DoctorSettingsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     isAvaliable?: BoolFieldUpdateOperationsInput | boolean
-    minAppointmentTime?: IntFieldUpdateOperationsInput | number
-    maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
+    maxSchedullingDays?: IntFieldUpdateOperationsInput | number
     advanceBookingHours?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -10738,10 +10709,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     doctorId?: StringFieldUpdateOperationsInput | string
     isAvaliable?: BoolFieldUpdateOperationsInput | boolean
-    minAppointmentTime?: IntFieldUpdateOperationsInput | number
-    maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
+    maxSchedullingDays?: IntFieldUpdateOperationsInput | number
     advanceBookingHours?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -11275,19 +11245,17 @@ export namespace Prisma {
     id?: SortOrder
     doctorId?: SortOrder
     isAvaliable?: SortOrder
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
   export type DoctorSettingsAvgOrderByAggregateInput = {
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrder
   }
@@ -11296,10 +11264,9 @@ export namespace Prisma {
     id?: SortOrder
     doctorId?: SortOrder
     isAvaliable?: SortOrder
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrder
   }
@@ -11308,19 +11275,17 @@ export namespace Prisma {
     id?: SortOrder
     doctorId?: SortOrder
     isAvaliable?: SortOrder
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
   export type DoctorSettingsSumOrderByAggregateInput = {
-    minAppointmentTime?: SortOrder
-    maxAppointmentTime?: SortOrder
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
+    maxSchedullingDays?: SortOrder
     advanceBookingHours?: SortOrder
     maxDailyAppointments?: SortOrder
   }
@@ -12649,10 +12614,9 @@ export namespace Prisma {
   export type DoctorSettingsCreateWithoutDoctorInput = {
     id: string
     isAvaliable: boolean
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments?: number | null
   }
@@ -12660,10 +12624,9 @@ export namespace Prisma {
   export type DoctorSettingsUncheckedCreateWithoutDoctorInput = {
     id: string
     isAvaliable: boolean
-    minAppointmentTime: number
-    maxAppointmentTime: number
     defaultDuration: number
     bufferBetween: number
+    maxSchedullingDays: number
     advanceBookingHours: number
     maxDailyAppointments?: number | null
   }
@@ -12793,10 +12756,9 @@ export namespace Prisma {
   export type DoctorSettingsUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
     isAvaliable?: BoolFieldUpdateOperationsInput | boolean
-    minAppointmentTime?: IntFieldUpdateOperationsInput | number
-    maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
+    maxSchedullingDays?: IntFieldUpdateOperationsInput | number
     advanceBookingHours?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -12804,10 +12766,9 @@ export namespace Prisma {
   export type DoctorSettingsUncheckedUpdateWithoutDoctorInput = {
     id?: StringFieldUpdateOperationsInput | string
     isAvaliable?: BoolFieldUpdateOperationsInput | boolean
-    minAppointmentTime?: IntFieldUpdateOperationsInput | number
-    maxAppointmentTime?: IntFieldUpdateOperationsInput | number
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
+    maxSchedullingDays?: IntFieldUpdateOperationsInput | number
     advanceBookingHours?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }

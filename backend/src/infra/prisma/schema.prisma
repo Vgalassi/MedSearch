@@ -130,12 +130,11 @@ model DoctorSettings {
   doctorId             String @unique @db.Uuid
   doctor               Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   isAvaliable          Boolean
-  minAppointmentTime   Int   
-  maxAppointmentTime   Int   
+
   defaultDuration      Int   
 
   bufferBetween        Int   
-
+  maxSchedullingDays   Int
   advanceBookingHours  Int   
 
   maxDailyAppointments Int?  

@@ -19,8 +19,7 @@ export class PrismaDoctorSettingsRepository implements DoctorSettingsRepository 
       {
         isAvaliable: row.isAvaliable,
         doctorId: new Identifier(row.doctorId),
-        minAppointmentTime: Time.createWithSeconds(row.minAppointmentTime),
-        maxAppointmentTime: Time.createWithSeconds(row.maxAppointmentTime),
+        maxSchedulingDays: row.maxSchedullingDays,
         defaultDuration: Time.createWithSeconds(row.defaultDuration),
         bufferBetween: Time.createWithSeconds(row.bufferBetween),
         advanceBookingHours: row.advanceBookingHours,

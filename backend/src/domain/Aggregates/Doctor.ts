@@ -36,6 +36,7 @@ export class Doctor extends AgregateRoot<DoctorProps> {
     return doctor;
   }
 
+
   constructor(props: DoctorProps, id?: Identifier) {
     super(props, id);
   }

@@ -77,10 +77,9 @@ CREATE TABLE "doctor_settings" (
     "id" UUID NOT NULL,
     "doctorId" UUID NOT NULL,
     "isAvaliable" BOOLEAN NOT NULL,
-    "minAppointmentTime" INTEGER NOT NULL,
-    "maxAppointmentTime" INTEGER NOT NULL,
     "defaultDuration" INTEGER NOT NULL,
     "bufferBetween" INTEGER NOT NULL,
+    "maxSchedullingDays" INTEGER NOT NULL,
     "advanceBookingHours" INTEGER NOT NULL,
     "maxDailyAppointments" INTEGER,
 

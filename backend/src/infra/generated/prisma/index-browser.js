@@ -174,10 +174,9 @@ exports.Prisma.DoctorSettingsScalarFieldEnum = {
   id: 'id',
   doctorId: 'doctorId',
   isAvaliable: 'isAvaliable',
-  minAppointmentTime: 'minAppointmentTime',
-  maxAppointmentTime: 'maxAppointmentTime',
   defaultDuration: 'defaultDuration',
   bufferBetween: 'bufferBetween',
+  maxSchedullingDays: 'maxSchedullingDays',
   advanceBookingHours: 'advanceBookingHours',
   maxDailyAppointments: 'maxDailyAppointments'
 };

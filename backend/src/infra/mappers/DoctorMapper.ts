@@ -12,10 +12,9 @@ type PrismaDoctorSettings = {
   id: string;
   doctorId: string;
   isAvaliable: boolean;
-  minAppointmentTime: number;
-  maxAppointmentTime: number;
   defaultDuration: number;
   bufferBetween: number;
+  maxSchedulingDays: number;
   advanceBookingHours: number;
   maxDailyAppointments: number | null;
 };
@@ -57,18 +56,13 @@ export class DoctorMapper {
               {
                 doctorId: new Identifier(raw.settings.doctorId),
                 isAvaliable: raw.settings.isAvaliable,
-                minAppointmentTime: Time.createWithSeconds(
-                  raw.settings.minAppointmentTime,
-                ),
-                maxAppointmentTime: Time.createWithSeconds(
-                  raw.settings.maxAppointmentTime,
-                ),
                 defaultDuration: Time.createWithSeconds(
                   raw.settings.defaultDuration,
                 ),
                 bufferBetween: Time.createWithSeconds(
                   raw.settings.bufferBetween,
                 ),
+                maxSchedulingDays: raw.settings.maxSchedulingDays,
                 advanceBookingHours: raw.settings.advanceBookingHours,
                 maxDailyAppointments: raw.settings.maxDailyAppointments,
               },
@@ -116,8 +110,7 @@ export class DoctorMapper {
             id: settings.id.value,
             doctorId: settings.props.doctorId.value,
             isAvaliable: settings.props.isAvaliable,
-            minAppointmentTime: settings.props.minAppointmentTime.value,
-            maxAppointmentTime: settings.props.maxAppointmentTime.value,
+            maxSchedulingDays: settings.props.maxSchedulingDays,
             defaultDuration: settings.props.defaultDuration.value,
             bufferBetween: settings.props.bufferBetween.value,
             advanceBookingHours: settings.props.advanceBookingHours,
