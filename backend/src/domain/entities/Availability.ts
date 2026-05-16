@@ -12,6 +12,8 @@ export type AvailabilityProps = {
     endTime: Time
 }
 
+
+
 export class Availability extends Entity<AvailabilityProps>{
     static createDefault(doctorId: Identifier): Availability{
         return new Availability(

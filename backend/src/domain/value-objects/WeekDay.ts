@@ -27,6 +27,21 @@ export class WeekDay {
     }
   }
 
+  public getWeekNumber(): number {
+
+      const map: Record<WeekDayType, number> = {
+          MONDAY: 1,
+          TUESDAY: 2,
+          WEDNESDAY: 3,
+          THURSDAY: 4,
+          FRIDAY: 5,
+          SATURDAY: 6,
+          SUNDAY: 0
+      }
+
+      return map[this._day]
+  }
+
   public get value(): WeekDayType {
     return this._day;
   }
