@@ -1,6 +1,7 @@
 import { AgregateRoot } from "../value-objects/AgregateRoot";
 import type { Identifier } from "../value-objects/Identifier";
 import { CannotCancelAppointmentError } from "../errors/CannotCancelAppointmentError";
+import { Time } from "../value-objects/Time";
 
 export type AppointmentStatusValue =
   | "SCHEDULED"
@@ -11,19 +12,22 @@ export type AppointmentStatusValue =
 export type AppointmentProps = {
   patientId: Identifier;
   doctorId: Identifier;
-  startTime: Date;
-  endTime: Date;
+  startTime: Time;
+  endTime: Time;
+  day: Date;
   status: AppointmentStatusValue;
   reason?: string | null;
   notes?: string | null;
 };
 
+
 export class Appointment extends AgregateRoot<AppointmentProps> {
   static createScheduled(input: {
     patientId: Identifier;
     doctorId: Identifier;
-    startTime: Date;
-    endTime: Date;
+    startTime: Time;
+    endTime: Time;
+    day: Date;
     reason?: string | null;
     notes?: string | null;
     id?: Identifier;
@@ -34,6 +38,7 @@ export class Appointment extends AgregateRoot<AppointmentProps> {
         doctorId: input.doctorId,
         startTime: input.startTime,
         endTime: input.endTime,
+        day: input.day,
         status: "SCHEDULED",
         reason: input.reason ?? null,
         notes: input.notes ?? null,

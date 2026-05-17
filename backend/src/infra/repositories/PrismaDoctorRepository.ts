@@ -24,7 +24,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
                 create: {
                   id: data.settings.id,
                   isAvaliable: data.settings.isAvaliable,
-                  maxSchedullingDays: data.settings.maxSchedulingDays,
+                  maxSchedullingDays: data.settings.maxSchedullingDays,
                   defaultDuration: data.settings.defaultDuration,
                   bufferBetween: data.settings.bufferBetween,
                   advanceBookingHours: data.settings.advanceBookingHours,

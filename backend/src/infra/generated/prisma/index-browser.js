@@ -163,6 +163,7 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   doctorId: 'doctorId',
   startTime: 'startTime',
   endTime: 'endTime',
+  day: 'day',
   status: 'status',
   reason: 'reason',
   notes: 'notes',

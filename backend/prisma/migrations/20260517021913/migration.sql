@@ -61,8 +61,9 @@ CREATE TABLE "appointments" (
     "id" UUID NOT NULL,
     "patientId" UUID NOT NULL,
     "doctorId" UUID NOT NULL,
-    "startTime" TIMESTAMP(3) NOT NULL,
-    "endTime" TIMESTAMP(3) NOT NULL,
+    "startTime" INTEGER NOT NULL,
+    "endTime" INTEGER NOT NULL,
+    "day" TIMESTAMP(3) NOT NULL,
     "status" "AppointmentStatus" NOT NULL DEFAULT 'SCHEDULED',
     "reason" TEXT,
     "notes" TEXT,
@@ -117,10 +118,10 @@ CREATE UNIQUE INDEX "doctors_userId_key" ON "doctors"("userId");
 CREATE UNIQUE INDEX "doctors_crm_key" ON "doctors"("crm");
 
 -- CreateIndex
-CREATE INDEX "appointments_doctorId_startTime_idx" ON "appointments"("doctorId", "startTime");
+CREATE INDEX "appointments_doctorId_day_startTime_idx" ON "appointments"("doctorId", "day", "startTime");
 
 -- CreateIndex
-CREATE INDEX "appointments_patientId_startTime_idx" ON "appointments"("patientId", "startTime");
+CREATE INDEX "appointments_patientId_day_startTime_idx" ON "appointments"("patientId", "day", "startTime");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "doctor_settings_doctorId_key" ON "doctor_settings"("doctorId");

@@ -119,16 +119,13 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
     return rows.map((r) => AppointmentMapper.toDomain(r as never));
   }
 
-  async findScheduledByDoctorBetween(
+  async findScheduledByDoctor(
     doctorId: string,
-    rangeStart: Date,
-    rangeEnd: Date,
   ): Promise<Appointment[]> {
     const rows = await prisma.appointment.findMany({
       where: {
         doctorId,
-        status: AppointmentStatus.SCHEDULED,
-        startTime: { gte: rangeStart, lt: rangeEnd },
+        status: AppointmentStatus.SCHEDULED
       },
       orderBy: { startTime: "asc" },
     });

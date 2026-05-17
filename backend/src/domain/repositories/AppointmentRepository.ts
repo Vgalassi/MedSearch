@@ -21,10 +21,8 @@ export interface AppointmentRepository {
 
   findByDoctorId(doctorId: string): Promise<Appointment[]>;
 
-  findScheduledByDoctorBetween(
+  findScheduledByDoctor(
     doctorId: string,
-    rangeStart: Date,
-    rangeEnd: Date,
   ): Promise<Appointment[]>;
 
   countScheduledByDoctorBetween(
