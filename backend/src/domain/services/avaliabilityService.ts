@@ -32,7 +32,6 @@ export function getWeekDaysFromAvaliabilities(
 
 
 export function isOnDayRange(dayNumber: number, dayRange: WeekDayRange ){
-
     for(let i = 0; i< dayRange.range.length; i++){
         if(dayNumber === dayRange.range[i]?.getWeekNumber()){
             return true
@@ -51,7 +50,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
         return []
     }
     const dayAvailabilities = doctor.props.Availabilities.filter((availability) => {
-        return isOnDayRange(day.getDay(), availability.props.weekDayRange)
+        return isOnDayRange(day.getUTCDay(), availability.props.weekDayRange)
     })
     if(dayAvailabilities.length == 0){
         return []
@@ -64,9 +63,10 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
             .toDateString() ===
             day.toDateString()
     )
+    console.log(dateAppointments)
 
     const availableSlots: Time[] = []
-
+    const buffer = doctor.props.schedulingSettings.props.bufferBetween.value
     for(const availability of dayAvailabilities){
         let currentSeconds =
             availability
@@ -80,7 +80,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
             .endTime
             .value
 
-        while(currentSeconds + defaultDuration.value <= endSeconds){
+        while(currentSeconds + defaultDuration.value   <= endSeconds){
             const slotStart = Time.createWithSeconds(currentSeconds)
             const slotEnd =  Time.createWithSeconds(currentSeconds + defaultDuration.value)
 
@@ -107,7 +107,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
                 )
             }
             currentSeconds +=
-                defaultDuration.value*60
+                defaultDuration.value + buffer
         }
 
     }
@@ -127,7 +127,9 @@ export function getAvaliableDays(doctor: Doctor, appointments: Appointment[]){
     for(let i = 0; i < maxSchedulingDays; i++){
         const current = new Date(today)
         current.setDate(today.getDate() + i)
-        if(isOnDayRange(current.getDay(),weekDays) && getAvaliableDayTimes(appointments,current,doctor).length > 0){
+        if(isOnDayRange(current.getUTCDay(),weekDays) && getAvaliableDayTimes(appointments,current,doctor).length > 0){
+            console.log(current)
+            console.log(getAvaliableDayTimes(appointments,current,doctor))
             avaliableDays.push(current)
         }
 

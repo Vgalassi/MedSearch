@@ -7,4 +7,5 @@ export interface DoctorRepository{
     findAll(): Promise<Doctor[]>
 
     update(doctor: Doctor): Promise<Doctor>
+    updateScheduling(doctor: Doctor): Promise<Doctor>
 }

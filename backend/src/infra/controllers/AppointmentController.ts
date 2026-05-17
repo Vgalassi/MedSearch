@@ -14,6 +14,7 @@ import {
   doctorIdParamsSchema,
   patientIdParamsSchema,
 } from "../schemas/appointmentSchemas";
+import { prisma } from "../../lib/prisma";
 
 function toAppointmentDto(appointment: Appointment) {
   return {
@@ -27,6 +28,62 @@ function toAppointmentDto(appointment: Appointment) {
     reason: appointment.props.reason ?? null,
     notes: appointment.props.notes ?? null,
   };
+}
+
+function formatTimeFromSeconds(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+}
+
+function toDetailedAppointmentDto(row: Awaited<ReturnType<typeof findDetailedAppointments>>[number]) {
+  return {
+    id: row.id,
+    patientId: row.patientId,
+    doctorId: row.doctorId,
+    startTime: formatTimeFromSeconds(row.startTime),
+    endTime: formatTimeFromSeconds(row.endTime),
+    day: row.day.toISOString(),
+    status: row.status,
+    reason: row.reason ?? null,
+    notes: row.notes ?? null,
+    doctor: {
+      id: row.doctor.id,
+      name: row.doctor.name,
+      phone: row.doctor.phone,
+      crm: row.doctor.crm,
+      speciality: row.doctor.speciality,
+    },
+    clinic: row.doctor.clinic
+      ? {
+          id: row.doctor.clinic.id,
+          name: row.doctor.clinic.name,
+          phone: row.doctor.clinic.phone,
+          address: row.doctor.clinic.address,
+          cep: row.doctor.clinic.cep,
+        }
+      : null,
+    patient: {
+      id: row.patient.id,
+      name: row.patient.name,
+      phone: row.patient.phone,
+    },
+  };
+}
+
+function findDetailedAppointments(where: { patientId?: string; doctorId?: string }) {
+  return prisma.appointment.findMany({
+    where,
+    include: {
+      patient: true,
+      doctor: {
+        include: {
+          clinic: true,
+        },
+      },
+    },
+    orderBy: [{ day: "asc" }, { startTime: "asc" }],
+  });
 }
 
 @injectable()
@@ -51,11 +108,13 @@ export class AppointmentController {
       doctorId: body.doctorId,
       startTime: body.startTime,
       endTime: body.endTime,
+      day: new Date(body.day),
       reason: body.reason ?? null,
       notes: body.notes ?? null,
     });
     return res.status(201).send({ appointment: toAppointmentDto(created) });
   }
+
 
   async cancel(req: FastifyRequest, res: FastifyReply) {
     const params = appointmentIdParamsSchema.parse(req.params);
@@ -80,6 +139,28 @@ export class AppointmentController {
     );
     return res.status(200).send({
       appointments: list.map(toAppointmentDto),
+    });
+  }
+
+  async listDetailedByPatient(req: FastifyRequest, res: FastifyReply) {
+    const params = patientIdParamsSchema.parse(req.params);
+    const appointments = await findDetailedAppointments({
+      patientId: params.patientId,
+    });
+
+    return res.status(200).send({
+      appointments: appointments.map(toDetailedAppointmentDto),
+    });
+  }
+
+  async listDetailedByDoctor(req: FastifyRequest, res: FastifyReply) {
+    const params = doctorIdParamsSchema.parse(req.params);
+    const appointments = await findDetailedAppointments({
+      doctorId: params.doctorId,
+    });
+
+    return res.status(200).send({
+      appointments: appointments.map(toDetailedAppointmentDto),
     });
   }
 

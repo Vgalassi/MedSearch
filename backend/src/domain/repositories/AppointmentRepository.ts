@@ -8,9 +8,9 @@ export type AppointmentConcurrencyParams = {
 };
 
 export interface AppointmentRepository {
-  createWithConcurrencyGuard(
-    appointment: Appointment,
-    params: AppointmentConcurrencyParams,
+  create(
+    create: Appointment,
+    
   ): Promise<Appointment>;
 
   update(appointment: Appointment): Promise<Appointment>;

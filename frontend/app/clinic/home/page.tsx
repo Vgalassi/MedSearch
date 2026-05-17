@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Doctor } from "@/components/types/Doctor";
 import { ClinicDoctorSection } from "@/components/ClinicDoctorSection";
 
-const CLINIC_ID = "26df81a4-f818-4043-ac31-5dc44a615c79";
+const CLINIC_ID = "3d1ef301-70fd-46f6-8478-7a20e08d1615";
 
 export default function ClinicHomePage() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);

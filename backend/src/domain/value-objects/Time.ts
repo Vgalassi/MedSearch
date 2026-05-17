@@ -26,6 +26,15 @@ export class Time {
      return new Time(hours,minutes)
   }
   
+  public static createWithString(time: string): Time {
+    const [hour, minute] =
+        time.split(":")
+
+    return new Time(
+        Number(hour),
+        Number(minute)
+    )
+}
 
   public isBehind(comparedTime: Time): boolean{
     const seconds = this.hour * 3600 + this.minute * 60

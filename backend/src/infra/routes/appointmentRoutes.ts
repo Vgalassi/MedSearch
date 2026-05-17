@@ -55,9 +55,23 @@ export default async function appointmentRoutes(app: FastifyInstance) {
   );
 
   app.get(
+    "/appointments/patient/:patientId/details",
+    async (req: FastifyRequest, res: FastifyReply) => {
+      await appointmentController.listDetailedByPatient(req, res);
+    },
+  );
+
+  app.get(
     "/appointments/doctor/:doctorId",
     async (req: FastifyRequest, res: FastifyReply) => {
       await appointmentController.listByDoctor(req, res);
+    },
+  );
+
+  app.get(
+    "/appointments/doctor/:doctorId/details",
+    async (req: FastifyRequest, res: FastifyReply) => {
+      await appointmentController.listDetailedByDoctor(req, res);
     },
   );
 

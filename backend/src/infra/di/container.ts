@@ -30,7 +30,9 @@ import { CancelAppointmentUseCase } from "../../app/usecases/CancelAppointmentUs
 import { ListPatientAppointmentsUseCase } from "../../app/usecases/ListPatientAppointmentsUseCase";
 import { ListDoctorAppointmentsUseCase } from "../../app/usecases/ListDoctorAppointmentsUseCase";
 import { ListDoctorAvailableSlotsUseCase } from "../../app/usecases/ListDoctorAvailableSlotsUseCase";
-
+import { GetDoctorAvailableHoursUseCase } from "../../app/usecases/GetAvailableHoursUseCase";
+import { GetDoctorSchedulingUseCase } from "../../app/usecases/GetDoctorSchedulingUseCase";
+import { UpdateDoctorSchedulingUseCase } from "../../app/usecases/UpdateDoctorSchedulingUseCase";
 const container = new Container();
 
 container.bind<UserRepository>(TYPES.UserRepository).to(PrismaUserRepository);
@@ -47,6 +49,18 @@ container.bind<GetAllDoctorsUseCase>(TYPES.GetAllDoctorsUseCase).to(GetAllDoctor
 container
   .bind<GetDoctorAvailableDaysUseCase>(TYPES.GetDoctorAvailableDaysUseCase)
   .to(GetDoctorAvailableDaysUseCase);
+
+container
+  .bind<GetDoctorAvailableHoursUseCase>(TYPES.GetDoctorAvailableHoursUseCase)
+  .to(GetDoctorAvailableHoursUseCase);
+container
+  .bind<GetDoctorSchedulingUseCase>(TYPES.GetDoctorSchedulingUseCase)
+  .to(GetDoctorSchedulingUseCase);
+container
+  .bind<UpdateDoctorSchedulingUseCase>(
+    TYPES.UpdateDoctorSchedulingUseCase,
+  )
+  .to(UpdateDoctorSchedulingUseCase);
 container
   .bind<AppointmentRepository>(TYPES.AppointmentRepository)
   .to(PrismaAppointmentRepository);

@@ -13,6 +13,9 @@ export const TYPES = {
     FindClinicByIdUseCase: Symbol.for("FindClinicByIdUseCase"),
     GetAllDoctorsUseCase: Symbol.for("GetAllDoctorsUseCase"),
     GetDoctorAvailableDaysUseCase: Symbol.for("GetDoctorAvailableDaysUseCase"),
+    GetDoctorAvailableHoursUseCase: Symbol.for("GetDoctorAvailableHoursUseCase"),
+    GetDoctorSchedulingUseCase: Symbol.for("GetDoctorSchedulingUseCase"),
+    UpdateDoctorSchedulingUseCase: Symbol.for("UpdateDoctorSchedulingUseCase"),
     AppointmentRepository: Symbol.for("AppointmentRepository"),
     DoctorSettingsRepository: Symbol.for("DoctorSettingsRepository"),
     AvailabilityRepository: Symbol.for("AvailabilityRepository"),
@@ -22,5 +25,6 @@ export const TYPES = {
     ListDoctorAppointmentsUseCase: Symbol.for("ListDoctorAppointmentsUseCase"),
     ListDoctorAvailableSlotsUseCase: Symbol.for("ListDoctorAvailableSlotsUseCase"),
     HashGenerator: Symbol.for("HashGenerator"),
+
     
 };

@@ -8,22 +8,16 @@ import type { AvailabilityRepository } from "../../domain/repositories/Availabil
 import type { DoctorSettingsRepository } from "../../domain/repositories/DoctorSettingsRepository";
 import type { PatientRepository } from "../../domain/repositories/PatientRepository";
 import type { DoctorRepository } from "../../domain/repositories/DoctorRepository";
-import {
-  assertAdvanceBooking,
-  assertDurationInRange,
-  assertNotInPast,
-  assertWithinAvailability,
-  durationMinutes,
-  utcDayBounds,
-} from "../../domain/services/appointmentSchedulingPolicy";
+import { getAvaliableDayTimes } from "../../domain/services/avaliabilityService";
 import { Identifier } from "../../domain/value-objects/Identifier";
-import { InvalidAppointmentTimeOrderError } from "../../domain/errors/InvalidAppointmentTimeOrderError";
-
+import { Time } from "../../domain/value-objects/Time";
+import { AppointmentOutsideAvailabilityError } from "../../domain/errors/AppointmentOutsideAvailabilityError";
 export type CreateAppointmentInput = {
   patientId: string;
   doctorId: string;
   startTime: string;
   endTime: string;
+  day: Date;
   reason?: string | null;
   notes?: string | null;
 };
@@ -60,46 +54,39 @@ export class CreateAppointmentUseCase {
     if (!settings) {
       throw new DoctorSettingsNotFoundError(input.doctorId);
     }
-    const schedulingSettings = settings.props;
 
-    const availability = await this.availabilityRepository.findByDoctorId(
-      input.doctorId,
-    );
 
-    const start = new Date(input.startTime);
-    const end = new Date(input.endTime);
-    const now = new Date();
+    const appointments = await this.appointmentRepository.findScheduledByDoctor(input.doctorId)
+    const slots = getAvaliableDayTimes(appointments,input.day,doctor)
 
-    const duration = durationMinutes(start, end);
-    if (duration <= 0) {
-      throw new InvalidAppointmentTimeOrderError();
+    const startTime = Time.createWithString(input.startTime)
+    const endTime = Time.createWithString(input.endTime)
+    console.log(slots)
+    if(!this.checkSlots(slots,startTime)){
+      throw new AppointmentOutsideAvailabilityError
     }
-
-    assertNotInPast(start, now);
-    assertAdvanceBooking(start, now, schedulingSettings.advanceBookingHours);
-    assertDurationInRange(
-      duration,
-      schedulingSettings.minAppointmentTime.value / 60,
-      schedulingSettings.maxAppointmentTime.value / 60,
-    );
-    assertWithinAvailability(start, end, availability);
-
-    const { dayStart, dayEnd } = utcDayBounds(start);
+    
 
     const appointment = Appointment.createScheduled({
       patientId: new Identifier(input.patientId),
       doctorId: new Identifier(input.doctorId),
-      startTime: start,
-      endTime: end,
+      startTime: startTime,
+      endTime: endTime,
+      day: input.day,
       reason: input.reason ?? null,
       notes: input.notes ?? null,
     });
 
-    return this.appointmentRepository.createWithConcurrencyGuard(appointment, {
-      bufferBetweenMinutes: schedulingSettings.bufferBetween.value / 60,
-      maxDailyAppointments: schedulingSettings.maxDailyAppointments,
-      dayStartUtc: dayStart,
-      dayEndUtc: dayEnd,
-    });
+    return this.appointmentRepository.create(appointment);
+  }
+
+
+  checkSlots(slots: Time[],startTime: Time): boolean{
+    for(const slot of slots){
+      if(slot.value == startTime.value){
+        return true
+      }
+    }
+    return false
   }
 }

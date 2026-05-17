@@ -4,6 +4,7 @@ import { Clinic } from "@/components/types/Clinic";
 import { useState, useEffect } from "react";
 import { Doctor } from "@/components/types/Doctor";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 export default function ClinicDetails() {
   const params = useParams<{ id: string }>();
@@ -103,9 +104,12 @@ export default function ClinicDetails() {
                   <p>CRM: {doctor.crm}</p>
                   <p>Telefone: {doctor.phone}</p>
                 </div>
-                <button className="btn-primary mt-5 w-full" type="button">
+                <Link
+                  className="btn-primary mt-5 w-full"
+                  href={`/patient/home/${params.id}/${doctor.id}`}
+                >
                   Agendar consulta
-                </button>
+                </Link>
               </article>
             ))}
           </div>

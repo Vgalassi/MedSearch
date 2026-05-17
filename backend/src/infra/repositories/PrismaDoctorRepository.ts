@@ -94,4 +94,64 @@ export class PrismaDoctorRepository implements DoctorRepository {
 
     return DoctorMapper.toDomain(updatedDoctor as never);
   }
+
+  async updateScheduling(doctor: Doctor): Promise<Doctor> {
+    const data = DoctorMapper.toPersistence(doctor);
+
+    const updatedDoctor = await prisma.$transaction(async (tx) => {
+      await tx.doctor.update({
+        where: { id: doctor.id.value },
+        data: {
+          ...(data.settings
+            ? {
+                settings: {
+                  upsert: {
+                    create: {
+                      id: data.settings.id,
+                      isAvaliable: data.settings.isAvaliable,
+                      maxSchedullingDays: data.settings.maxSchedullingDays,
+                      defaultDuration: data.settings.defaultDuration,
+                      bufferBetween: data.settings.bufferBetween,
+                      advanceBookingHours: data.settings.advanceBookingHours,
+                      maxDailyAppointments: data.settings.maxDailyAppointments,
+                    },
+                    update: {
+                      isAvaliable: data.settings.isAvaliable,
+                      maxSchedullingDays: data.settings.maxSchedullingDays,
+                      defaultDuration: data.settings.defaultDuration,
+                      bufferBetween: data.settings.bufferBetween,
+                      advanceBookingHours: data.settings.advanceBookingHours,
+                      maxDailyAppointments: data.settings.maxDailyAppointments,
+                    },
+                  },
+                },
+              }
+            : {}),
+        },
+      });
+
+      await tx.availability.deleteMany({
+        where: { doctorId: doctor.id.value },
+      });
+
+      if (data.availabilities?.length) {
+        await tx.availability.createMany({
+          data: data.availabilities.map((availability) => ({
+            id: availability.id,
+            doctorId: doctor.id.value,
+            weekdays: availability.weekdays,
+            startMinutes: availability.startMinutes,
+            endMinutes: availability.endMinutes,
+          })),
+        });
+      }
+
+      return tx.doctor.findUniqueOrThrow({
+        where: { id: doctor.id.value },
+        include: { settings: true, availabilities: true },
+      });
+    });
+
+    return DoctorMapper.toDomain(updatedDoctor as never);
+  }
 }

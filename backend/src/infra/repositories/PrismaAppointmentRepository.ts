@@ -1,83 +1,17 @@
 import { injectable } from "inversify";
 import { Appointment } from "../../domain/Aggregates/Appointment";
-import type {
-  AppointmentConcurrencyParams,
-  AppointmentRepository,
-} from "../../domain/repositories/AppointmentRepository";
-import { conflictsWithBuffer } from "../../domain/services/appointmentSchedulingPolicy";
+import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
 import { prisma } from "../../lib/prisma";
 import { AppointmentMapper } from "../mappers/AppointmentMapper";
-import { AppointmentStatus, Prisma } from "../generated/prisma/client";
-import { AppointmentSchedulingConflictError } from "../../domain/errors/AppointmentSchedulingConflictError";
-import { DailyAppointmentLimitReachedError } from "../../domain/errors/DailyAppointmentLimitReachedError";
+import { AppointmentStatus } from "../generated/prisma/client";
 
 @injectable()
 export class PrismaAppointmentRepository implements AppointmentRepository {
-  async createWithConcurrencyGuard(
-    appointment: Appointment,
-    params: AppointmentConcurrencyParams,
-  ): Promise<Appointment> {
+  async create(appointment: Appointment): Promise<Appointment> {
     const data = AppointmentMapper.toPersistence(appointment);
-    const bufferMs = params.bufferBetweenMinutes * 60_000;
+    const created = await prisma.appointment.create({ data });
 
-    const rangeStart = new Date(data.startTime.getTime() - bufferMs);
-    const rangeEnd = new Date(data.endTime.getTime() + bufferMs);
-
-    return prisma.$transaction(
-      async (tx) => {
-        if (params.maxDailyAppointments != null) {
-          const count = await tx.appointment.count({
-            where: {
-              doctorId: data.doctorId,
-              status: AppointmentStatus.SCHEDULED,
-              startTime: {
-                gte: params.dayStartUtc,
-                lt: params.dayEndUtc,
-              },
-            },
-          });
-          if (count >= params.maxDailyAppointments) {
-            throw new DailyAppointmentLimitReachedError(
-              params.maxDailyAppointments,
-            );
-          }
-        }
-
-        const candidates = await tx.appointment.findMany({
-          where: {
-            doctorId: data.doctorId,
-            status: AppointmentStatus.SCHEDULED,
-            startTime: { lt: rangeEnd },
-            endTime: { gt: rangeStart },
-          },
-        });
-
-        for (const row of candidates) {
-          if (
-            conflictsWithBuffer(
-              data.startTime,
-              data.endTime,
-              row.startTime,
-              row.endTime,
-              params.bufferBetweenMinutes,
-            )
-          ) {
-            throw new AppointmentSchedulingConflictError();
-          }
-        }
-
-        const created = await tx.appointment.create({
-          data,
-        });
-
-        return AppointmentMapper.toDomain(created as never);
-      },
-      {
-        isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-        maxWait: 5_000,
-        timeout: 10_000,
-      },
-    );
+    return AppointmentMapper.toDomain(created as never);
   }
 
   async update(appointment: Appointment): Promise<Appointment> {
@@ -90,6 +24,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
         notes: data.notes,
         startTime: data.startTime,
         endTime: data.endTime,
+        day: data.day,
       },
     });
     return AppointmentMapper.toDomain(updated as never);
@@ -141,7 +76,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
       where: {
         doctorId,
         status: AppointmentStatus.SCHEDULED,
-        startTime: { gte: rangeStart, lt: rangeEnd },
+        day: { gte: rangeStart, lt: rangeEnd },
       },
     });
   }
