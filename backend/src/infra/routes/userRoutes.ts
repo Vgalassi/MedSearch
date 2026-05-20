@@ -17,4 +17,21 @@ export default async function userRoutes(app: FastifyInstance){
  app.post("/users/login", async(req:FastifyRequest, res: FastifyReply)=>{
   await userController.login(req,res)
  })
+  app.get("/me",
+  async(req,reply)=>{
+
+    if(!req.session.userId){
+
+        return reply
+        .status(401)
+        .send();
+    }
+
+    return {
+        id:req.session.userId,
+        role:req.session.role,
+        email: req.session.email
+    };
+
+  });
 }

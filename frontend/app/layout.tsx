@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import MainHeader from "@/components/MainHeader";
-
+import { AuthProvider } from "@/context/AuthContext";
 export const metadata: Metadata = {
   title: "MedSearch",
   description: "Agendamento e gerenciamento online de consultas medicas.",
@@ -19,8 +19,10 @@ export default function RootLayout({
     >
 
       <body className="min-h-full flex flex-col">
-        <MainHeader />
-        {children}
+        <AuthProvider>
+          <MainHeader />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

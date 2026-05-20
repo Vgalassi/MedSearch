@@ -1,6 +1,40 @@
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/components/appConfig";
 
 export default function LoginPage() {
+
+  const router = useRouter();
+
+  async function handleSubmit(formData: FormData){
+      const email =  formData.get("email");
+      const password = formData.get("password");
+      const response =
+      await fetch(
+          `${API_BASE_URL}/users/login`,
+          {
+            method:"POST",
+            credentials:"include",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                email,
+                password
+            })
+          }
+      );
+
+      if(response.ok){
+          router.push("/patient/home");
+      }else{
+          alert(
+            "Email ou senha inválidos"
+          );
+      }
+  }
+
   return (
     <main className="page-shell grid place-items-center">
       <div className="grid w-full max-w-5xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl shadow-slate-200/70 lg:grid-cols-[0.9fr_1.1fr]">
@@ -15,7 +49,7 @@ export default function LoginPage() {
         </section>
 
         <section className="p-8 sm:p-10">
-          <form action="" className="mx-auto max-w-md">
+          <form action={handleSubmit} className="mx-auto max-w-md">
             <div>
               <p className="section-kicker">Login</p>
               <h2 className="mt-3 text-2xl font-bold text-slate-950">

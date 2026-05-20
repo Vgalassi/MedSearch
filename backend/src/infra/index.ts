@@ -13,8 +13,8 @@ const app = Fastify({
 })
 
 await app.register(cors, {
-
-  origin: true,
+  origin: "http://localhost:3001",
+  credentials: true,
   methods: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 })

@@ -24,9 +24,10 @@ export class UserController{
 
     async login(req:FastifyRequest, res: FastifyReply ){
         const body = loginSchema.parse(req.body)
-        const userSession = await this.loginUserUseCase.execute({email: body.email, password: body.password})
-        req.session.userId = userSession.id.value;
-        req.session.role = userSession.props.role;
+        const user = await this.loginUserUseCase.execute({email: body.email, password: body.password})
+        req.session.userId = user.id.value;
+        req.session.role = user.props.role;
+        req.session.email = user.props.email.email
         return res.status(200).send({
             success: true
         })

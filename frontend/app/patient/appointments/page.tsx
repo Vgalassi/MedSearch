@@ -21,6 +21,9 @@ export default function PatientAppointmentsPage() {
       try {
         const response = await fetch(
           `${API_BASE_URL}/appointments/patient/${FIXED_PATIENT_ID}/details`,
+          {
+            credentials: "include"
+          }
         );
         const data = await response.json();
 
