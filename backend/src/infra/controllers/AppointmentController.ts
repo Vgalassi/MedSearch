@@ -6,7 +6,6 @@ import { CreateAppointmentUseCase } from "../../app/usecases/CreateAppointmentUs
 import { CancelAppointmentUseCase } from "../../app/usecases/CancelAppointmentUseCase";
 import { ListPatientAppointmentsUseCase } from "../../app/usecases/ListPatientAppointmentsUseCase";
 import { ListDoctorAppointmentsUseCase } from "../../app/usecases/ListDoctorAppointmentsUseCase";
-import { ListDoctorAvailableSlotsUseCase } from "../../app/usecases/ListDoctorAvailableSlotsUseCase";
 import {
   appointmentIdParamsSchema,
   availableSlotsQuerySchema,
@@ -15,6 +14,7 @@ import {
   patientIdParamsSchema,
 } from "../schemas/appointmentSchemas";
 import { prisma } from "../../lib/prisma";
+import { Auth } from "../auth/authDecorator";
 
 function toAppointmentDto(appointment: Appointment) {
   return {
@@ -96,11 +96,11 @@ export class AppointmentController {
     @inject(TYPES.ListPatientAppointmentsUseCase)
     private readonly listPatientAppointmentsUseCase: ListPatientAppointmentsUseCase,
     @inject(TYPES.ListDoctorAppointmentsUseCase)
-    private readonly listDoctorAppointmentsUseCase: ListDoctorAppointmentsUseCase,
-    @inject(TYPES.ListDoctorAvailableSlotsUseCase)
-    private readonly listDoctorAvailableSlotsUseCase: ListDoctorAvailableSlotsUseCase,
+    private readonly listDoctorAppointmentsUseCase: ListDoctorAppointmentsUseCase
+   
   ) {}
 
+  @Auth("PATIENT")
   async create(req: FastifyRequest, res: FastifyReply) {
     const body = createAppointmentBodySchema.parse(req.body);
     const created = await this.createAppointmentUseCase.execute({
@@ -115,13 +115,15 @@ export class AppointmentController {
     return res.status(201).send({ appointment: toAppointmentDto(created) });
   }
 
-
+  @Auth("PATIENT","DOCTOR")
   async cancel(req: FastifyRequest, res: FastifyReply) {
     const params = appointmentIdParamsSchema.parse(req.params);
     const updated = await this.cancelAppointmentUseCase.execute(params.id);
     return res.status(200).send({ appointment: toAppointmentDto(updated) });
   }
 
+
+  @Auth("PATIENT")
   async listByPatient(req: FastifyRequest, res: FastifyReply) {
     const params = patientIdParamsSchema.parse(req.params);
     const list = await this.listPatientAppointmentsUseCase.execute(
@@ -132,6 +134,7 @@ export class AppointmentController {
     });
   }
 
+  @Auth("DOCTOR")
   async listByDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamsSchema.parse(req.params);
     const list = await this.listDoctorAppointmentsUseCase.execute(
@@ -142,6 +145,7 @@ export class AppointmentController {
     });
   }
 
+  @Auth("PATIENT")
   async listDetailedByPatient(req: FastifyRequest, res: FastifyReply) {
     const params = patientIdParamsSchema.parse(req.params);
     const appointments = await findDetailedAppointments({
@@ -153,6 +157,7 @@ export class AppointmentController {
     });
   }
 
+  @Auth("DOCTOR")
   async listDetailedByDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamsSchema.parse(req.params);
     const appointments = await findDetailedAppointments({
@@ -164,19 +169,5 @@ export class AppointmentController {
     });
   }
 
-  async listAvailableSlots(req: FastifyRequest, res: FastifyReply) {
-    const params = doctorIdParamsSchema.parse(req.params);
-    const query = availableSlotsQuerySchema.parse(req.query);
-    const payload: Parameters<
-      ListDoctorAvailableSlotsUseCase["execute"]
-    >[0] = {
-      doctorId: params.doctorId,
-      date: query.date,
-    };
-    if (query.durationMinutes !== undefined) {
-      payload.durationMinutes = query.durationMinutes;
-    }
-    const slots = await this.listDoctorAvailableSlotsUseCase.execute(payload);
-    return res.status(200).send({ slots });
-  }
+  
 }

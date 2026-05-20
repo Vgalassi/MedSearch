@@ -2,7 +2,7 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../app/dto/types";
 import { GetAllDoctorsUseCase } from "../../app/usecases/GetAllDoctorsUseCase";
-import { GetDoctorAvailableDaysUseCase } from "../../app/usecases/getDoctorAvailableDaysUsecase";
+import { GetDoctorAvailableDaysUseCase } from "../../app/usecases/GetDoctorAvailableDaysUsecase";
 import {
   doctorAvailableHoursSchema,
   doctorIdParamSchema,
@@ -11,6 +11,7 @@ import {
 import { GetDoctorAvailableHoursUseCase } from "../../app/usecases/GetAvailableHoursUseCase";
 import { GetDoctorSchedulingUseCase } from "../../app/usecases/GetDoctorSchedulingUseCase";
 import { UpdateDoctorSchedulingUseCase } from "../../app/usecases/UpdateDoctorSchedulingUseCase";
+import { Auth } from "../auth/authDecorator";
 
 function toSchedulingDto(
   doctor: Awaited<ReturnType<GetDoctorSchedulingUseCase["execute"]>>,
@@ -74,7 +75,7 @@ export class DoctorController {
       })),
     });
   }
-
+  @Auth("PATIENT")
   async getAvailableDays(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamSchema.parse(req.params);
     const days = await this.getDoctorAvailableDaysUseCase.execute(params.id);
@@ -85,7 +86,7 @@ export class DoctorController {
     });
   }
 
-
+  @Auth("PATIENT")
   async getAvailableHours(req: FastifyRequest,res: FastifyReply){
     const params = doctorIdParamSchema.parse(req.params)
     const body = doctorAvailableHoursSchema.parse(req.body)
@@ -101,6 +102,7 @@ export class DoctorController {
     });
   }
 
+  @Auth("DOCTOR")
   async updateScheduling(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamSchema.parse(req.params);
     const body = updateDoctorSchedulingSchema.parse(req.body);

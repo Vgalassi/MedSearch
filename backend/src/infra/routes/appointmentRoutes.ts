@@ -6,7 +6,6 @@ import { CreateAppointmentUseCase } from "../../app/usecases/CreateAppointmentUs
 import { CancelAppointmentUseCase } from "../../app/usecases/CancelAppointmentUseCase";
 import { ListPatientAppointmentsUseCase } from "../../app/usecases/ListPatientAppointmentsUseCase";
 import { ListDoctorAppointmentsUseCase } from "../../app/usecases/ListDoctorAppointmentsUseCase";
-import { ListDoctorAvailableSlotsUseCase } from "../../app/usecases/ListDoctorAvailableSlotsUseCase";
 
 const createAppointmentUseCase = container.get<CreateAppointmentUseCase>(
   TYPES.CreateAppointmentUseCase,
@@ -22,17 +21,14 @@ const listDoctorAppointmentsUseCase =
   container.get<ListDoctorAppointmentsUseCase>(
     TYPES.ListDoctorAppointmentsUseCase,
   );
-const listDoctorAvailableSlotsUseCase =
-  container.get<ListDoctorAvailableSlotsUseCase>(
-    TYPES.ListDoctorAvailableSlotsUseCase,
-  );
+
 
 const appointmentController = new AppointmentController(
   createAppointmentUseCase,
   cancelAppointmentUseCase,
   listPatientAppointmentsUseCase,
-  listDoctorAppointmentsUseCase,
-  listDoctorAvailableSlotsUseCase,
+  listDoctorAppointmentsUseCase
+  
 );
 
 export default async function appointmentRoutes(app: FastifyInstance) {
@@ -75,10 +71,5 @@ export default async function appointmentRoutes(app: FastifyInstance) {
     },
   );
 
-  app.get(
-    "/appointments/doctor/:doctorId/available-slots",
-    async (req: FastifyRequest, res: FastifyReply) => {
-      await appointmentController.listAvailableSlots(req, res);
-    },
-  );
+  
 }

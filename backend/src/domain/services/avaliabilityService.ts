@@ -63,7 +63,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
             .toDateString() ===
             day.toDateString()
     )
-    console.log(dateAppointments)
+   
 
     const availableSlots: Time[] = []
     const buffer = doctor.props.schedulingSettings.props.bufferBetween.value
@@ -128,8 +128,6 @@ export function getAvaliableDays(doctor: Doctor, appointments: Appointment[]){
         const current = new Date(today)
         current.setDate(today.getDate() + i)
         if(isOnDayRange(current.getUTCDay(),weekDays) && getAvaliableDayTimes(appointments,current,doctor).length > 0){
-            console.log(current)
-            console.log(getAvaliableDayTimes(appointments,current,doctor))
             avaliableDays.push(current)
         }
 

@@ -2,12 +2,14 @@ import type {FastifyRequest, FastifyReply} from "fastify";
 import { injectable,inject } from "inversify";
 import { TYPES } from "../../app/dto/types.js"
 import { RegisterUserUseCase } from "../../app/usecases/RegisterUserUseCase";
-import { registerUserSchema } from "../schemas/registerUserSchema";
+import { registerUserSchema,loginSchema } from "../schemas/userSchema.js";
+import { LoginUserUseCase } from "../../app/usecases/LoginUserUseCase.js";
 
 @injectable()
 export class UserController{
     constructor(
         @inject(TYPES.RegisterUserUseCase) private readonly registerUserUseCase: RegisterUserUseCase,
+        @inject(TYPES.LoginUserUseCase) private readonly loginUserUseCase: LoginUserUseCase,
     ){}
     async register(req: FastifyRequest, res: FastifyReply){
        const body = registerUserSchema.parse(req.body);
@@ -18,5 +20,15 @@ export class UserController{
         email: createdUser.props.email.email,
         role: createdUser.props.role,
        });
+    }
+
+    async login(req:FastifyRequest, res: FastifyReply ){
+        const body = loginSchema.parse(req.body)
+        const userSession = await this.loginUserUseCase.execute({email: body.email, password: body.password})
+        req.session.userId = userSession.id.value;
+        req.session.role = userSession.props.role;
+        return res.status(200).send({
+            success: true
+        })
     }
 }

@@ -2,7 +2,7 @@ export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
 export const FIXED_PATIENT_ID =
-  process.env.NEXT_PUBLIC_FIXED_PATIENT_ID ?? "16373959-cc6e-4b39-9290-9ea3285bd1b3";
+  process.env.NEXT_PUBLIC_FIXED_PATIENT_ID ?? "e792c9ba-31d4-4980-8b5c-f56fa309898f";
 
 export const FIXED_DOCTOR_ID =
-  process.env.NEXT_PUBLIC_FIXED_DOCTOR_ID ?? "9691dfd9-a93c-49b6-b3f4-7fbc03faeaa2";
+  process.env.NEXT_PUBLIC_FIXED_DOCTOR_ID ?? "2ffb4589-e39e-467b-aff7-d43c59ce5fb8";

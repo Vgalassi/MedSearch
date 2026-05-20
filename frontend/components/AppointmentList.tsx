@@ -55,7 +55,7 @@ export function AppointmentList({
             </h2>
             <p className="mt-2 text-sm text-slate-600">
               {mode === "patient"
-                ? `${appointment.doctor.speciality} | CRM ${appointment.doctor.crm}`
+                ? `${appointment.doctor.speciality} `
                 : appointment.patient.phone}
             </p>
           </div>

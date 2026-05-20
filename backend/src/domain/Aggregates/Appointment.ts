@@ -48,11 +48,9 @@ export class Appointment extends AgregateRoot<AppointmentProps> {
   }
 
   cancel(): void {
-    /*
     if (this.props.status !== "SCHEDULED") {
       throw new CannotCancelAppointmentError(this.props.status);
     }
-    */
     this.props.status = "CANCELED";
   }
 }

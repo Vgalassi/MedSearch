@@ -219,7 +219,7 @@ export default function AppointmentPage() {
               <div>
                 <p className="section-kicker">Dias disponíveis</p>
                 <h2 className="mt-2 text-2xl font-bold text-slate-950">
-                  Calendario por mes
+                  Selecione o dia para consulta
                 </h2>
               </div>
             </div>
@@ -264,7 +264,7 @@ export default function AppointmentPage() {
           </div>
 
           <aside className="surface p-5">
-            <p className="section-kicker">Horarios</p>
+            <p className="section-kicker">Horários</p>
             <h2 className="mt-2 text-2xl font-bold text-slate-950">
               {selectedDay ? formatDay(selectedDay,"long") : "Selecione um dia"}
             </h2>

@@ -3,7 +3,7 @@ import { DoctorController } from "../controllers/DoctorController";
 import { container } from "../di/container";
 import { TYPES } from "../../app/dto/types";
 import { GetAllDoctorsUseCase } from "../../app/usecases/GetAllDoctorsUseCase";
-import { GetDoctorAvailableDaysUseCase } from "../../app/usecases/getDoctorAvailableDaysUsecase";
+import { GetDoctorAvailableDaysUseCase } from "../../app/usecases/GetDoctorAvailableDaysUsecase";
 import { GetDoctorAvailableHoursUseCase } from "../../app/usecases/GetAvailableHoursUseCase";
 import { GetDoctorSchedulingUseCase } from "../../app/usecases/GetDoctorSchedulingUseCase";
 import { UpdateDoctorSchedulingUseCase } from "../../app/usecases/UpdateDoctorSchedulingUseCase";

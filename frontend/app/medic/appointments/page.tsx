@@ -53,8 +53,7 @@ export default function MedicAppointmentsPage() {
             <div>
               <h1 className="text-3xl font-bold">Agenda do medico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Veja os pacientes agendados, horários e dados da clínica
-                vinculada a cada consulta.
+                Veja os pacientes agendados e horários das suas consultas
               </p>
             </div>
             <span className="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-teal-50">

@@ -265,7 +265,7 @@ export default function MedicAppointmentConfigPage() {
                   />
                 </label>
                 <label>
-                  <span className="label">Dias futuros para agendar</span>
+                  <span className="label">Limite dias de agendamento</span>
                   <input
                     className="input"
                     min={1}

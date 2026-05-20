@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { email, z } from "zod";
 
 const baseSchema = z.object({
   email: z.email(),
@@ -6,6 +6,11 @@ const baseSchema = z.object({
   name: z.string().min(2),
   phone: z.string().min(8),
 });
+
+export const loginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(6)
+})
 
 const doctorSchema = baseSchema.extend({
   role: z.literal("DOCTOR"),

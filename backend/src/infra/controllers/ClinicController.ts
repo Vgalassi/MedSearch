@@ -10,6 +10,7 @@ import {
   clinicDoctorParamsSchema,
 } from "../schemas/clinicDoctorSchema";
 import type { FindClinicByIdUseCase } from "../../app/usecases/FindClinicByIdUseCase";
+import { Auth } from "../auth/authDecorator";
 
 @injectable()
 export class ClinicController {
@@ -26,6 +27,7 @@ export class ClinicController {
     private readonly findClinicsByIdUseCase: FindClinicByIdUseCase
   ) {}
 
+  @Auth("CLINIC")
   async addDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = clinicDoctorParamsSchema.parse(req.params);
     const body = clinicDoctorBodySchema.parse(req.body);
@@ -42,6 +44,7 @@ export class ClinicController {
     });
   }
 
+  @Auth("CLINIC")
   async removeDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = clinicDoctorParamsSchema.parse(req.params);
     const body = clinicDoctorBodySchema.parse(req.body);

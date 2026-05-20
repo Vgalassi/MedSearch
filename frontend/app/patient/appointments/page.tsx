@@ -46,10 +46,9 @@ export default function PatientAppointmentsPage() {
           <p className="section-kicker text-teal-200">Minhas consultas</p>
           <div className="mt-4 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <h1 className="text-3xl font-bold">Agenda do paciente</h1>
+              <h1 className="text-3xl font-bold">Sua agenda</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Acompanhe os horarios marcados e os dados do medico e da
-                clinica de cada atendimento.
+                Acompanhe suas consultas marcadas 
               </p>
             </div>
             <span className="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-teal-50">
