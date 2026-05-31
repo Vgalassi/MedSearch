@@ -1,26 +1,30 @@
 "use client";
 
-import { API_BASE_URL, FIXED_PATIENT_ID } from "@/components/appConfig";
+import { API_BASE_URL } from "@/components/appConfig";
 import { AppointmentList } from "@/components/AppointmentList";
 import { AppointmentDetails } from "@/components/types/Appointment";
+import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 
 export default function PatientAppointmentsPage() {
+  const { user, loading } = useAuth();
   const [appointments, setAppointments] = useState<AppointmentDetails[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (loading) return;
+
     async function fetchAppointments() {
-      if (!FIXED_PATIENT_ID) {
-        setError("Configure NEXT_PUBLIC_FIXED_PATIENT_ID para listar consultas.");
+      if (user?.role !== "PATIENT" || !user.profileId) {
+        setError("Entre como paciente para listar suas consultas.");
         setIsFetching(false);
         return;
       }
 
       try {
         const response = await fetch(
-          `${API_BASE_URL}/appointments/patient/${FIXED_PATIENT_ID}/details`,
+          `${API_BASE_URL}/appointments/patient/${user.profileId}/details`,
           {
             credentials: "include"
           }
@@ -40,7 +44,7 @@ export default function PatientAppointmentsPage() {
     }
 
     fetchAppointments();
-  }, []);
+  }, [loading, user]);
 
   return (
     <main className="page-shell">

@@ -16,6 +16,8 @@ import { Clinic } from "../../domain/Aggregates/Clinic";
 import { Email } from "../../domain/value-objects/Email";
 import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 import { CPF } from "../../domain/value-objects/Cpf";
+import type { CepService } from "../protocols/CepService";
+import type { GeocodingService } from "../protocols/GeocodingService";
 
 @injectable()
 export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User>>{
@@ -25,6 +27,8 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
         @inject(TYPES.PatientRepository) private readonly patientRepository: PatientRepository,
         @inject(TYPES.ClinicRepository) private readonly clinicRepository: ClinicRepository,
         @inject(TYPES.HashGenerator) private readonly hashGenerator: HashGenerator,
+        @inject(TYPES.CepService) private readonly CepService: CepService,
+        @inject(TYPES.GeocodingService) private readonly GeocodingService: GeocodingService
     ){}
 
     async execute(input: RegisterUserDto): Promise<User> {
@@ -52,6 +56,7 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
             if (!input.crm || !input.speciality) {
                 throw new Error("Doctor data is required");
             }
+
 
             const doctor = Doctor.create(
                 {
@@ -90,19 +95,18 @@ export class RegisterUserUseCase implements UseCase<RegisterUserDto,Promise<User
             return createdUser;
         }
 
-        if (!input.address || !input.cep || input.latitude === undefined || input.longitude === undefined || !input.description) {
+        if (!input.cep  || !input.description || !input.number) {
             throw new Error("Clinic data is required");
         }
-
+        
+        let address = await this.CepService.findAddress(input.cep,input.number)
+        address = await this.GeocodingService.getCoordinates(address)
         const clinic = new Clinic(
             {
                 userId: createdUser.id,
                 name: input.name,
                 phone,
-                address: input.address,
-                cep: input.cep,
-                latitude: input.latitude,
-                longitude: input.longitude,
+                address: address,
                 description: input.description,
             },
             new Identifier(),

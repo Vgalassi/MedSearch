@@ -33,6 +33,10 @@ import { GetDoctorAvailableHoursUseCase } from "../../app/usecases/GetAvailableH
 import { GetDoctorSchedulingUseCase } from "../../app/usecases/GetDoctorSchedulingUseCase";
 import { UpdateDoctorSchedulingUseCase } from "../../app/usecases/UpdateDoctorSchedulingUseCase";
 import { LoginUserUseCase } from "../../app/usecases/LoginUserUseCase";
+import type { CepService } from "../../app/protocols/CepService";
+import type { GeocodingService } from "../../app/protocols/GeocodingService";
+import { CepViaService } from "../api/CepViaService";
+import { NominatimGeocodingService } from "../api/NominatimService";
 const container = new Container();
 
 container.bind<UserRepository>(TYPES.UserRepository).to(PrismaUserRepository);
@@ -84,5 +88,9 @@ container
   .bind<ListDoctorAppointmentsUseCase>(TYPES.ListDoctorAppointmentsUseCase)
   .to(ListDoctorAppointmentsUseCase);
 container.bind<HashGenerator>(TYPES.HashGenerator).to(BcryptAdapter);
+container.bind<CepService>(TYPES.CepService).to(CepViaService);
+container
+  .bind<GeocodingService>(TYPES.GeocodingService)
+  .to(NominatimGeocodingService);
 
 export { container };

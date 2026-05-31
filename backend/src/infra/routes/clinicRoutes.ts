@@ -60,6 +60,10 @@ export default async function clinicRoutes(app: FastifyInstance) {
     await clinicController.getAllClinics(req, res);
   });
 
+  app.get("/clinics", async (req: FastifyRequest, res: FastifyReply) => {
+    await clinicController.listClinics(req, res);
+  });
+
   app.get("/clinics/find/:id", async (req: FastifyRequest, res: FastifyReply) => {
     await clinicController.findClinicById(req, res);
   });

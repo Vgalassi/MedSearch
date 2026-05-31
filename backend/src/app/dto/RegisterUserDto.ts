@@ -8,10 +8,8 @@ export type RegisterUserDto = {
   crm?: string | undefined;
   speciality?: string | undefined;
   cpf?: string | undefined;
-  address?: string | undefined;
+  number?: string;
   cep?: string | undefined;
-  latitude?: number | undefined;
-  longitude?: number | undefined;
   description?: string | undefined;
   clinicId?: string | undefined;
 };

@@ -1,31 +1,33 @@
 "use client";
 
-import { API_BASE_URL, FIXED_DOCTOR_ID } from "@/components/appConfig";
+import { API_BASE_URL } from "@/components/appConfig";
 import { AppointmentList } from "@/components/AppointmentList";
 import { AppointmentDetails } from "@/components/types/Appointment";
+import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 
 export default function MedicAppointmentsPage() {
+  const { user, loading } = useAuth();
   const [appointments, setAppointments] = useState<AppointmentDetails[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (loading) return;
+
     async function fetchAppointments() {
       try {
-        let doctorId = FIXED_DOCTOR_ID;
-        if (!doctorId) {
-          const doctorsResponse = await fetch(`${API_BASE_URL}/doctors/all`);
-          const doctorsData = await doctorsResponse.json();
-          doctorId = doctorsData.doctors?.[0]?.id ?? "";
-        }
+        const doctorId = user?.role === "DOCTOR" ? user.profileId : null;
 
         if (!doctorId) {
-          throw new Error("Nenhum médico encontrado para carregar a agenda");
+          throw new Error("Entre como medico para carregar sua agenda");
         }
 
         const response = await fetch(
           `${API_BASE_URL}/appointments/doctor/${doctorId}/details`,
+          {
+            credentials: "include",
+          },
         );
         const data = await response.json();
 
@@ -42,7 +44,7 @@ export default function MedicAppointmentsPage() {
     }
 
     fetchAppointments();
-  }, []);
+  }, [loading, user]);
 
   return (
     <main className="page-shell">
@@ -53,7 +55,7 @@ export default function MedicAppointmentsPage() {
             <div>
               <h1 className="text-3xl font-bold">Agenda do medico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Veja os pacientes agendados e horários das suas consultas
+                Veja os pacientes agendados e horarios das suas consultas
               </p>
             </div>
             <span className="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-teal-50">

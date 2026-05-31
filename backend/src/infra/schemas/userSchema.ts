@@ -26,10 +26,8 @@ const patientSchema = baseSchema.extend({
 
 const clinicSchema = baseSchema.extend({
   role: z.literal("CLINIC"),
-  address: z.string().min(5),
   cep: z.string().min(8),
-  latitude: z.number(),
-  longitude: z.number(),
+  number: z.string().min(1),
   description: z.string().min(5),
 });
 

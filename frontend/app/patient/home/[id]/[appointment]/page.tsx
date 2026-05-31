@@ -1,7 +1,8 @@
 "use client";
 
-import { API_BASE_URL, FIXED_PATIENT_ID } from "@/components/appConfig";
+import { API_BASE_URL } from "@/components/appConfig";
 import { Doctor } from "@/components/types/Doctor";
+import { useAuth } from "@/context/AuthContext";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -50,6 +51,7 @@ function addDuration(time: string, duration: string) {
 export default function AppointmentPage() {
   const params = useParams<{ id: string; appointment: string }>();
   const router = useRouter();
+  const { user, loading } = useAuth();
   const doctorId = params?.appointment;
 
   const [doctor, setDoctor] = useState<Doctor | null>(null);
@@ -64,14 +66,16 @@ export default function AppointmentPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!doctorId) return;
+    if (!doctorId || loading) return;
 
     async function fetchInitialData() {
       try {
         const [doctorsResponse, daysResponse, schedulingResponse] =
           await Promise.all([
             fetch(`${API_BASE_URL}/doctors/all`),
-            fetch(`${API_BASE_URL}/doctors/days/${doctorId}`),
+            fetch(`${API_BASE_URL}/doctors/days/${doctorId}`, {
+              credentials: "include",
+            }),
             fetch(`${API_BASE_URL}/doctors/${doctorId}/scheduling`),
           ]);
 
@@ -98,7 +102,7 @@ export default function AppointmentPage() {
     }
 
     fetchInitialData();
-  }, [doctorId]);
+  }, [doctorId, loading]);
 
   useEffect(() => {
     if (!doctorId || !selectedDay) return;
@@ -114,6 +118,7 @@ export default function AppointmentPage() {
           `${API_BASE_URL}/doctors/days/hours/${doctorId}`,
           {
             method: "POST",
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date: dateKey(day) }),
           },
@@ -146,8 +151,9 @@ export default function AppointmentPage() {
 
   async function createAppointment() {
     if (!doctorId || !selectedDay || !selectedHour) return;
-    if (!FIXED_PATIENT_ID) {
-      setError("Configure NEXT_PUBLIC_FIXED_PATIENT_ID para criar consultas.");
+    if (loading) return;
+    if (user?.role !== "PATIENT" || !user.profileId) {
+      setError("Entre como paciente para criar consultas.");
       setSelectedHour(null);
       return;
     }
@@ -158,9 +164,9 @@ export default function AppointmentPage() {
     try {
       const response = await fetch(`${API_BASE_URL}/appointments`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          patientId: FIXED_PATIENT_ID,
           doctorId,
           startTime: selectedHour,
           endTime: addDuration(selectedHour, defaultDuration),

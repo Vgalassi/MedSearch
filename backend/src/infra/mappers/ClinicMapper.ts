@@ -1,4 +1,6 @@
 import { Clinic } from "../../domain/Aggregates/Clinic";
+import { Address } from "../../domain/value-objects/Address";
+import { Cep } from "../../domain/value-objects/Cep";
 import { Identifier } from "../../domain/value-objects/Identifier";
 import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 
@@ -6,7 +8,10 @@ type PrismaClinic = {
   id: string;
   userId: string;
   name: string;
-  address: string;
+  street: string;
+  city: string;
+  state: string;
+  number: string;
   cep: string;
   latitude: number;
   longitude: number;
@@ -20,10 +25,15 @@ export class ClinicMapper {
       {
         userId: new Identifier(raw.userId),
         name: raw.name,
-        address: raw.address,
-        cep: raw.cep,
-        latitude: raw.latitude,
-        longitude: raw.longitude,
+        address: new Address(
+          raw.street,
+          raw.city,
+          raw.state,
+          new Cep(raw.cep),
+          raw.number,
+          raw.latitude,
+          raw.longitude,
+        ),
         description: raw.description,
         phone: new PhoneNumber(raw.phone),
       },
@@ -36,10 +46,13 @@ export class ClinicMapper {
       id: clinic.id.value,
       userId: clinic.props.userId.value,
       name: clinic.props.name,
-      address: clinic.props.address,
-      cep: clinic.props.cep,
-      latitude: clinic.props.latitude,
-      longitude: clinic.props.longitude,
+      street: clinic.props.address.street,
+      city: clinic.props.address.city,
+      state: clinic.props.address.state,
+      number: clinic.props.address.number ?? "",
+      cep: clinic.props.address.cep.value,
+      latitude: clinic.props.address.latitude ?? 0,
+      longitude: clinic.props.address.longitude ?? 0,
       description: clinic.props.description,
       phone: clinic.props.phone.value,
     };

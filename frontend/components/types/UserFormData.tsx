@@ -29,10 +29,8 @@ export type ClinicCreateFormData = {
     phone: string,
     role: "CLINIC"
     cep: string,
+    number: string,
     description: string,
-    address: string,
-    latitude: number,
-    longitude: number
 } 
 
 export type UserCreateFormData =

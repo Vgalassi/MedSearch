@@ -8,9 +8,29 @@ import { GetAllClinicsUseCase } from "../../app/usecases/GetAllClinicsUseCase";
 import {
   clinicDoctorBodySchema,
   clinicDoctorParamsSchema,
+  listClinicsQuerySchema,
 } from "../schemas/clinicDoctorSchema";
 import type { FindClinicByIdUseCase } from "../../app/usecases/FindClinicByIdUseCase";
 import { Auth } from "../auth/authDecorator";
+import type { Clinic } from "../../domain/Aggregates/Clinic";
+
+function serializeClinic(clinic: Clinic, distanceInKm?: number) {
+  return {
+    id: clinic.id.value,
+    userId: clinic.props.userId.value,
+    name: clinic.props.name,
+    phone: clinic.props.phone.value,
+    street: clinic.props.address.street,
+    city: clinic.props.address.city,
+    state: clinic.props.address.state,
+    number: clinic.props.address.number,
+    cep: clinic.props.address.cep.value,
+    latitude: clinic.props.address.latitude,
+    longitude: clinic.props.address.longitude,
+    description: clinic.props.description,
+    distanceInKm,
+  };
+}
 
 @injectable()
 export class ClinicController {
@@ -31,6 +51,13 @@ export class ClinicController {
   async addDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = clinicDoctorParamsSchema.parse(req.params);
     const body = clinicDoctorBodySchema.parse(req.body);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de clinica invalida" });
+    }
+
+    if (req.session.profileId !== params.id) {
+      return res.status(403).send({ message: "Voce nao pode alterar outra clinica" });
+    }
 
     const doctor = await this.addDoctorToClinicUseCase.execute({
       clinicId: params.id,
@@ -48,6 +75,13 @@ export class ClinicController {
   async removeDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = clinicDoctorParamsSchema.parse(req.params);
     const body = clinicDoctorBodySchema.parse(req.body);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de clinica invalida" });
+    }
+
+    if (req.session.profileId !== params.id) {
+      return res.status(403).send({ message: "Voce nao pode alterar outra clinica" });
+    }
 
     const doctor = await this.removeDoctorFromClinicUseCase.execute({
       clinicId: params.id,
@@ -83,17 +117,30 @@ export class ClinicController {
     const clinics = await this.getAllClinicsUseCase.execute();
 
     return res.status(200).send({
-      clinics: clinics.map((clinic) => ({
-        id: clinic.id.value,
-        userId: clinic.props.userId.value,
-        name: clinic.props.name,
-        phone: clinic.props.phone.value,
-        address: clinic.props.address,
-        cep: clinic.props.cep,
-        latitude: clinic.props.latitude,
-        longitude: clinic.props.longitude,
-        description: clinic.props.description,
-      })),
+      clinics: clinics.map((clinic) => serializeClinic(clinic)),
+    });
+  }
+
+  async listClinics(req: FastifyRequest, res: FastifyReply) {
+    const query = listClinicsQuerySchema.parse(req.query);
+    const clinics = await this.getAllClinicsUseCase.execute({
+      page: query.page,
+      pageSize: query.pageSize,
+      ...(query.search ? { search: query.search } : {}),
+      ...(typeof query.latitude === "number" ? { latitude: query.latitude } : {}),
+      ...(typeof query.longitude === "number" ? { longitude: query.longitude } : {}),
+    });
+
+    return res.status(200).send({
+      clinics: clinics.items.map((item) =>
+        serializeClinic(item.clinic, item.distanceInKm),
+      ),
+      pagination: {
+        total: clinics.total,
+        page: clinics.page,
+        pageSize: clinics.pageSize,
+        totalPages: clinics.totalPages,
+      },
     });
   }
 
@@ -101,15 +148,6 @@ export class ClinicController {
     const params =  clinicDoctorParamsSchema.parse(req.params);
     const clinic = await this.findClinicsByIdUseCase.execute(params.id);
 
-    return res.status(200).send({
-        id: clinic.id.value,
-        name: clinic.props.name,
-        phone: clinic.props.phone.value,
-        address: clinic.props.address,
-        cep: clinic.props.cep,
-        latitude: clinic.props.latitude,
-        longitude: clinic.props.longitude,
-        description: clinic.props.description,
-      })
+    return res.status(200).send(serializeClinic(clinic))
   }
 }

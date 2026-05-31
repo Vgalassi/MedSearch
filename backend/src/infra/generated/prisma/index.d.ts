@@ -3783,7 +3783,10 @@ export namespace Prisma {
     userId: string | null
     name: string | null
     phone: string | null
-    address: string | null
+    street: string | null
+    city: string | null
+    state: string | null
+    number: string | null
     cep: string | null
     latitude: number | null
     longitude: number | null
@@ -3795,7 +3798,10 @@ export namespace Prisma {
     userId: string | null
     name: string | null
     phone: string | null
-    address: string | null
+    street: string | null
+    city: string | null
+    state: string | null
+    number: string | null
     cep: string | null
     latitude: number | null
     longitude: number | null
@@ -3807,7 +3813,10 @@ export namespace Prisma {
     userId: number
     name: number
     phone: number
-    address: number
+    street: number
+    city: number
+    state: number
+    number: number
     cep: number
     latitude: number
     longitude: number
@@ -3831,7 +3840,10 @@ export namespace Prisma {
     userId?: true
     name?: true
     phone?: true
-    address?: true
+    street?: true
+    city?: true
+    state?: true
+    number?: true
     cep?: true
     latitude?: true
     longitude?: true
@@ -3843,7 +3855,10 @@ export namespace Prisma {
     userId?: true
     name?: true
     phone?: true
-    address?: true
+    street?: true
+    city?: true
+    state?: true
+    number?: true
     cep?: true
     latitude?: true
     longitude?: true
@@ -3855,7 +3870,10 @@ export namespace Prisma {
     userId?: true
     name?: true
     phone?: true
-    address?: true
+    street?: true
+    city?: true
+    state?: true
+    number?: true
     cep?: true
     latitude?: true
     longitude?: true
@@ -3954,7 +3972,10 @@ export namespace Prisma {
     userId: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -3985,7 +4006,10 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     phone?: boolean
-    address?: boolean
+    street?: boolean
+    city?: boolean
+    state?: boolean
+    number?: boolean
     cep?: boolean
     latitude?: boolean
     longitude?: boolean
@@ -4000,7 +4024,10 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     phone?: boolean
-    address?: boolean
+    street?: boolean
+    city?: boolean
+    state?: boolean
+    number?: boolean
     cep?: boolean
     latitude?: boolean
     longitude?: boolean
@@ -4013,7 +4040,10 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     phone?: boolean
-    address?: boolean
+    street?: boolean
+    city?: boolean
+    state?: boolean
+    number?: boolean
     cep?: boolean
     latitude?: boolean
     longitude?: boolean
@@ -4026,14 +4056,17 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     phone?: boolean
-    address?: boolean
+    street?: boolean
+    city?: boolean
+    state?: boolean
+    number?: boolean
     cep?: boolean
     latitude?: boolean
     longitude?: boolean
     description?: boolean
   }
 
-  export type ClinicOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "phone" | "address" | "cep" | "latitude" | "longitude" | "description", ExtArgs["result"]["clinic"]>
+  export type ClinicOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "phone" | "street" | "city" | "state" | "number" | "cep" | "latitude" | "longitude" | "description", ExtArgs["result"]["clinic"]>
   export type ClinicInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     doctors?: boolean | Clinic$doctorsArgs<ExtArgs>
@@ -4057,7 +4090,10 @@ export namespace Prisma {
       userId: string
       name: string
       phone: string
-      address: string
+      street: string
+      city: string
+      state: string
+      number: string
       cep: string
       latitude: number
       longitude: number
@@ -4491,7 +4527,10 @@ export namespace Prisma {
     readonly userId: FieldRef<"Clinic", 'String'>
     readonly name: FieldRef<"Clinic", 'String'>
     readonly phone: FieldRef<"Clinic", 'String'>
-    readonly address: FieldRef<"Clinic", 'String'>
+    readonly street: FieldRef<"Clinic", 'String'>
+    readonly city: FieldRef<"Clinic", 'String'>
+    readonly state: FieldRef<"Clinic", 'String'>
+    readonly number: FieldRef<"Clinic", 'String'>
     readonly cep: FieldRef<"Clinic", 'String'>
     readonly latitude: FieldRef<"Clinic", 'Float'>
     readonly longitude: FieldRef<"Clinic", 'Float'>
@@ -9625,7 +9664,10 @@ export namespace Prisma {
     userId: 'userId',
     name: 'name',
     phone: 'phone',
-    address: 'address',
+    street: 'street',
+    city: 'city',
+    state: 'state',
+    number: 'number',
     cep: 'cep',
     latitude: 'latitude',
     longitude: 'longitude',
@@ -9950,7 +9992,10 @@ export namespace Prisma {
     userId?: UuidFilter<"Clinic"> | string
     name?: StringFilter<"Clinic"> | string
     phone?: StringFilter<"Clinic"> | string
-    address?: StringFilter<"Clinic"> | string
+    street?: StringFilter<"Clinic"> | string
+    city?: StringFilter<"Clinic"> | string
+    state?: StringFilter<"Clinic"> | string
+    number?: StringFilter<"Clinic"> | string
     cep?: StringFilter<"Clinic"> | string
     latitude?: FloatFilter<"Clinic"> | number
     longitude?: FloatFilter<"Clinic"> | number
@@ -9964,7 +10009,10 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    street?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    number?: SortOrder
     cep?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -9981,7 +10029,10 @@ export namespace Prisma {
     NOT?: ClinicWhereInput | ClinicWhereInput[]
     name?: StringFilter<"Clinic"> | string
     phone?: StringFilter<"Clinic"> | string
-    address?: StringFilter<"Clinic"> | string
+    street?: StringFilter<"Clinic"> | string
+    city?: StringFilter<"Clinic"> | string
+    state?: StringFilter<"Clinic"> | string
+    number?: StringFilter<"Clinic"> | string
     cep?: StringFilter<"Clinic"> | string
     latitude?: FloatFilter<"Clinic"> | number
     longitude?: FloatFilter<"Clinic"> | number
@@ -9995,7 +10046,10 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    street?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    number?: SortOrder
     cep?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -10015,7 +10069,10 @@ export namespace Prisma {
     userId?: UuidWithAggregatesFilter<"Clinic"> | string
     name?: StringWithAggregatesFilter<"Clinic"> | string
     phone?: StringWithAggregatesFilter<"Clinic"> | string
-    address?: StringWithAggregatesFilter<"Clinic"> | string
+    street?: StringWithAggregatesFilter<"Clinic"> | string
+    city?: StringWithAggregatesFilter<"Clinic"> | string
+    state?: StringWithAggregatesFilter<"Clinic"> | string
+    number?: StringWithAggregatesFilter<"Clinic"> | string
     cep?: StringWithAggregatesFilter<"Clinic"> | string
     latitude?: FloatWithAggregatesFilter<"Clinic"> | number
     longitude?: FloatWithAggregatesFilter<"Clinic"> | number
@@ -10447,7 +10504,10 @@ export namespace Prisma {
     id: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -10461,7 +10521,10 @@ export namespace Prisma {
     userId: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -10473,7 +10536,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -10487,7 +10553,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -10500,7 +10569,10 @@ export namespace Prisma {
     userId: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -10511,7 +10583,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -10523,7 +10598,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -11022,7 +11100,10 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    street?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    number?: SortOrder
     cep?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -11039,7 +11120,10 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    street?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    number?: SortOrder
     cep?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -11051,7 +11135,10 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    address?: SortOrder
+    street?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    number?: SortOrder
     cep?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -12249,7 +12336,10 @@ export namespace Prisma {
     id: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -12261,7 +12351,10 @@ export namespace Prisma {
     id: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -12351,7 +12444,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -12363,7 +12459,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -12634,7 +12733,10 @@ export namespace Prisma {
     id: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -12647,7 +12749,10 @@ export namespace Prisma {
     userId: string
     name: string
     phone: string
-    address: string
+    street: string
+    city: string
+    state: string
+    number: string
     cep: string
     latitude: number
     longitude: number
@@ -12790,7 +12895,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
@@ -12803,7 +12911,10 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    address?: StringFieldUpdateOperationsInput | string
+    street?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    number?: StringFieldUpdateOperationsInput | string
     cep?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number

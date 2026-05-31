@@ -27,7 +27,7 @@ export default function ClinicRegisterPage() {
     const confirmPassword = formData.get("confirm-password") as string;
     const phone = formData.get("phone") as string;
     const cep = formData.get("cep") as string;
-    const address = formData.get("address") as string;
+    const number = formData.get("number") as string;
     const description = formData.get("description") as string;
     const enteredValues: ClinicCreateFormData = {
       name,
@@ -37,10 +37,8 @@ export default function ClinicRegisterPage() {
       phone,
       role: "CLINIC",
       cep,
+      number,
       description,
-      latitude: 0.1,
-      longitude: 0.1,
-      address,
     };
 
     checkUserErrors(enteredValues, errors);
@@ -101,10 +99,10 @@ export default function ClinicRegisterPage() {
           />
           <div className="sm:col-span-2">
             <FormField
-              defaultValue={formState.enteredValues?.address}
-              id="address"
-              label="Endereco"
-              name="address"
+              defaultValue={formState.enteredValues?.number}
+              id="number"
+              label="Numero"
+              name="number"
             />
           </div>
           <FormField

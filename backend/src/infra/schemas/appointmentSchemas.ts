@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createAppointmentBodySchema = z.object({
-  patientId: z.uuid(),
+  patientId: z.uuid().optional(),
   doctorId: z.uuid(),
   startTime: z.string().regex(/^\d{2}:\d{2}$/),
   endTime: z.string().regex(/^\d{2}:\d{2}$/),

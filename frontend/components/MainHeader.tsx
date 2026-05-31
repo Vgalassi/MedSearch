@@ -1,10 +1,12 @@
 "use client"
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import LinkDropdown from "./LinkDropdown";
 import { useAuth } from "@/context/AuthContext";
 
 export default function MainHeader() {
-  const {user} = useAuth()
+  const {user, logout} = useAuth()
+  const router = useRouter();
   
   const registerUrls = [
     {
@@ -23,12 +25,14 @@ export default function MainHeader() {
 
   const authUrls = [
     {
-      href: "/user/logout",
-      label: "Sair"
+      label: "Sair",
+      onClick: async () => {
+        await logout();
+        router.push("/login");
+        router.refresh();
+      },
     }
   ]
-
-  console.log(user)
   
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur">
@@ -71,7 +75,7 @@ export default function MainHeader() {
         </nav>
       }
 
-      {user?.role === "MEDIC" &&
+      {user?.role === "DOCTOR" &&
         <nav className="flex items-center gap-2">
           
           <Link
@@ -80,24 +84,24 @@ export default function MainHeader() {
           >
             Clinicas
           </Link>
-          <LinkDropdown title="Registrar" urls={registerUrls} />
-          <Link className="btn-primary px-3 py-2" href="/login">
-            Login
+          <Link className="btn-primary px-3 py-2" href="/medic/appointments">
+            Ver Consultas
           </Link>
+          <Link className="btn-secondary px-3 py-2" href="/medic/appointment-config">
+            Agenda
+          </Link>
+          <LinkDropdown title={user.email} urls={authUrls} />
         </nav>
       }
       {user?.role === "CLINIC" &&
         <nav className="flex items-center gap-2">
           <Link
             className="hidden rounded-md px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 sm:inline-flex"
-            href="/patient/home"
+            href="/clinic/home"
           >
             Adicionar Médicos
           </Link>
-          <LinkDropdown title="Registrar" urls={registerUrls} />
-          <Link className="btn-primary px-3 py-2" href="/login">
-            Login
-          </Link>
+          <LinkDropdown title={user.email} urls={authUrls} />
         </nav>
       }
       </div>

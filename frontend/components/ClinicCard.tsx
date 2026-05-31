@@ -5,6 +5,12 @@ interface Props {
   clinic: Clinic;
 }
 
+function formatAddress(clinic: Clinic) {
+  return [clinic.street, clinic.number, clinic.city, clinic.state]
+    .filter(Boolean)
+    .join(", ");
+}
+
 export function ClinicCard({ clinic }: Props) {
   return (
     <article className="surface flex h-full flex-col p-6 transition hover:-translate-y-0.5 hover:border-teal-200 hover:shadow-lg hover:shadow-slate-200/70">
@@ -17,9 +23,16 @@ export function ClinicCard({ clinic }: Props) {
             {clinic.name}
           </h2>
         </div>
-        <span className="grid size-11 shrink-0 place-items-center rounded-md bg-teal-50 text-lg font-bold text-teal-700">
+        {typeof clinic.distanceInKm === "number" && (
+          <span className="rounded-md bg-teal-50 px-3 py-2 text-sm font-semibold text-teal-700">
+            {clinic.distanceInKm.toFixed(1)} km
+          </span>
+        )}
+        {typeof clinic.distanceInKm !== "number" && (
+          <span className="grid size-11 shrink-0 place-items-center rounded-md bg-teal-50 text-lg font-bold text-teal-700">
           +
-        </span>
+          </span>
+        )}
       </div>
 
       <p className="mt-4 leading-7 text-slate-600">
@@ -29,7 +42,7 @@ export function ClinicCard({ clinic }: Props) {
       <div className="mt-5 space-y-2 text-sm text-slate-600">
         <p>
           <span className="font-semibold text-slate-800">Endereco:</span>{" "}
-          {clinic.address}
+          {formatAddress(clinic)}
         </p>
         <p>
           <span className="font-semibold text-slate-800">CEP:</span>{" "}

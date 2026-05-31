@@ -8,7 +8,6 @@ import { ListPatientAppointmentsUseCase } from "../../app/usecases/ListPatientAp
 import { ListDoctorAppointmentsUseCase } from "../../app/usecases/ListDoctorAppointmentsUseCase";
 import {
   appointmentIdParamsSchema,
-  availableSlotsQuerySchema,
   createAppointmentBodySchema,
   doctorIdParamsSchema,
   patientIdParamsSchema,
@@ -59,7 +58,10 @@ function toDetailedAppointmentDto(row: Awaited<ReturnType<typeof findDetailedApp
           id: row.doctor.clinic.id,
           name: row.doctor.clinic.name,
           phone: row.doctor.clinic.phone,
-          address: row.doctor.clinic.address,
+          street: row.doctor.clinic.street,
+          number: row.doctor.clinic.number,
+          city: row.doctor.clinic.city,
+          state: row.doctor.clinic.state,
           cep: row.doctor.clinic.cep,
         }
       : null,
@@ -103,8 +105,14 @@ export class AppointmentController {
   @Auth("PATIENT")
   async create(req: FastifyRequest, res: FastifyReply) {
     const body = createAppointmentBodySchema.parse(req.body);
+    const patientId = req.session.profileId;
+
+    if (!patientId) {
+      return res.status(401).send({ message: "Sessao de paciente invalida" });
+    }
+
     const created = await this.createAppointmentUseCase.execute({
-      patientId: body.patientId,
+      patientId,
       doctorId: body.doctorId,
       startTime: body.startTime,
       endTime: body.endTime,
@@ -126,6 +134,14 @@ export class AppointmentController {
   @Auth("PATIENT")
   async listByPatient(req: FastifyRequest, res: FastifyReply) {
     const params = patientIdParamsSchema.parse(req.params);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de paciente invalida" });
+    }
+
+    if (req.session.profileId !== params.patientId) {
+      return res.status(403).send({ message: "Voce nao pode acessar consultas de outro paciente" });
+    }
+
     const list = await this.listPatientAppointmentsUseCase.execute(
       params.patientId,
     );
@@ -137,6 +153,14 @@ export class AppointmentController {
   @Auth("DOCTOR")
   async listByDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamsSchema.parse(req.params);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de medico invalida" });
+    }
+
+    if (req.session.profileId !== params.doctorId) {
+      return res.status(403).send({ message: "Voce nao pode acessar consultas de outro medico" });
+    }
+
     const list = await this.listDoctorAppointmentsUseCase.execute(
       params.doctorId,
     );
@@ -148,6 +172,14 @@ export class AppointmentController {
   @Auth("PATIENT")
   async listDetailedByPatient(req: FastifyRequest, res: FastifyReply) {
     const params = patientIdParamsSchema.parse(req.params);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de paciente invalida" });
+    }
+
+    if (req.session.profileId !== params.patientId) {
+      return res.status(403).send({ message: "Voce nao pode acessar consultas de outro paciente" });
+    }
+
     const appointments = await findDetailedAppointments({
       patientId: params.patientId,
     });
@@ -160,6 +192,14 @@ export class AppointmentController {
   @Auth("DOCTOR")
   async listDetailedByDoctor(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamsSchema.parse(req.params);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de medico invalida" });
+    }
+
+    if (req.session.profileId !== params.doctorId) {
+      return res.status(403).send({ message: "Voce nao pode acessar consultas de outro medico" });
+    }
+
     const appointments = await findDetailedAppointments({
       doctorId: params.doctorId,
     });

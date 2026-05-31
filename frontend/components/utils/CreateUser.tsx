@@ -1,12 +1,15 @@
 
+import { API_BASE_URL } from "../appConfig"
+import { UserCreateFormData } from "../types/UserFormData"
+
 type response = {
     status: boolean,
     message: string
 }
-import { UserCreateFormData } from "../types/UserFormData"
+
 export default async function createUser(data: UserCreateFormData): Promise<response>{
 
-    const response = await fetch('http://localhost:3000/users/register',{
+    const response = await fetch(`${API_BASE_URL}/users/register`,{
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

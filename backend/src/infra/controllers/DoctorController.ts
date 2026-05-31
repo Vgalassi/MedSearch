@@ -106,6 +106,13 @@ export class DoctorController {
   async updateScheduling(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamSchema.parse(req.params);
     const body = updateDoctorSchedulingSchema.parse(req.body);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de medico invalida" });
+    }
+
+    if (req.session.profileId !== params.id) {
+      return res.status(403).send({ message: "Voce nao pode alterar agenda de outro medico" });
+    }
 
     const doctor = await this.updateDoctorSchedulingUseCase.execute({
       doctorId: params.id,

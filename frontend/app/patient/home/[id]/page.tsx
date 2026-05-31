@@ -1,10 +1,27 @@
 "use client";
-
 import { Clinic } from "@/components/types/Clinic";
 import { useState, useEffect } from "react";
 import { Doctor } from "@/components/types/Doctor";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { API_BASE_URL } from "@/components/appConfig";
+
+const ClinicMap = dynamic(
+  () => import("@/components/ClinicMap").then((module) => module.ClinicMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="clinic-map-empty">Carregando mapa da clinica...</div>
+    ),
+  },
+);
+
+function formatAddress(clinic: Clinic) {
+  return [clinic.street, clinic.number, clinic.city, clinic.state]
+    .filter(Boolean)
+    .join(", ");
+}
 
 export default function ClinicDetails() {
   const params = useParams<{ id: string }>();
@@ -19,13 +36,13 @@ export default function ClinicDetails() {
     async function fetchData() {
       try {
         const clinicRes = await fetch(
-          `http://localhost:3000/clinics/find/${params.id}`,
+          `${API_BASE_URL}/clinics/find/${params.id}`,
         );
         const clinicData = await clinicRes.json();
         setClinic(clinicData);
 
         const doctorRes = await fetch(
-          `http://localhost:3000/clinics/doctors/${params.id}`,
+          `${API_BASE_URL}/clinics/doctors/${params.id}`,
         );
         const doctorData = await doctorRes.json();
         setDoctors(doctorData.doctors ?? []);
@@ -67,7 +84,7 @@ export default function ClinicDetails() {
                 </div>
                 <div>
                   <dt className="font-semibold text-slate-500">Endereço</dt>
-                  <dd className="mt-1 text-slate-900">{clinic.address}</dd>
+                  <dd className="mt-1 text-slate-900">{formatAddress(clinic)}</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-slate-500">CEP</dt>
@@ -120,6 +137,19 @@ export default function ClinicDetails() {
             </div>
           )}
         </section>
+        {clinic && (
+        <section className="mt-8">
+          <h2 className="mt-2 text-2xl font-bold text-slate-950">
+                Localização
+          </h2>
+
+          <ClinicMap
+            latitude={clinic.latitude}
+            longitude={clinic.longitude}
+            name={clinic.name}
+          />
+        </section>
+        )}
       </div>
     </main>
   );

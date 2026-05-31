@@ -65,7 +65,10 @@ model Clinic {
   name  String
   phone String
 
-  address     String
+  street      String
+  city        String
+  state       String
+  number      String
   cep         String
   latitude    Float
   longitude   Float

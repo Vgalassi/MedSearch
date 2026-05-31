@@ -4,7 +4,11 @@ export type Clinic = {
     phone: string,
     cep: string,
     description: string,
-    address: string,
-    latitude: number,
-    longitude: number
+    street: string,
+    city: string,
+    state: string,
+    number?: string,
+    latitude?: number,
+    longitude?: number,
+    distanceInKm?: number
 }

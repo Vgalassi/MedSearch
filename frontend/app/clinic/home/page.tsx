@@ -1,20 +1,26 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Doctor } from "@/components/types/Doctor";
 import { ClinicDoctorSection } from "@/components/ClinicDoctorSection";
-
-const CLINIC_ID = "b95e7f0a-545f-496a-a956-bfe8d9b27f2b";
+import { API_BASE_URL } from "@/components/appConfig";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ClinicHomePage() {
+  const { user, loading } = useAuth();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [myDoctors, setMyDoctors] = useState<Doctor[]>([]);
+  const clinicId = user?.role === "CLINIC" ? user.profileId : null;
 
-  async function loadDoctors() {
+  const loadDoctors = useCallback(async () => {
+    if (!clinicId) {
+      throw new Error("Entre como clinica para gerenciar medicos");
+    }
+
     const [allDoctorsResponse, clinicDoctorsResponse] = await Promise.all([
-      fetch("http://localhost:3000/doctors/all"),
-      fetch(`http://localhost:3000/clinics/doctors/${CLINIC_ID}`),
+      fetch(`${API_BASE_URL}/doctors/all`),
+      fetch(`${API_BASE_URL}/clinics/doctors/${clinicId}`),
     ]);
 
     const allDoctorsData = await allDoctorsResponse.json();
@@ -24,9 +30,11 @@ export default function ClinicHomePage() {
       allDoctors: allDoctorsData.doctors ?? [],
       clinicDoctors: clinicDoctorsData.doctors ?? [],
     };
-  }
+  }, [clinicId]);
 
   useEffect(() => {
+    if (loading) return;
+
     async function fetchInitialDoctors() {
       try {
         const data = await loadDoctors();
@@ -40,7 +48,7 @@ export default function ClinicHomePage() {
     }
 
     fetchInitialDoctors();
-  }, []);
+  }, [loading, loadDoctors]);
 
   const myDoctorIds = useMemo(
     () => new Set(myDoctors.map((doctor) => doctor.id)),
@@ -50,10 +58,13 @@ export default function ClinicHomePage() {
   const availableDoctors = doctors.filter((doctor) => !myDoctorIds.has(doctor.id));
 
   async function addDoctor(doctorId: string) {
+    if (!clinicId) return;
+
     const response = await fetch(
-      `http://localhost:3000/clinic/add-doctor/${CLINIC_ID}`,
+      `${API_BASE_URL}/clinic/add-doctor/${clinicId}`,
       {
         method: "PUT",
+        credentials: "include",
         body: JSON.stringify({ doctorId }),
         headers: {
           "Content-Type": "application/json",
@@ -69,10 +80,13 @@ export default function ClinicHomePage() {
   }
 
   async function removeDoctor(doctorId: string) {
+    if (!clinicId) return;
+
     const response = await fetch(
-      `http://localhost:3000/clinic/remove-doctor/${CLINIC_ID}`,
+      `${API_BASE_URL}/clinic/remove-doctor/${clinicId}`,
       {
         method: "PUT",
+        credentials: "include",
         body: JSON.stringify({ doctorId }),
         headers: {
           "Content-Type": "application/json",

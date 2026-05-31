@@ -4,6 +4,7 @@ declare module "fastify" {
   interface Session {
     userId?: string;
     role?: "DOCTOR" | "PATIENT" | "CLINIC";
-    email?: string
+    email?: string;
+    profileId?: string;
   }
 }

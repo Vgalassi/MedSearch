@@ -1,6 +1,7 @@
 
 
 
+
 export const TYPES = {
     UserRepository: Symbol.for("UserRepository"),
     DoctorRepository: Symbol.for("DoctorRepository"),
@@ -26,7 +27,8 @@ export const TYPES = {
     ListDoctorAppointmentsUseCase: Symbol.for("ListDoctorAppointmentsUseCase"),
     ListDoctorAvailableSlotsUseCase: Symbol.for("ListDoctorAvailableSlotsUseCase"),
     HashGenerator: Symbol.for("HashGenerator"),
-    LoginUserUseCase: Symbol.for("LoginUserUseCase")
-
+    LoginUserUseCase: Symbol.for("LoginUserUseCase"),
+    CepService: Symbol.for("CepService"),
+    GeocodingService: Symbol.for("GeocodingService")
     
 };

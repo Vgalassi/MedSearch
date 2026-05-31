@@ -2,10 +2,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { API_BASE_URL } from "@/components/appConfig";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
 
   const router = useRouter();
+  const { refreshUser } = useAuth();
 
   async function handleSubmit(formData: FormData){
       const email =  formData.get("email");
@@ -27,7 +29,15 @@ export default function LoginPage() {
       );
 
       if(response.ok){
-          router.push("/patient/home");
+          const loggedUser = await refreshUser();
+
+          if (loggedUser?.role === "DOCTOR") {
+            router.push("/medic/appointments");
+          } else if (loggedUser?.role === "CLINIC") {
+            router.push("/clinic/home");
+          } else {
+            router.push("/patient/home");
+          }
       }else{
           alert(
             "Email ou senha inválidos"

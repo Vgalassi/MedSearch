@@ -1,6 +1,7 @@
 "use client";
 
-import { API_BASE_URL, FIXED_DOCTOR_ID } from "@/components/appConfig";
+import { API_BASE_URL } from "@/components/appConfig";
+import { useAuth } from "@/context/AuthContext";
 import { FormEvent, useEffect, useState } from "react";
 
 const WEEKDAYS = [
@@ -44,28 +45,26 @@ const defaultAvailability: AvailabilityForm = {
 };
 
 export default function MedicAppointmentConfigPage() {
+  const { user, loading } = useAuth();
   const [settings, setSettings] = useState<SettingsForm>(defaultSettings);
   const [availabilities, setAvailabilities] = useState<AvailabilityForm[]>([
     defaultAvailability,
   ]);
   const [isFetching, setIsFetching] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [activeDoctorId, setActiveDoctorId] = useState(FIXED_DOCTOR_ID);
+  const [activeDoctorId, setActiveDoctorId] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (loading) return;
+
     async function fetchScheduling() {
       try {
-        let doctorId = FIXED_DOCTOR_ID;
-        if (!doctorId) {
-          const doctorsResponse = await fetch(`${API_BASE_URL}/doctors/all`);
-          const doctorsData = await doctorsResponse.json();
-          doctorId = doctorsData.doctors?.[0]?.id ?? "";
-        }
+        const doctorId = user?.role === "DOCTOR" ? user.profileId : null;
 
         if (!doctorId) {
-          throw new Error("Nenhum medico encontrado para configurar agenda");
+          throw new Error("Entre como medico para configurar sua agenda");
         }
 
         setActiveDoctorId(doctorId);
@@ -106,7 +105,7 @@ export default function MedicAppointmentConfigPage() {
     }
 
     fetchScheduling();
-  }, []);
+  }, [loading, user]);
 
   function updateAvailability(
     index: number,
@@ -145,6 +144,7 @@ export default function MedicAppointmentConfigPage() {
         `${API_BASE_URL}/doctors/${activeDoctorId}/scheduling`,
         {
           method: "PUT",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             settings: {
