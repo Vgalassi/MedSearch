@@ -6,6 +6,7 @@ import { Identifier } from "../../domain/value-objects/Identifier";
 import { Time } from "../../domain/value-objects/Time";
 import { WeekDay } from "../../domain/value-objects/WeekDay";
 import { WeekDayRange } from "../../domain/value-objects/WeekDayRange";
+import { AvailabilityMode } from "../../domain/value-objects/AvailabilityMode";
 
 @injectable()
 export class PrismaAvailabilityRepository implements AvailabilityRepository {
@@ -20,6 +21,7 @@ export class PrismaAvailabilityRepository implements AvailabilityRepository {
         weekDayRange: new WeekDayRange(
           row.weekdays.map((weekday) => new WeekDay(weekday)),
         ),
+        mode: new AvailabilityMode(row.mode),
         startTime: Time.createWithSeconds(row.startMinutes),
         endTime: Time.createWithSeconds(row.endMinutes),
       },

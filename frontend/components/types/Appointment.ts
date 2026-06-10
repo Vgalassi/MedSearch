@@ -6,6 +6,7 @@ export type AppointmentDetails = {
   endTime: string;
   day: string;
   status: string;
+  type: "ONLINE" | "OFFLINE";
   reason: string | null;
   notes: string | null;
   doctor: {

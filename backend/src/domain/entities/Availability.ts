@@ -4,12 +4,14 @@ import { Entity } from "../value-objects/Entity";
 import { Identifier } from "../value-objects/Identifier";
 import { Time } from "../value-objects/Time";
 import { WeekDay } from "../value-objects/WeekDay";
+import { AvailabilityMode } from "../value-objects/AvailabilityMode";
 
 export type AvailabilityProps = {
     doctorId: Identifier,
     weekDayRange: WeekDayRange,
     startTime: Time,
     endTime: Time
+    mode: AvailabilityMode
 }
 
 
@@ -26,6 +28,7 @@ export class Availability extends Entity<AvailabilityProps>{
                     new WeekDay("THURSDAY"),
                     new WeekDay("FRIDAY")
                 ]),
+                mode: new AvailabilityMode("OFFLINE"),
                 startTime: new Time(8,0),
                 endTime: new Time(17,30)
             }

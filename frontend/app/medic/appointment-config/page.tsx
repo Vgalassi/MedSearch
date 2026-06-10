@@ -14,6 +14,14 @@ const WEEKDAYS = [
   { value: "SUNDAY", label: "Dom" },
 ];
 
+type AvailabilityMode = "ONLINE" | "OFFLINE" | "BOTH";
+
+const AVAILABILITY_MODES: { value: AvailabilityMode; label: string }[] = [
+  { value: "OFFLINE", label: "Presencial" },
+  { value: "ONLINE", label: "Online" },
+  { value: "BOTH", label: "Ambas" },
+];
+
 type SettingsForm = {
   isAvaliable: boolean;
   defaultDuration: string;
@@ -27,6 +35,7 @@ type AvailabilityForm = {
   weekdays: string[];
   startTime: string;
   endTime: string;
+  mode: AvailabilityMode;
 };
 
 const defaultSettings: SettingsForm = {
@@ -42,6 +51,7 @@ const defaultAvailability: AvailabilityForm = {
   weekdays: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
   startTime: "08:00",
   endTime: "17:30",
+  mode: "OFFLINE",
 };
 
 export default function MedicAppointmentConfigPage() {
@@ -94,6 +104,7 @@ export default function MedicAppointmentConfigPage() {
                 weekdays: item.weekdays,
                 startTime: item.startTime,
                 endTime: item.endTime,
+                mode: item.mode ?? "OFFLINE",
               }))
             : [defaultAvailability],
         );
@@ -344,7 +355,7 @@ export default function MedicAppointmentConfigPage() {
                       ))}
                     </div>
 
-                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                    <div className="mt-5 grid gap-4 sm:grid-cols-3">
                       <label>
                         <span className="label">Horario de inicio</span>
                         <input
@@ -372,6 +383,25 @@ export default function MedicAppointmentConfigPage() {
                           type="time"
                           value={availability.endTime}
                         />
+                      </label>
+                      <label>
+                        <span className="label">Tipo de atendimento</span>
+                        <select
+                          className="input"
+                          onChange={(event) =>
+                            updateAvailability(index, {
+                              ...availability,
+                              mode: event.target.value as AvailabilityMode,
+                            })
+                          }
+                          value={availability.mode}
+                        >
+                          {AVAILABILITY_MODES.map((mode) => (
+                            <option key={mode.value} value={mode.value}>
+                              {mode.label}
+                            </option>
+                          ))}
+                        </select>
                       </label>
                     </div>
                   </article>

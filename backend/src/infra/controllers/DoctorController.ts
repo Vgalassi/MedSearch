@@ -41,6 +41,7 @@ function toSchedulingDto(
         ),
         startTime: availability.props.startTime.toString(),
         endTime: availability.props.endTime.toString(),
+        mode: availability.props.mode.value,
       })) ?? [],
   };
 }
@@ -98,7 +99,11 @@ export class DoctorController {
 
     return res.status(200).send({
       doctorId: params.id,
-      hours: hours.map((hour) => hour.toString()),
+      hours: hours.map((hour) => ({
+        startTime: hour.startTime.toString(),
+        endTime: hour.endTime.toString(),
+        mode: hour.mode,
+      })),
     });
   }
 

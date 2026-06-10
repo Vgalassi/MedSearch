@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../dto/types";
-import { Appointment } from "../../domain/Aggregates/Appointment";
+import { Appointment, type appointmentType } from "../../domain/Aggregates/Appointment";
 import { NotfoundError } from "../../domain/errors/NotFoundError";
 import { DoctorSettingsNotFoundError } from "../../domain/errors/DoctorSettingsNotFoundError";
 import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
@@ -20,6 +20,7 @@ export type CreateAppointmentInput = {
   day: Date;
   reason?: string | null;
   notes?: string | null;
+  type: appointmentType;
 };
 
 @injectable()
@@ -61,8 +62,7 @@ export class CreateAppointmentUseCase {
 
     const startTime = Time.createWithString(input.startTime)
     const endTime = Time.createWithString(input.endTime)
-    console.log(slots)
-    if(!this.checkSlots(slots,startTime)){
+    if(!this.checkSlots(slots,startTime,input.type)){
       throw new AppointmentOutsideAvailabilityError
     }
     
@@ -75,15 +75,16 @@ export class CreateAppointmentUseCase {
       day: input.day,
       reason: input.reason ?? null,
       notes: input.notes ?? null,
+      type: input.type,
     });
 
     return this.appointmentRepository.create(appointment);
   }
 
 
-  checkSlots(slots: Time[],startTime: Time): boolean{
+  checkSlots(slots: ReturnType<typeof getAvaliableDayTimes>,startTime: Time,type: appointmentType): boolean{
     for(const slot of slots){
-      if(slot.value == startTime.value){
+      if(slot.startTime.value == startTime.value && (slot.mode === "BOTH" || slot.mode === type)){
         return true
       }
     }

@@ -26,6 +26,15 @@ function statusLabel(status: string) {
   return labels[status] ?? status;
 }
 
+function appointmentTypeLabel(type: AppointmentDetails["type"]) {
+  const labels: Record<AppointmentDetails["type"], string> = {
+    ONLINE: "Online",
+    OFFLINE: "Presencial",
+  };
+
+  return labels[type] ?? type;
+}
+
 export function AppointmentList({
   appointments,
   emptyText,
@@ -69,6 +78,9 @@ export function AppointmentList({
             </p>
             <p className="mt-1">
               {appointment.startTime} - {appointment.endTime}
+            </p>
+            <p className="mt-1 font-semibold text-slate-800">
+              {appointmentTypeLabel(appointment.type)}
             </p>
           </div>
 

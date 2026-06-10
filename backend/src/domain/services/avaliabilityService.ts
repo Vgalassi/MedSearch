@@ -4,6 +4,13 @@ import { WeekDay } from "../value-objects/WeekDay";
 import { WeekDayRange } from "../value-objects/WeekDayRange";
 import { Appointment } from "../Aggregates/Appointment";
 import { Time } from "../value-objects/Time";
+import type { AvailabilityMode } from "../value-objects/AvailabilityMode";
+
+export type AvailableSlot = {
+    startTime: Time
+    endTime: Time
+    mode: AvailabilityMode["value"]
+}
 
 export function getWeekDaysFromAvaliabilities(
     availabilities: Availability[]
@@ -41,7 +48,23 @@ export function isOnDayRange(dayNumber: number, dayRange: WeekDayRange ){
 }
 
 
-export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doctor: Doctor){
+function mergeSlotMode(currentMode: AvailableSlot["mode"], nextMode: AvailableSlot["mode"]): AvailableSlot["mode"] {
+    if(currentMode === nextMode){
+        return currentMode
+    }
+    return "BOTH"
+}
+
+function addAvailableSlot(slots: AvailableSlot[], nextSlot: AvailableSlot){
+    const existingSlot = slots.find(slot => slot.startTime.value === nextSlot.startTime.value)
+    if(existingSlot){
+        existingSlot.mode = mergeSlotMode(existingSlot.mode, nextSlot.mode)
+        return
+    }
+    slots.push(nextSlot)
+}
+
+export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doctor: Doctor): AvailableSlot[]{
     if(!doctor.props.schedulingSettings || !doctor.props.Availabilities){
         throw Error("Doctor scheduling settings or availabilities not found")
     }
@@ -65,7 +88,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
     )
    
 
-    const availableSlots: Time[] = []
+    const availableSlots: AvailableSlot[] = []
     const buffer = doctor.props.schedulingSettings.props.bufferBetween.value
     for(const availability of dayAvailabilities){
         let currentSeconds =
@@ -102,9 +125,11 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
                 )
 
             if(!occupied){
-                availableSlots.push(
-                    slotStart
-                )
+                addAvailableSlot(availableSlots, {
+                    startTime: slotStart,
+                    endTime: slotEnd,
+                    mode: availability.props.mode.value,
+                })
             }
             currentSeconds +=
                 defaultDuration.value + buffer

@@ -10,11 +10,13 @@ import { Identifier } from "../../domain/value-objects/Identifier";
 import { Time } from "../../domain/value-objects/Time";
 import { WeekDay } from "../../domain/value-objects/WeekDay";
 import { WeekDayRange } from "../../domain/value-objects/WeekDayRange";
+import { AvailabilityMode } from "../../domain/value-objects/AvailabilityMode";
 
 type AvailabilityInput = {
   weekdays: string[];
   startTime: string;
   endTime: string;
+  mode: string;
 };
 
 type UpdateDoctorSchedulingInput = {
@@ -75,6 +77,7 @@ export class UpdateDoctorSchedulingUseCase {
         ),
         startTime,
         endTime,
+        mode: new AvailabilityMode(availability.mode),
       });
     });
 

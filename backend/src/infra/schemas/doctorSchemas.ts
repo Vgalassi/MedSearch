@@ -9,6 +9,7 @@ export const doctorAvailableHoursSchema = z.object({
 })
 
 const timeSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
+const availabilityModeSchema = z.enum(["ONLINE", "OFFLINE", "BOTH"]);
 
 export const updateDoctorSchedulingSchema = z.object({
   settings: z.object({
@@ -39,6 +40,7 @@ export const updateDoctorSchedulingSchema = z.object({
       ),
       startTime: timeSchema,
       endTime: timeSchema,
+      mode: availabilityModeSchema.default("OFFLINE"),
     }),
   ).min(1),
 });

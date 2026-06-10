@@ -41,6 +41,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
                   weekdays: availability.weekdays,
                   startMinutes: availability.startMinutes,
                   endMinutes: availability.endMinutes,
+                  mode: availability.mode,
                 })),
               },
             }
@@ -142,6 +143,8 @@ export class PrismaDoctorRepository implements DoctorRepository {
             weekdays: availability.weekdays,
             startMinutes: availability.startMinutes,
             endMinutes: availability.endMinutes,
+            mode: availability.mode,
+           
           })),
         });
       }

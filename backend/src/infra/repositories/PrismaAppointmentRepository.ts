@@ -25,6 +25,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
         startTime: data.startTime,
         endTime: data.endTime,
         day: data.day,
+        type: data.type,
       },
     });
     return AppointmentMapper.toDomain(updated as never);

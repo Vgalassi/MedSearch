@@ -26,6 +26,7 @@ function toAppointmentDto(appointment: Appointment) {
     status: appointment.props.status,
     reason: appointment.props.reason ?? null,
     notes: appointment.props.notes ?? null,
+    type: appointment.props.type,
   };
 }
 
@@ -46,6 +47,7 @@ function toDetailedAppointmentDto(row: Awaited<ReturnType<typeof findDetailedApp
     status: row.status,
     reason: row.reason ?? null,
     notes: row.notes ?? null,
+    type: row.type,
     doctor: {
       id: row.doctor.id,
       name: row.doctor.name,
@@ -119,6 +121,7 @@ export class AppointmentController {
       day: new Date(body.day),
       reason: body.reason ?? null,
       notes: body.notes ?? null,
+      type: body.type,
     });
     return res.status(201).send({ appointment: toAppointmentDto(created) });
   }

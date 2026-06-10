@@ -9,6 +9,8 @@ export type AppointmentStatusValue =
   | "COMPLETED"
   | "NO_SHOW";
 
+export type appointmentType = "OFFLINE" | "ONLINE"
+
 export type AppointmentProps = {
   patientId: Identifier;
   doctorId: Identifier;
@@ -18,6 +20,7 @@ export type AppointmentProps = {
   status: AppointmentStatusValue;
   reason?: string | null;
   notes?: string | null;
+  type: appointmentType
 };
 
 
@@ -30,6 +33,7 @@ export class Appointment extends AgregateRoot<AppointmentProps> {
     day: Date;
     reason?: string | null;
     notes?: string | null;
+    type: appointmentType
     id?: Identifier;
   }): Appointment {
     return new Appointment(
@@ -42,6 +46,7 @@ export class Appointment extends AgregateRoot<AppointmentProps> {
         status: "SCHEDULED",
         reason: input.reason ?? null,
         notes: input.notes ?? null,
+        type: input.type
       },
       input.id,
     );

@@ -12,6 +12,26 @@ type SchedulingResponse = {
   } | null;
 };
 
+type AppointmentType = "ONLINE" | "OFFLINE";
+type AvailabilityMode = AppointmentType | "BOTH";
+
+type AvailableHour = {
+  startTime: string;
+  endTime: string;
+  mode: AvailabilityMode;
+};
+
+const modeLabels: Record<AvailabilityMode, string> = {
+  ONLINE: "Online",
+  OFFLINE: "Presencial",
+  BOTH: "Ambas",
+};
+
+const typeLabels: Record<AppointmentType, string> = {
+  ONLINE: "Online",
+  OFFLINE: "Presencial",
+};
+
 function dateKey(value: string) {
   return new Date(value).toISOString().slice(0, 10);
 }
@@ -57,8 +77,9 @@ export default function AppointmentPage() {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [days, setDays] = useState<string[]>([]);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
-  const [hours, setHours] = useState<string[]>([]);
-  const [selectedHour, setSelectedHour] = useState<string | null>(null);
+  const [hours, setHours] = useState<AvailableHour[]>([]);
+  const [selectedHour, setSelectedHour] = useState<AvailableHour | null>(null);
+  const [selectedType, setSelectedType] = useState<AppointmentType>("OFFLINE");
   const [defaultDuration, setDefaultDuration] = useState("00:30");
   const [isFetchingDays, setIsFetchingDays] = useState(true);
   const [isFetchingHours, setIsFetchingHours] = useState(false);
@@ -112,6 +133,7 @@ export default function AppointmentPage() {
       setIsFetchingHours(true);
       setError(null);
       setSelectedHour(null);
+      setSelectedType("OFFLINE");
 
       try {
         const response = await fetch(
@@ -168,11 +190,12 @@ export default function AppointmentPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           doctorId,
-          startTime: selectedHour,
-          endTime: addDuration(selectedHour, defaultDuration),
+          startTime: selectedHour.startTime,
+          endTime: selectedHour.endTime ?? addDuration(selectedHour.startTime, defaultDuration),
           day: dateKey(selectedDay),
           reason: "Consulta agendada pelo paciente",
           notes: null,
+          type: selectedType,
         }),
       });
       const data = await response.json();
@@ -290,12 +313,28 @@ export default function AppointmentPage() {
             <div className="mt-5 grid grid-cols-2 gap-3">
               {hours.map((hour,index) => (
                 <button
-                  className="btn-secondary cursor-pointer"
+                  className={`rounded-md border px-4 py-3 text-left transition cursor-pointer ${
+                    selectedHour?.startTime === hour.startTime
+                      ? "border-teal-700 bg-teal-700 text-white"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-teal-200 hover:bg-teal-50"
+                  }`}
                   key={index}
-                  onClick={() => setSelectedHour(hour)}
+                  onClick={() => {
+                    setSelectedHour(hour);
+                    setSelectedType(hour.mode === "ONLINE" ? "ONLINE" : "OFFLINE");
+                  }}
                   type="button"
                 >
-                  {hour}
+                  <span className="block text-sm font-bold">{hour.startTime}</span>
+                  <span className={`mt-2 inline-flex rounded-md px-2 py-1 text-xs font-semibold ${
+                    hour.mode === "ONLINE"
+                      ? "bg-sky-50 text-sky-700"
+                      : hour.mode === "OFFLINE"
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "bg-amber-50 text-amber-700"
+                  }`}>
+                    {modeLabels[hour.mode]}
+                  </span>
                 </button>
               ))}
             </div>
@@ -307,12 +346,31 @@ export default function AppointmentPage() {
             <div className="surface w-full max-w-md p-6 shadow-xl">
               <p className="section-kicker">Confirmar consulta</p>
               <h2 className="mt-2 text-2xl font-bold text-slate-950">
-                Agendar para {selectedHour}?
+                Agendar para {selectedHour.startTime}?
               </h2>
               <p className="mt-3 text-slate-600">
                 A consulta sera criada para {formatDay(selectedDay,"long")} com{" "}
                 {doctor?.name ?? "este medico"}.
               </p>
+              {selectedHour.mode === "BOTH" ? (
+                <label className="mt-5 block">
+                  <span className="label">Tipo de consulta</span>
+                  <select
+                    className="input"
+                    onChange={(event) =>
+                      setSelectedType(event.target.value as AppointmentType)
+                    }
+                    value={selectedType}
+                  >
+                    <option value="OFFLINE">Presencial</option>
+                    <option value="ONLINE">Online</option>
+                  </select>
+                </label>
+              ) : (
+                <p className="mt-5 inline-flex rounded-md bg-teal-50 px-3 py-2 text-sm font-semibold text-teal-700">
+                  {typeLabels[selectedType]}
+                </p>
+              )}
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
                 <button
                   className="btn-secondary cursor-pointer"

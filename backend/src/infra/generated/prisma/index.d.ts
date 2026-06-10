@@ -72,6 +72,14 @@ export const AppointmentStatus: {
 export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]
 
 
+export const AppointmentType: {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE'
+};
+
+export type AppointmentType = (typeof AppointmentType)[keyof typeof AppointmentType]
+
+
 export const WeekDay: {
   MONDAY: 'MONDAY',
   TUESDAY: 'TUESDAY',
@@ -84,6 +92,15 @@ export const WeekDay: {
 
 export type WeekDay = (typeof WeekDay)[keyof typeof WeekDay]
 
+
+export const AvailabilityMode: {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  BOTH: 'BOTH'
+};
+
+export type AvailabilityMode = (typeof AvailabilityMode)[keyof typeof AvailabilityMode]
+
 }
 
 export type Role = $Enums.Role
@@ -94,9 +111,17 @@ export type AppointmentStatus = $Enums.AppointmentStatus
 
 export const AppointmentStatus: typeof $Enums.AppointmentStatus
 
+export type AppointmentType = $Enums.AppointmentType
+
+export const AppointmentType: typeof $Enums.AppointmentType
+
 export type WeekDay = $Enums.WeekDay
 
 export const WeekDay: typeof $Enums.WeekDay
+
+export type AvailabilityMode = $Enums.AvailabilityMode
+
+export const AvailabilityMode: typeof $Enums.AvailabilityMode
 
 /**
  * ##  Prisma Client ʲˢ
@@ -6205,6 +6230,7 @@ export namespace Prisma {
     endTime: number | null
     day: Date | null
     status: $Enums.AppointmentStatus | null
+    type: $Enums.AppointmentType | null
     reason: string | null
     notes: string | null
     createdAt: Date | null
@@ -6219,6 +6245,7 @@ export namespace Prisma {
     endTime: number | null
     day: Date | null
     status: $Enums.AppointmentStatus | null
+    type: $Enums.AppointmentType | null
     reason: string | null
     notes: string | null
     createdAt: Date | null
@@ -6233,6 +6260,7 @@ export namespace Prisma {
     endTime: number
     day: number
     status: number
+    type: number
     reason: number
     notes: number
     createdAt: number
@@ -6259,6 +6287,7 @@ export namespace Prisma {
     endTime?: true
     day?: true
     status?: true
+    type?: true
     reason?: true
     notes?: true
     createdAt?: true
@@ -6273,6 +6302,7 @@ export namespace Prisma {
     endTime?: true
     day?: true
     status?: true
+    type?: true
     reason?: true
     notes?: true
     createdAt?: true
@@ -6287,6 +6317,7 @@ export namespace Prisma {
     endTime?: true
     day?: true
     status?: true
+    type?: true
     reason?: true
     notes?: true
     createdAt?: true
@@ -6388,6 +6419,7 @@ export namespace Prisma {
     endTime: number
     day: Date
     status: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason: string | null
     notes: string | null
     createdAt: Date
@@ -6421,6 +6453,7 @@ export namespace Prisma {
     endTime?: boolean
     day?: boolean
     status?: boolean
+    type?: boolean
     reason?: boolean
     notes?: boolean
     createdAt?: boolean
@@ -6437,6 +6470,7 @@ export namespace Prisma {
     endTime?: boolean
     day?: boolean
     status?: boolean
+    type?: boolean
     reason?: boolean
     notes?: boolean
     createdAt?: boolean
@@ -6453,6 +6487,7 @@ export namespace Prisma {
     endTime?: boolean
     day?: boolean
     status?: boolean
+    type?: boolean
     reason?: boolean
     notes?: boolean
     createdAt?: boolean
@@ -6469,13 +6504,14 @@ export namespace Prisma {
     endTime?: boolean
     day?: boolean
     status?: boolean
+    type?: boolean
     reason?: boolean
     notes?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type AppointmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "patientId" | "doctorId" | "startTime" | "endTime" | "day" | "status" | "reason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
+  export type AppointmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "patientId" | "doctorId" | "startTime" | "endTime" | "day" | "status" | "type" | "reason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
   export type AppointmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     patient?: boolean | PatientDefaultArgs<ExtArgs>
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
@@ -6503,6 +6539,7 @@ export namespace Prisma {
       endTime: number
       day: Date
       status: $Enums.AppointmentStatus
+      type: $Enums.AppointmentType
       reason: string | null
       notes: string | null
       createdAt: Date
@@ -6939,6 +6976,7 @@ export namespace Prisma {
     readonly endTime: FieldRef<"Appointment", 'Int'>
     readonly day: FieldRef<"Appointment", 'DateTime'>
     readonly status: FieldRef<"Appointment", 'AppointmentStatus'>
+    readonly type: FieldRef<"Appointment", 'AppointmentType'>
     readonly reason: FieldRef<"Appointment", 'String'>
     readonly notes: FieldRef<"Appointment", 'String'>
     readonly createdAt: FieldRef<"Appointment", 'DateTime'>
@@ -8542,6 +8580,7 @@ export namespace Prisma {
     startMinutes: number | null
     endMinutes: number | null
     createdAt: Date | null
+    mode: $Enums.AvailabilityMode | null
   }
 
   export type AvailabilityMaxAggregateOutputType = {
@@ -8550,6 +8589,7 @@ export namespace Prisma {
     startMinutes: number | null
     endMinutes: number | null
     createdAt: Date | null
+    mode: $Enums.AvailabilityMode | null
   }
 
   export type AvailabilityCountAggregateOutputType = {
@@ -8559,6 +8599,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt: number
+    mode: number
     _all: number
   }
 
@@ -8579,6 +8620,7 @@ export namespace Prisma {
     startMinutes?: true
     endMinutes?: true
     createdAt?: true
+    mode?: true
   }
 
   export type AvailabilityMaxAggregateInputType = {
@@ -8587,6 +8629,7 @@ export namespace Prisma {
     startMinutes?: true
     endMinutes?: true
     createdAt?: true
+    mode?: true
   }
 
   export type AvailabilityCountAggregateInputType = {
@@ -8596,6 +8639,7 @@ export namespace Prisma {
     startMinutes?: true
     endMinutes?: true
     createdAt?: true
+    mode?: true
     _all?: true
   }
 
@@ -8692,6 +8736,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt: Date
+    mode: $Enums.AvailabilityMode
     _count: AvailabilityCountAggregateOutputType | null
     _avg: AvailabilityAvgAggregateOutputType | null
     _sum: AvailabilitySumAggregateOutputType | null
@@ -8720,6 +8765,7 @@ export namespace Prisma {
     startMinutes?: boolean
     endMinutes?: boolean
     createdAt?: boolean
+    mode?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["availability"]>
 
@@ -8730,6 +8776,7 @@ export namespace Prisma {
     startMinutes?: boolean
     endMinutes?: boolean
     createdAt?: boolean
+    mode?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["availability"]>
 
@@ -8740,6 +8787,7 @@ export namespace Prisma {
     startMinutes?: boolean
     endMinutes?: boolean
     createdAt?: boolean
+    mode?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["availability"]>
 
@@ -8750,9 +8798,10 @@ export namespace Prisma {
     startMinutes?: boolean
     endMinutes?: boolean
     createdAt?: boolean
+    mode?: boolean
   }
 
-  export type AvailabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "weekdays" | "startMinutes" | "endMinutes" | "createdAt", ExtArgs["result"]["availability"]>
+  export type AvailabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "weekdays" | "startMinutes" | "endMinutes" | "createdAt" | "mode", ExtArgs["result"]["availability"]>
   export type AvailabilityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }
@@ -8775,6 +8824,7 @@ export namespace Prisma {
       startMinutes: number
       endMinutes: number
       createdAt: Date
+      mode: $Enums.AvailabilityMode
     }, ExtArgs["result"]["availability"]>
     composites: {}
   }
@@ -9205,6 +9255,7 @@ export namespace Prisma {
     readonly startMinutes: FieldRef<"Availability", 'Int'>
     readonly endMinutes: FieldRef<"Availability", 'Int'>
     readonly createdAt: FieldRef<"Availability", 'DateTime'>
+    readonly mode: FieldRef<"Availability", 'AvailabilityMode'>
   }
     
 
@@ -9698,6 +9749,7 @@ export namespace Prisma {
     endTime: 'endTime',
     day: 'day',
     status: 'status',
+    type: 'type',
     reason: 'reason',
     notes: 'notes',
     createdAt: 'createdAt',
@@ -9727,7 +9779,8 @@ export namespace Prisma {
     weekdays: 'weekdays',
     startMinutes: 'startMinutes',
     endMinutes: 'endMinutes',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    mode: 'mode'
   };
 
   export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[keyof typeof AvailabilityScalarFieldEnum]
@@ -9847,6 +9900,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'AppointmentType'
+   */
+  export type EnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType'>
+    
+
+
+  /**
+   * Reference to a field of type 'AppointmentType[]'
+   */
+  export type ListEnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -9864,6 +9931,20 @@ export namespace Prisma {
    * Reference to a field of type 'WeekDay'
    */
   export type EnumWeekDayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WeekDay'>
+    
+
+
+  /**
+   * Reference to a field of type 'AvailabilityMode'
+   */
+  export type EnumAvailabilityModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AvailabilityMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'AvailabilityMode[]'
+   */
+  export type ListEnumAvailabilityModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AvailabilityMode[]'>
     
   /**
    * Deep Input Types
@@ -10167,6 +10248,7 @@ export namespace Prisma {
     endTime?: IntFilter<"Appointment"> | number
     day?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFilter<"Appointment"> | $Enums.AppointmentType
     reason?: StringNullableFilter<"Appointment"> | string | null
     notes?: StringNullableFilter<"Appointment"> | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
@@ -10183,6 +10265,7 @@ export namespace Prisma {
     endTime?: SortOrder
     day?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     reason?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -10202,6 +10285,7 @@ export namespace Prisma {
     endTime?: IntFilter<"Appointment"> | number
     day?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFilter<"Appointment"> | $Enums.AppointmentType
     reason?: StringNullableFilter<"Appointment"> | string | null
     notes?: StringNullableFilter<"Appointment"> | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
@@ -10218,6 +10302,7 @@ export namespace Prisma {
     endTime?: SortOrder
     day?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     reason?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -10240,6 +10325,7 @@ export namespace Prisma {
     endTime?: IntWithAggregatesFilter<"Appointment"> | number
     day?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusWithAggregatesFilter<"Appointment"> | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeWithAggregatesFilter<"Appointment"> | $Enums.AppointmentType
     reason?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     notes?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
@@ -10328,6 +10414,7 @@ export namespace Prisma {
     startMinutes?: IntFilter<"Availability"> | number
     endMinutes?: IntFilter<"Availability"> | number
     createdAt?: DateTimeFilter<"Availability"> | Date | string
+    mode?: EnumAvailabilityModeFilter<"Availability"> | $Enums.AvailabilityMode
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
   }
 
@@ -10338,6 +10425,7 @@ export namespace Prisma {
     startMinutes?: SortOrder
     endMinutes?: SortOrder
     createdAt?: SortOrder
+    mode?: SortOrder
     doctor?: DoctorOrderByWithRelationInput
   }
 
@@ -10351,6 +10439,7 @@ export namespace Prisma {
     startMinutes?: IntFilter<"Availability"> | number
     endMinutes?: IntFilter<"Availability"> | number
     createdAt?: DateTimeFilter<"Availability"> | Date | string
+    mode?: EnumAvailabilityModeFilter<"Availability"> | $Enums.AvailabilityMode
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
   }, "id">
 
@@ -10361,6 +10450,7 @@ export namespace Prisma {
     startMinutes?: SortOrder
     endMinutes?: SortOrder
     createdAt?: SortOrder
+    mode?: SortOrder
     _count?: AvailabilityCountOrderByAggregateInput
     _avg?: AvailabilityAvgOrderByAggregateInput
     _max?: AvailabilityMaxOrderByAggregateInput
@@ -10378,6 +10468,7 @@ export namespace Prisma {
     startMinutes?: IntWithAggregatesFilter<"Availability"> | number
     endMinutes?: IntWithAggregatesFilter<"Availability"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Availability"> | Date | string
+    mode?: EnumAvailabilityModeWithAggregatesFilter<"Availability"> | $Enums.AvailabilityMode
   }
 
   export type UserCreateInput = {
@@ -10694,6 +10785,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -10710,6 +10802,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -10722,6 +10815,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10738,6 +10832,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10752,6 +10847,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -10764,6 +10860,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10778,6 +10875,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10866,6 +10964,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt?: Date | string
+    mode: $Enums.AvailabilityMode
     doctor: DoctorCreateNestedOneWithoutAvailabilitiesInput
   }
 
@@ -10876,6 +10975,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt?: Date | string
+    mode: $Enums.AvailabilityMode
   }
 
   export type AvailabilityUpdateInput = {
@@ -10884,6 +10984,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
     doctor?: DoctorUpdateOneRequiredWithoutAvailabilitiesNestedInput
   }
 
@@ -10894,6 +10995,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
   }
 
   export type AvailabilityCreateManyInput = {
@@ -10903,6 +11005,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt?: Date | string
+    mode: $Enums.AvailabilityMode
   }
 
   export type AvailabilityUpdateManyMutationInput = {
@@ -10911,6 +11014,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
   }
 
   export type AvailabilityUncheckedUpdateManyInput = {
@@ -10920,6 +11024,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -11272,6 +11377,13 @@ export namespace Prisma {
     not?: NestedEnumAppointmentStatusFilter<$PrismaModel> | $Enums.AppointmentStatus
   }
 
+  export type EnumAppointmentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AppointmentType | EnumAppointmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAppointmentTypeFilter<$PrismaModel> | $Enums.AppointmentType
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -11305,6 +11417,7 @@ export namespace Prisma {
     endTime?: SortOrder
     day?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     reason?: SortOrder
     notes?: SortOrder
     createdAt?: SortOrder
@@ -11324,6 +11437,7 @@ export namespace Prisma {
     endTime?: SortOrder
     day?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     reason?: SortOrder
     notes?: SortOrder
     createdAt?: SortOrder
@@ -11338,6 +11452,7 @@ export namespace Prisma {
     endTime?: SortOrder
     day?: SortOrder
     status?: SortOrder
+    type?: SortOrder
     reason?: SortOrder
     notes?: SortOrder
     createdAt?: SortOrder
@@ -11387,6 +11502,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAppointmentStatusFilter<$PrismaModel>
     _max?: NestedEnumAppointmentStatusFilter<$PrismaModel>
+  }
+
+  export type EnumAppointmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AppointmentType | EnumAppointmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAppointmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AppointmentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAppointmentTypeFilter<$PrismaModel>
+    _max?: NestedEnumAppointmentTypeFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11504,6 +11629,13 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type EnumAvailabilityModeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AvailabilityMode | EnumAvailabilityModeFieldRefInput<$PrismaModel>
+    in?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAvailabilityModeFilter<$PrismaModel> | $Enums.AvailabilityMode
+  }
+
   export type AvailabilityCountOrderByAggregateInput = {
     id?: SortOrder
     doctorId?: SortOrder
@@ -11511,6 +11643,7 @@ export namespace Prisma {
     startMinutes?: SortOrder
     endMinutes?: SortOrder
     createdAt?: SortOrder
+    mode?: SortOrder
   }
 
   export type AvailabilityAvgOrderByAggregateInput = {
@@ -11524,6 +11657,7 @@ export namespace Prisma {
     startMinutes?: SortOrder
     endMinutes?: SortOrder
     createdAt?: SortOrder
+    mode?: SortOrder
   }
 
   export type AvailabilityMinOrderByAggregateInput = {
@@ -11532,11 +11666,22 @@ export namespace Prisma {
     startMinutes?: SortOrder
     endMinutes?: SortOrder
     createdAt?: SortOrder
+    mode?: SortOrder
   }
 
   export type AvailabilitySumOrderByAggregateInput = {
     startMinutes?: SortOrder
     endMinutes?: SortOrder
+  }
+
+  export type EnumAvailabilityModeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AvailabilityMode | EnumAvailabilityModeFieldRefInput<$PrismaModel>
+    in?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAvailabilityModeWithAggregatesFilter<$PrismaModel> | $Enums.AvailabilityMode
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAvailabilityModeFilter<$PrismaModel>
+    _max?: NestedEnumAvailabilityModeFilter<$PrismaModel>
   }
 
   export type PatientCreateNestedOneWithoutUserInput = {
@@ -11941,6 +12086,10 @@ export namespace Prisma {
     set?: $Enums.AppointmentStatus
   }
 
+  export type EnumAppointmentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.AppointmentType
+  }
+
   export type PatientUpdateOneRequiredWithoutAppointmentsNestedInput = {
     create?: XOR<PatientCreateWithoutAppointmentsInput, PatientUncheckedCreateWithoutAppointmentsInput>
     connectOrCreate?: PatientCreateOrConnectWithoutAppointmentsInput
@@ -11996,6 +12145,10 @@ export namespace Prisma {
   export type AvailabilityUpdateweekdaysInput = {
     set?: $Enums.WeekDay[]
     push?: $Enums.WeekDay | $Enums.WeekDay[]
+  }
+
+  export type EnumAvailabilityModeFieldUpdateOperationsInput = {
+    set?: $Enums.AvailabilityMode
   }
 
   export type DoctorUpdateOneRequiredWithoutAvailabilitiesNestedInput = {
@@ -12185,6 +12338,13 @@ export namespace Prisma {
     not?: NestedEnumAppointmentStatusFilter<$PrismaModel> | $Enums.AppointmentStatus
   }
 
+  export type NestedEnumAppointmentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AppointmentType | EnumAppointmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAppointmentTypeFilter<$PrismaModel> | $Enums.AppointmentType
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -12223,6 +12383,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAppointmentStatusFilter<$PrismaModel>
     _max?: NestedEnumAppointmentStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAppointmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AppointmentType | EnumAppointmentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AppointmentType[] | ListEnumAppointmentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAppointmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AppointmentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAppointmentTypeFilter<$PrismaModel>
+    _max?: NestedEnumAppointmentTypeFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12280,6 +12450,23 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumAvailabilityModeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AvailabilityMode | EnumAvailabilityModeFieldRefInput<$PrismaModel>
+    in?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAvailabilityModeFilter<$PrismaModel> | $Enums.AvailabilityMode
+  }
+
+  export type NestedEnumAvailabilityModeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AvailabilityMode | EnumAvailabilityModeFieldRefInput<$PrismaModel>
+    in?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AvailabilityMode[] | ListEnumAvailabilityModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAvailabilityModeWithAggregatesFilter<$PrismaModel> | $Enums.AvailabilityMode
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAvailabilityModeFilter<$PrismaModel>
+    _max?: NestedEnumAvailabilityModeFilter<$PrismaModel>
   }
 
   export type PatientCreateWithoutUserInput = {
@@ -12499,6 +12686,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -12513,6 +12701,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -12585,6 +12774,7 @@ export namespace Prisma {
     endTime?: IntFilter<"Appointment"> | number
     day?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFilter<"Appointment"> | $Enums.AppointmentType
     reason?: StringNullableFilter<"Appointment"> | string | null
     notes?: StringNullableFilter<"Appointment"> | string | null
     createdAt?: DateTimeFilter<"Appointment"> | Date | string
@@ -12770,6 +12960,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -12784,6 +12975,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -12831,6 +13023,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt?: Date | string
+    mode: $Enums.AvailabilityMode
   }
 
   export type AvailabilityUncheckedCreateWithoutDoctorInput = {
@@ -12839,6 +13032,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt?: Date | string
+    mode: $Enums.AvailabilityMode
   }
 
   export type AvailabilityCreateOrConnectWithoutDoctorInput = {
@@ -12994,6 +13188,7 @@ export namespace Prisma {
     startMinutes?: IntFilter<"Availability"> | number
     endMinutes?: IntFilter<"Availability"> | number
     createdAt?: DateTimeFilter<"Availability"> | Date | string
+    mode?: EnumAvailabilityModeFilter<"Availability"> | $Enums.AvailabilityMode
   }
 
   export type PatientCreateWithoutAppointmentsInput = {
@@ -13243,6 +13438,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -13255,6 +13451,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13269,6 +13466,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13282,6 +13480,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13337,6 +13536,7 @@ export namespace Prisma {
     endTime: number
     day: Date | string
     status?: $Enums.AppointmentStatus
+    type: $Enums.AppointmentType
     reason?: string | null
     notes?: string | null
     createdAt?: Date | string
@@ -13349,6 +13549,7 @@ export namespace Prisma {
     startMinutes: number
     endMinutes: number
     createdAt?: Date | string
+    mode: $Enums.AvailabilityMode
   }
 
   export type AppointmentUpdateWithoutDoctorInput = {
@@ -13357,6 +13558,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13371,6 +13573,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13384,6 +13587,7 @@ export namespace Prisma {
     endTime?: IntFieldUpdateOperationsInput | number
     day?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+    type?: EnumAppointmentTypeFieldUpdateOperationsInput | $Enums.AppointmentType
     reason?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13396,6 +13600,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
   }
 
   export type AvailabilityUncheckedUpdateWithoutDoctorInput = {
@@ -13404,6 +13609,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
   }
 
   export type AvailabilityUncheckedUpdateManyWithoutDoctorInput = {
@@ -13412,6 +13618,7 @@ export namespace Prisma {
     startMinutes?: IntFieldUpdateOperationsInput | number
     endMinutes?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mode?: EnumAvailabilityModeFieldUpdateOperationsInput | $Enums.AvailabilityMode
   }
 
 

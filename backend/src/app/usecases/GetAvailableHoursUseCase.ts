@@ -3,9 +3,8 @@ import { TYPES } from "../dto/types";
 import type { DoctorRepository } from "../../domain/repositories/DoctorRepository";
 import { NotfoundError } from "../../domain/errors/NotFoundError";
 import type { UseCase } from "../../domain/value-objects/UseCase";
-import { getAvaliableDayTimes} from "../../domain/services/avaliabilityService";
+import { getAvaliableDayTimes, type AvailableSlot} from "../../domain/services/avaliabilityService";
 import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
-import { Time } from "../../domain/value-objects/Time";
 type Input= {
     day: Date,
     doctorId: string
@@ -13,14 +12,14 @@ type Input= {
 
 @injectable()
 export class GetDoctorAvailableHoursUseCase
-  implements UseCase<Input, Promise<Time[]>>
+  implements UseCase<Input, Promise<AvailableSlot[]>>
 {
   constructor(
     @inject(TYPES.DoctorRepository) private readonly doctorRepository: DoctorRepository,
     @inject(TYPES.AppointmentRepository) private readonly appointmentRepository: AppointmentRepository
   ) {}
 
-  async execute(input: Input): Promise<Time[]> {
+  async execute(input: Input): Promise<AvailableSlot[]> {
     const doctor = await this.doctorRepository.findById(input.doctorId);
     if (!doctor) {
       throw new NotfoundError("Doctor", input.doctorId);

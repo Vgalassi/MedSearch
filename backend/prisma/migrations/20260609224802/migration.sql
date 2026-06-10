@@ -5,7 +5,13 @@ CREATE TYPE "Role" AS ENUM ('PATIENT', 'DOCTOR', 'CLINIC');
 CREATE TYPE "AppointmentStatus" AS ENUM ('SCHEDULED', 'CANCELED', 'COMPLETED', 'NO_SHOW');
 
 -- CreateEnum
+CREATE TYPE "AppointmentType" AS ENUM ('ONLINE', 'OFFLINE');
+
+-- CreateEnum
 CREATE TYPE "WeekDay" AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
+
+-- CreateEnum
+CREATE TYPE "AvailabilityMode" AS ENUM ('ONLINE', 'OFFLINE', 'BOTH');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -68,6 +74,7 @@ CREATE TABLE "appointments" (
     "endTime" INTEGER NOT NULL,
     "day" TIMESTAMP(3) NOT NULL,
     "status" "AppointmentStatus" NOT NULL DEFAULT 'SCHEDULED',
+    "type" "AppointmentType" NOT NULL,
     "reason" TEXT,
     "notes" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -98,6 +105,7 @@ CREATE TABLE "availabilities" (
     "startMinutes" INTEGER NOT NULL,
     "endMinutes" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "mode" "AvailabilityMode" NOT NULL,
 
     CONSTRAINT "availabilities_pkey" PRIMARY KEY ("id")
 );

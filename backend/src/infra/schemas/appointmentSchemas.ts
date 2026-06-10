@@ -8,6 +8,7 @@ export const createAppointmentBodySchema = z.object({
   day: z.iso.date(),
   reason: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
+  type: z.enum(["ONLINE", "OFFLINE"]),
 });
 
 export const appointmentIdParamsSchema = z.object({

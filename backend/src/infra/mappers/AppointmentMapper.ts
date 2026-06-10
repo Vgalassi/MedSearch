@@ -1,4 +1,4 @@
-import { Appointment } from "../../domain/Aggregates/Appointment";
+import { Appointment, type appointmentType } from "../../domain/Aggregates/Appointment";
 import { Identifier } from "../../domain/value-objects/Identifier";
 import { Time } from "../../domain/value-objects/Time";
 import { AppointmentStatus } from "../generated/prisma/client";
@@ -13,6 +13,7 @@ type PrismaAppointment = {
   status: AppointmentStatus;
   reason: string | null;
   notes: string | null;
+  type: appointmentType;
 };
 
 export class AppointmentMapper {
@@ -27,6 +28,7 @@ export class AppointmentMapper {
         status: raw.status as Appointment["props"]["status"],
         reason: raw.reason,
         notes: raw.notes,
+        type: raw.type,
       },
       new Identifier(raw.id),
     );
@@ -42,6 +44,7 @@ export class AppointmentMapper {
     status: AppointmentStatus;
     reason: string | null;
     notes: string | null;
+    type: appointmentType;
   } {
     return {
       id: appointment.id.value,
@@ -53,6 +56,7 @@ export class AppointmentMapper {
       status: appointment.props.status as AppointmentStatus,
       reason: appointment.props.reason ?? null,
       notes: appointment.props.notes ?? null,
+      type: appointment.props.type,
     };
   }
 }

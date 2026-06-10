@@ -147,13 +147,7 @@ export default function PatientHomePage() {
               value={search}
             />
           </label>
-          <button
-            className="btn-primary h-12 px-5"
-            onClick={useCurrentLocation}
-            type="button"
-          >
-            Usar minha localizacao
-          </button>
+         
         </section>
 
         {locationError && (

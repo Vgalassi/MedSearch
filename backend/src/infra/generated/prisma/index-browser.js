@@ -168,6 +168,7 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   endTime: 'endTime',
   day: 'day',
   status: 'status',
+  type: 'type',
   reason: 'reason',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -191,7 +192,8 @@ exports.Prisma.AvailabilityScalarFieldEnum = {
   weekdays: 'weekdays',
   startMinutes: 'startMinutes',
   endMinutes: 'endMinutes',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  mode: 'mode'
 };
 
 exports.Prisma.SortOrder = {
@@ -219,6 +221,17 @@ exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
   CANCELED: 'CANCELED',
   COMPLETED: 'COMPLETED',
   NO_SHOW: 'NO_SHOW'
+};
+
+exports.AppointmentType = exports.$Enums.AppointmentType = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE'
+};
+
+exports.AvailabilityMode = exports.$Enums.AvailabilityMode = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  BOTH: 'BOTH'
 };
 
 exports.WeekDay = exports.$Enums.WeekDay = {

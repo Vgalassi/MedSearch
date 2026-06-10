@@ -20,6 +20,11 @@ enum AppointmentStatus {
   NO_SHOW
 }
 
+enum AppointmentType {
+  ONLINE
+  OFFLINE
+}
+
 enum WeekDay {
   MONDAY
   TUESDAY
@@ -28,6 +33,12 @@ enum WeekDay {
   FRIDAY
   SATURDAY
   SUNDAY
+}
+
+enum AvailabilityMode {
+  ONLINE
+  OFFLINE
+  BOTH
 }
 
 model User {
@@ -114,6 +125,7 @@ model Appointment {
   day       DateTime
 
   status AppointmentStatus @default(SCHEDULED)
+  type   AppointmentType
 
   reason String?
   notes  String?
@@ -155,7 +167,8 @@ model Availability {
   startMinutes Int
   endMinutes   Int
 
-  createdAt DateTime @default(now())
+  createdAt DateTime         @default(now())
+  mode      AvailabilityMode
 
   @@index([doctorId])
   @@map("availabilities")

@@ -6,7 +6,8 @@ import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 import { Time } from "../../domain/value-objects/Time";
 import { WeekDay as DomainWeekDay } from "../../domain/value-objects/WeekDay";
 import { WeekDayRange } from "../../domain/value-objects/WeekDayRange";
-import type { WeekDay as PrismaWeekDay } from "../generated/prisma/client";
+import { AvailabilityMode } from "../../domain/value-objects/AvailabilityMode";
+import type { AvailabilityMode as PrismaAvailabilityMode, WeekDay as PrismaWeekDay } from "../generated/prisma/client";
 
 type PrismaDoctorSettings = {
   id: string;
@@ -25,6 +26,7 @@ type PrismaAvailability = {
   weekdays: PrismaWeekDay[];
   startMinutes: number;
   endMinutes: number;
+  mode: PrismaAvailabilityMode;
 };
 
 type PrismaDoctor = {
@@ -84,6 +86,7 @@ export class DoctorMapper {
                     availability.startMinutes,
                   ),
                   endTime: Time.createWithSeconds(availability.endMinutes),
+                  mode: new AvailabilityMode(availability.mode),
                 },
                 new Identifier(availability.id),
               ),
@@ -128,6 +131,7 @@ export class DoctorMapper {
         ),
         startMinutes: availability.props.startTime.value,
         endMinutes: availability.props.endTime.value,
+        mode: availability.props.mode.value as PrismaAvailabilityMode,
       }));
     }
 
