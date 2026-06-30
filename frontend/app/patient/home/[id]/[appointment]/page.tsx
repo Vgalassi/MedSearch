@@ -24,7 +24,7 @@ type AvailableHour = {
 const modeLabels: Record<AvailabilityMode, string> = {
   ONLINE: "Online",
   OFFLINE: "Presencial",
-  BOTH: "Ambas",
+  BOTH: "Presencial ou Online",
 };
 
 const typeLabels: Record<AppointmentType, string> = {

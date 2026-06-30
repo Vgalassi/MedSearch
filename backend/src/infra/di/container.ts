@@ -37,6 +37,7 @@ import type { CepService } from "../../app/protocols/CepService";
 import type { GeocodingService } from "../../app/protocols/GeocodingService";
 import { CepViaService } from "../api/CepViaService";
 import { NominatimGeocodingService } from "../api/NominatimService";
+import { JoinCallUseCase } from "../../app/usecases/JoinCallUseCase";
 const container = new Container();
 
 container.bind<UserRepository>(TYPES.UserRepository).to(PrismaUserRepository);
@@ -92,5 +93,7 @@ container.bind<CepService>(TYPES.CepService).to(CepViaService);
 container
   .bind<GeocodingService>(TYPES.GeocodingService)
   .to(NominatimGeocodingService);
+
+container.bind<JoinCallUseCase>(TYPES.JoinCallUseCase).to(JoinCallUseCase)
 
 export { container };

@@ -1,7 +1,6 @@
 
 
 
-
 export const TYPES = {
     UserRepository: Symbol.for("UserRepository"),
     DoctorRepository: Symbol.for("DoctorRepository"),
@@ -17,6 +16,7 @@ export const TYPES = {
     GetDoctorAvailableDaysUseCase: Symbol.for("GetDoctorAvailableDaysUseCase"),
     GetDoctorAvailableHoursUseCase: Symbol.for("GetDoctorAvailableHoursUseCase"),
     GetDoctorSchedulingUseCase: Symbol.for("GetDoctorSchedulingUseCase"),
+    JoinCallUseCase: Symbol.for("JoinCallUseCase"),
     UpdateDoctorSchedulingUseCase: Symbol.for("UpdateDoctorSchedulingUseCase"),
     AppointmentRepository: Symbol.for("AppointmentRepository"),
     DoctorSettingsRepository: Symbol.for("DoctorSettingsRepository"),

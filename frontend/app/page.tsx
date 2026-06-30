@@ -9,20 +9,20 @@ export default function Home() {
           <div className="max-w-2xl">
             <p className="section-kicker text-teal-200">MedSearch</p>
             <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-              Consultas medicas com busca, agenda e gestao em um so lugar.
+              Consultas médicas com busca, agenda e gestão em um só lugar.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-8 text-teal-50/85 sm:text-lg">
-              Uma plataforma para pacientes encontrarem clinicas, conhecerem
-              medicos disponiveis e acompanharem o agendamento online. Para
-              clinicas, o MedSearch organiza suas consultas e simplifica a
+              Uma plataforma para pacientes encontrarem clínicas, conhecerem
+              médicos disponiveis e acompanharem o agendamento online. Para
+              clínicas, o MedSearch organiza suas consultas e simplifica a
               rotina de atendimento.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/patient/home" className="btn-primary bg-white text-teal-900 hover:bg-teal-50">
-                Procurar clinicas
+                Procurar clínicas
               </Link>
               <Link href="/clinic/register" className="btn-secondary border-white/25 bg-white/10 text-white hover:bg-white/15 hover:text-white">
-                Cadastrar clinica
+                Cadastrar clínica
               </Link>
             </div>
           </div>
@@ -82,8 +82,8 @@ export default function Home() {
           <p className="section-kicker">Como funciona</p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {[
-              ["Encontre", "Compare clinicas por localizacao, descricao e especialidades disponiveis."],
-              ["Agende", "Escolha o medico e acompanhe os horarios livres com regras claras de agenda."],
+              ["Encontre", "Compare clínicas por localização, descrição e especialidades disponíveis."],
+              ["Agende", "Escolha o médico e acompanhe os horários livres com regras claras de agenda."],
               ["Gerencie", "Clinicas adicionam e removem medicos do time sem perder visibilidade."],
             ].map(([title, text]) => (
               <article className="surface p-6" key={title}>

@@ -12,6 +12,7 @@ import { DailyAppointmentLimitReachedError } from "../../domain/errors/DailyAppo
 import { CannotCancelAppointmentError } from "../../domain/errors/CannotCancelAppointmentError.js";
 import { InvalidAppointmentTimeOrderError } from "../../domain/errors/InvalidAppointmentTimeOrderError.js";
 import type { FastifyInstance } from "fastify";
+import { UnauthorizedError } from "../../domain/errors/UnauthorizedError.js";
 
 
 export function setupErrorHandler(app: FastifyInstance){
@@ -39,6 +40,10 @@ export function setupErrorHandler(app: FastifyInstance){
             message: "Validation error",
             issues: error.issues,
             });
+        }
+
+        if(error instanceof UnauthorizedError ){
+            reply.status(403).send({ message: error.message})
         }
 
         console.error(error)

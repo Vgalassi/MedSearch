@@ -17,7 +17,7 @@ export function ClinicCard({ clinic }: Props) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.14em] text-teal-700">
-            Clinica
+            Clínica
           </p>
           <h2 className="mt-2 text-xl font-bold text-slate-950">
             {clinic.name}
