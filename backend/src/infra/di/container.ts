@@ -38,6 +38,9 @@ import type { GeocodingService } from "../../app/protocols/GeocodingService";
 import { CepViaService } from "../api/CepViaService";
 import { NominatimGeocodingService } from "../api/NominatimService";
 import { JoinCallUseCase } from "../../app/usecases/JoinCallUseCase";
+import type { SymptomClassifier } from "../../app/protocols/SymptomClassifier";
+import { PythonSymptomClassifier } from "../ai/PythonSymptomClassifier";
+import { FindClinicsForSymptomsUseCase } from "../../app/usecases/FindClinicsForSymptomsUseCase";
 const container = new Container();
 
 container.bind<UserRepository>(TYPES.UserRepository).to(PrismaUserRepository);
@@ -95,5 +98,9 @@ container
   .to(NominatimGeocodingService);
 
 container.bind<JoinCallUseCase>(TYPES.JoinCallUseCase).to(JoinCallUseCase)
+container.bind<SymptomClassifier>(TYPES.SymptomClassifier).to(PythonSymptomClassifier);
+container
+  .bind<FindClinicsForSymptomsUseCase>(TYPES.FindClinicsForSymptomsUseCase)
+  .to(FindClinicsForSymptomsUseCase);
 
 export { container };

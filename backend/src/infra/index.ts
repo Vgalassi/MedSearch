@@ -5,6 +5,7 @@ import clinicRoutes from "./routes/clinicRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
 import callRoutes from "./routes/callRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 import cors from '@fastify/cors'
 import { setupErrorHandler } from "./error/errorHandler.js";
 import { setupSession } from "./auth/sessionConfig.js";
@@ -42,6 +43,7 @@ app.register(clinicRoutes)
 app.register(doctorRoutes)
 app.register(appointmentRoutes)
 app.register(callRoutes)
+app.register(aiRoutes)
 
 
 new CallWebSocketServer(

@@ -30,5 +30,7 @@ export const TYPES = {
     LoginUserUseCase: Symbol.for("LoginUserUseCase"),
     CepService: Symbol.for("CepService"),
     GeocodingService: Symbol.for("GeocodingService")
+    ,SymptomClassifier: Symbol.for("SymptomClassifier")
+    ,FindClinicsForSymptomsUseCase: Symbol.for("FindClinicsForSymptomsUseCase")
     
 };

@@ -13,6 +13,7 @@ import { CannotCancelAppointmentError } from "../../domain/errors/CannotCancelAp
 import { InvalidAppointmentTimeOrderError } from "../../domain/errors/InvalidAppointmentTimeOrderError.js";
 import type { FastifyInstance } from "fastify";
 import { UnauthorizedError } from "../../domain/errors/UnauthorizedError.js";
+import { LowConfidenceClassificationError } from "../../domain/errors/LowConfidenceClassificationError.js";
 
 
 export function setupErrorHandler(app: FastifyInstance){
@@ -33,6 +34,10 @@ export function setupErrorHandler(app: FastifyInstance){
             error instanceof InvalidAppointmentTimeOrderError
         ) {
             return reply.status(400).send({ message: error.message });
+        }
+
+        if (error instanceof LowConfidenceClassificationError) {
+            return reply.status(422).send({ message: error.message });
         }
 
         if (error instanceof ZodError) {
