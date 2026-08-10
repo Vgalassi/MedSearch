@@ -68,6 +68,9 @@ export default function MainHeader() {
           >
             Clinicas
           </Link>
+          <Link className="btn-secondary px-3 py-2" href="/patient/ai">
+            Assistente IA
+          </Link>
           <Link className="btn-primary px-3 py-2" href="/patient/appointments">
             Ver Consultas
           </Link>

@@ -1,0 +1,255 @@
+disease,speciality
+abdominal hernia,Cirurgia Geral
+acne,Dermatologia
+actinic keratosis,Dermatologia
+acute bronchiolitis,Pneumologia
+acute bronchitis,Pneumologia
+acute bronchospasm,Pneumologia
+acute kidney injury,Nefrologia
+acute otitis media,Otorrinolaringologia
+acute pancreatitis,Gastroenterologia
+acute respiratory distress syndrome (ards),Pneumologia
+acute sinusitis,Otorrinolaringologia
+acute stress reaction,Psiquiatria
+adjustment reaction,Psiquiatria
+alcohol abuse,Psiquiatria
+alcohol withdrawal,Psiquiatria
+allergy,Alergologia
+angina,Cardiologia
+ankylosing spondylitis,Reumatologia
+anxiety,Psiquiatria
+aortic valve disease,Cardiologia
+appendicitis,Cirurgia Geral
+arthritis of the hip,Ortopedia
+asthma,Pneumologia
+atrophic skin condition,Dermatologia
+attention deficit hyperactivity disorder (adhd),Psiquiatria
+autism,Psiquiatria
+balanitis,Urologia
+bell palsy,Neurologia
+benign paroxysmal positional vertical (bppv),Otorrinolaringologia
+benign prostatic hyperplasia (bph),Urologia
+benign vaginal discharge (leukorrhea),Ginecologia
+bipolar disorder,Psiquiatria
+bladder disorder,Urologia
+blepharitis,Oftalmologia
+brachial neuritis,Neurologia/Ortopedia
+breast infection (mastitis),Mastologia
+bursitis,Ortopedia/Reumatologia
+callus,Dermatologia
+carpal tunnel syndrome,Ortopedia
+cataract,Oftalmologia
+chalazion,Oftalmologia
+cholecystitis,Cirurgia Geral
+choledocholithiasis,Gastroenterologia
+chronic back pain,Ortopedia
+chronic constipation,Gastroenterologia
+chronic glaucoma,Oftalmologia
+chronic obstructive pulmonary disease (copd),Pneumologia
+chronic otitis media,Otorrinolaringologia
+chronic pain disorder,Neurologia/Dor Crônica
+chronic sinusitis,Otorrinolaringologia
+common cold,Clínica Médica
+complex regional pain syndrome,Neurologia
+concussion,Neurologia
+conduct disorder,Psiquiatria Infantil
+conductive hearing loss,Otorrinolaringologia
+conjunctivitis,Oftalmologia
+conjunctivitis due to allergy,Oftalmologia
+conjunctivitis due to virus,Oftalmologia
+contact dermatitis,Dermatologia
+cornea infection,Oftalmologia
+corneal abrasion,Oftalmologia
+corneal disorder,Oftalmologia
+croup,Pediatria
+cystitis,Urologia
+degenerative disc disease,Ortopedia
+delirium,Psiquiatria
+dental caries,Odontologia
+depression,Psiquiatria
+dermatitis due to sun exposure,Dermatologia
+developmental disability,Pediatria
+deviated nasal septum,Otorrinolaringologia
+diabetic ketoacidosis,Endocrinologia
+diabetic peripheral neuropathy,Neurologia
+diabetic retinopathy,Oftalmologia
+diaper rash,Pediatria
+diverticulitis,Gastroenterologia
+diverticulosis,Gastroenterologia
+drug abuse,Psiquiatria
+drug abuse (opioids),Psiquiatria
+drug reaction,Alergologia
+dry eye of unknown cause,Oftalmologia
+dysthymic disorder,Psiquiatria
+ear drum damage,Otorrinolaringologia
+ear wax impaction,Otorrinolaringologia
+eating disorder,Psiquiatria
+eczema,Dermatologia
+envenomation from spider or animal bite,Medicina de Emergência
+epididymitis,Urologia
+erectile dysfunction,Urologia
+esophagitis,Gastroenterologia
+eustachian tube dysfunction (ear disorder),Otorrinolaringologia
+eye alignment disorder,Oftalmologia
+fibromyalgia,Reumatologia
+flu,Clínica Médica/Pneumologia
+food allergy,Alergologia
+fracture of the arm,Ortopedia
+fracture of the facial bones,Cirurgia Bucomaxilofacial
+fracture of the leg,Ortopedia
+fracture of the rib,Ortopedia
+fungal infection of the hair,Dermatologia
+fungal infection of the skin,Dermatologia
+gallstone,Gastroenterologia
+ganglion cyst,Ortopedia
+gastritis,Gastroenterologia
+gastroduodenal ulcer,Gastroenterologia
+gastroesophageal reflux disease (gerd),Gastroenterologia
+gastrointestinal hemorrhage,Gastroenterologia
+glaucoma,Oftalmologia
+gout,Reumatologia
+gum disease,Odontologia
+heart attack,Cardiologia
+heart block,Cardiologia
+heart failure,Cardiologia
+hemangioma,Dermatologia
+hemiplegia,Neurologia
+hemorrhoids,Coloproctologia
+herniated disk,Ortopedia
+herpangina,Pediatria
+hiatal hernia,Gastroenterologia
+hyperemesis gravidarum,Ginecologia e Obstetrícia
+hyperkalemia,Nefrologia
+hypertensive heart disease,Cardiologia
+hypoglycemia,Endocrinologia
+hypokalemia,Nefrologia
+hyponatremia,Nefrologia
+hypovolemia,Clínica Médica
+idiopathic absence of menstruation,Ginecologia
+idiopathic excessive menstruation,Ginecologia
+idiopathic irregular menstrual cycle,Ginecologia
+idiopathic painful menstruation,Ginecologia
+ileus,Cirurgia Geral
+impetigo,Dermatologia
+indigestion,Gastroenterologia
+infectious gastroenteritis,Gastroenterologia
+ingrown toe nail,Dermatologia
+inguinal hernia,Cirurgia Geral
+injury to the arm,Ortopedia
+injury to the face,Cirurgia Bucomaxilofacial
+injury to the leg,Ortopedia
+injury to the shoulder,Ortopedia
+injury to the trunk,Ortopedia
+insect bite,Dermatologia
+interstitial lung disease,Pneumologia
+intestinal obstruction,Cirurgia Geral
+intracerebral hemorrhage,Neurologia
+iridocyclitis,Oftalmologia
+iron deficiency anemia,Hematologia
+irritable bowel syndrome,Gastroenterologia
+ischemic heart disease,Cardiologia
+itching of unknown cause,Dermatologia
+joint effusion,Ortopedia
+kidney stone,Urologia
+labyrinthitis,Otorrinolaringologia
+laryngitis,Otorrinolaringologia
+lipoma,Cirurgia Geral
+liver disease,Hepatologia
+lymphadenitis,Clínica Médica
+lymphedema,Angiologia
+macular degeneration,Oftalmologia
+marijuana abuse,Psiquiatria
+mitral valve disease,Cardiologia
+molluscum contagiosum,Dermatologia
+mononeuritis,Neurologia
+multiple sclerosis,Neurologia
+muscle spasm,Ortopedia
+myopia,Oftalmologia
+neuralgia,Neurologia
+neurosis,Psiquiatria
+noninfectious gastroenteritis,Gastroenterologia
+nose disorder,Otorrinolaringologia
+obsessive compulsive disorder (ocd),Psiquiatria
+obstructive sleep apnea (osa),Pneumologia
+onychomycosis,Dermatologia
+oppositional disorder,Psiquiatria Infantil
+oral mucosal lesion,Odontologia
+oral thrush (yeast infection),Odontologia
+osteoarthritis,Ortopedia
+otitis externa (swimmer's ear),Otorrinolaringologia
+otitis media,Otorrinolaringologia
+ovarian cyst,Ginecologia
+pain after an operation,Cirurgia Geral
+panic disorder,Psiquiatria
+parkinson disease,Neurologia
+paronychia,Dermatologia
+paroxysmal ventricular tachycardia,Cardiologia
+pelvic inflammatory disease,Ginecologia
+pelvic organ prolapse,Ginecologia
+peripheral nerve disorder,Neurologia
+personality disorder,Psiquiatria
+pleural effusion,Pneumologia
+pneumonia,Pneumologia
+post-traumatic stress disorder (ptsd),Psiquiatria
+postpartum depression,Psiquiatria
+problem during pregnancy,Ginecologia e Obstetrícia
+prostatitis,Urologia
+psoriasis,Dermatologia
+psychotic disorder,Psiquiatria
+pulmonary congestion,Cardiologia
+pulmonary embolism,Pneumologia
+pulmonary hypertension,Pneumologia
+pyelonephritis,Urologia
+pyogenic skin infection,Dermatologia
+rectal disorder,Coloproctologia
+rheumatoid arthritis,Reumatologia
+rosacea,Dermatologia
+schizophrenia,Psiquiatria
+sciatica,Ortopedia
+seasonal allergies (hay fever),Alergologia
+sebaceous cyst,Dermatologia
+seborrheic dermatitis,Dermatologia
+seborrheic keratosis,Dermatologia
+sensorineural hearing loss,Otorrinolaringologia
+sepsis,Medicina de Emergência
+sialoadenitis,Otorrinolaringologia
+sickle cell crisis,Hematologia
+sinus bradycardia,Cardiologia
+skin cancer,Dermatologia
+skin disorder,Dermatologia
+skin pigmentation disorder,Dermatologia
+skin polyp,Dermatologia
+smoking or tobacco addiction,Psiquiatria
+social phobia,Psiquiatria
+spinal stenosis,Ortopedia
+spondylitis,Reumatologia
+spondylolisthesis,Ortopedia
+spondylosis,Ortopedia
+spontaneous abortion,Ginecologia e Obstetrícia
+sprain or strain,Ortopedia
+strep throat,Otorrinolaringologia
+stroke,Neurologia
+stye,Oftalmologia
+teething syndrome,Pediatria
+temporary or benign blood in urine,Urologia
+tendinitis,Ortopedia
+threatened pregnancy,Ginecologia e Obstetrícia
+thrombophlebitis,Angiologia
+tonsillitis,Otorrinolaringologia
+tooth abscess,Odontologia
+tooth disorder,Odontologia
+transient ischemic attack,Neurologia
+urethritis,Urologia
+urge incontinence,Urologia
+urinary tract infection,Urologia
+urinary tract obstruction,Urologia
+uterine fibroids,Ginecologia
+vaginal cyst,Ginecologia
+vaginal yeast infection,Ginecologia
+vaginitis,Ginecologia
+varicocele of the testicles,Urologia
+viral exanthem,Dermatologia
+viral warts,Dermatologia
+vulvodynia,Ginecologia
+white blood cell disease,Hematologia
+yeast infection,Ginecologia
