@@ -11,6 +11,7 @@ type ClinicDoctorSectionProps = {
   actionLabel: string;
   actionStyle?: "primary" | "danger";
   onAction: (doctorId: string) => void;
+  pendingDoctorIds?: Set<string>;
 };
 
 export function ClinicDoctorSection({
@@ -22,6 +23,7 @@ export function ClinicDoctorSection({
   actionLabel,
   actionStyle,
   onAction,
+  pendingDoctorIds,
 }: ClinicDoctorSectionProps) {
   return (
     <div>
@@ -35,10 +37,11 @@ export function ClinicDoctorSection({
       <div className="mt-5 space-y-4">
         {doctors.map((doctor) => (
           <DoctorRow
-            actionLabel={actionLabel}
+            actionLabel={pendingDoctorIds?.has(doctor.id) ? "Solicitacao enviada" : actionLabel}
             actionStyle={actionStyle}
             doctor={doctor}
             key={doctor.id}
+            disabled={pendingDoctorIds?.has(doctor.id)}
             onAction={() => onAction(doctor.id)}
           />
         ))}

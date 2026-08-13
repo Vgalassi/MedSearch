@@ -11,6 +11,7 @@ export default function ClinicHomePage() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [myDoctors, setMyDoctors] = useState<Doctor[]>([]);
+  const [pendingDoctorIds, setPendingDoctorIds] = useState<Set<string>>(new Set());
   const clinicId = user?.role === "CLINIC" ? user.profileId : null;
 
   const loadDoctors = useCallback(async () => {
@@ -72,11 +73,11 @@ export default function ClinicHomePage() {
       },
     );
 
-    if (response.status !== 200) {
-      throw new Error("failed to add doctor");
+    if (!response.ok) {
+      const data = await response.json().catch(() => null);
+      throw new Error(data?.message ?? "Nao foi possivel enviar a solicitacao");
     }
-
-    await refreshDoctors();
+    setPendingDoctorIds((current) => new Set(current).add(doctorId));
   }
 
   async function removeDoctor(doctorId: string) {
@@ -166,6 +167,7 @@ export default function ClinicHomePage() {
             isFetching={isFetching}
             kicker="Rede MedSearch"
             onAction={addDoctor}
+            pendingDoctorIds={pendingDoctorIds}
             title="Medicos disponiveis"
           />
         </section>

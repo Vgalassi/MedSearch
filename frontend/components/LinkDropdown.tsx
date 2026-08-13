@@ -18,7 +18,7 @@ export default function LinkDropdown({ urls, title }: Props) {
   return (
     <div className="relative inline-block">
       <button
-        className="btn-secondary px-3 py-2"
+        className="btn-secondary px-3 py-2 cursor-pointer"
         onClick={handleClick}
         type="button"
       >

@@ -5,6 +5,7 @@ type DoctorRowProps = {
   actionLabel: string;
   actionStyle?: "primary" | "danger";
   onAction: () => void;
+  disabled?: boolean;
 };
 
 export function DoctorRow({
@@ -12,6 +13,7 @@ export function DoctorRow({
   actionLabel,
   actionStyle = "primary",
   onAction,
+  disabled = false,
 }: DoctorRowProps) {
   return (
     <article className="surface flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -24,6 +26,7 @@ export function DoctorRow({
       </div>
       <button
         className={actionStyle === "danger" ? "btn-danger" : "btn-primary"}
+        disabled={disabled}
         onClick={onAction}
         type="button"
       >

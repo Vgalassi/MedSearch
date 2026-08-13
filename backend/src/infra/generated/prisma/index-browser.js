@@ -160,6 +160,26 @@ exports.Prisma.DoctorScalarFieldEnum = {
   clinicId: 'clinicId'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  data: 'data',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ClinicInvitationScalarFieldEnum = {
+  id: 'id',
+  clinicId: 'clinicId',
+  doctorId: 'doctorId',
+  status: 'status',
+  createdAt: 'createdAt',
+  respondedAt: 'respondedAt'
+};
+
 exports.Prisma.AppointmentScalarFieldEnum = {
   id: 'id',
   patientId: 'patientId',
@@ -201,6 +221,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -210,10 +235,28 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
 exports.Role = exports.$Enums.Role = {
   PATIENT: 'PATIENT',
   DOCTOR: 'DOCTOR',
   CLINIC: 'CLINIC'
+};
+
+exports.NotificationType = exports.$Enums.NotificationType = {
+  APPOINTMENT_REMINDER: 'APPOINTMENT_REMINDER',
+  CLINIC_INVITATION: 'CLINIC_INVITATION',
+  CLINIC_INVITATION_RESPONSE: 'CLINIC_INVITATION_RESPONSE'
+};
+
+exports.ClinicInvitationStatus = exports.$Enums.ClinicInvitationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED'
 };
 
 exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
@@ -249,6 +292,8 @@ exports.Prisma.ModelName = {
   Patient: 'Patient',
   Clinic: 'Clinic',
   Doctor: 'Doctor',
+  Notification: 'Notification',
+  ClinicInvitation: 'ClinicInvitation',
   Appointment: 'Appointment',
   DoctorSettings: 'DoctorSettings',
   Availability: 'Availability'

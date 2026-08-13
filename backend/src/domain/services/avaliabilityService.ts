@@ -91,17 +91,9 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
     const availableSlots: AvailableSlot[] = []
     const buffer = doctor.props.schedulingSettings.props.bufferBetween.value
     for(const availability of dayAvailabilities){
-        let currentSeconds =
-            availability
-            .props
-            .startTime
-            .value
+        let currentSeconds = availability.props.startTime.value
 
-        const endSeconds =
-            availability
-            .props
-            .endTime
-            .value
+        const endSeconds = availability.props.endTime.value
 
         while(currentSeconds + defaultDuration.value   <= endSeconds){
             const slotStart = Time.createWithSeconds(currentSeconds)

@@ -6,6 +6,8 @@ import doctorRoutes from "./routes/doctorRoutes.js";
 import appointmentRoutes from "./routes/appointmentRoutes.js";
 import callRoutes from "./routes/callRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
+import { createDueAppointmentReminders } from "./notifications/AppointmentReminderService.js";
 import cors from '@fastify/cors'
 import { setupErrorHandler } from "./error/errorHandler.js";
 import { setupSession } from "./auth/sessionConfig.js";
@@ -44,6 +46,10 @@ app.register(doctorRoutes)
 app.register(appointmentRoutes)
 app.register(callRoutes)
 app.register(aiRoutes)
+app.register(notificationRoutes)
+
+void createDueAppointmentReminders();
+setInterval(() => void createDueAppointmentReminders().catch((error) => app.log.error(error, "Erro ao criar lembretes de consulta")), 60_000);
 
 
 new CallWebSocketServer(

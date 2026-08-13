@@ -13,6 +13,8 @@ import {
 import type { FindClinicByIdUseCase } from "../../app/usecases/FindClinicByIdUseCase";
 import { Auth } from "../auth/authDecorator";
 import type { Clinic } from "../../domain/Aggregates/Clinic";
+import { prisma } from "../../lib/prisma";
+import { randomUUID } from "node:crypto";
 
 function serializeClinic(clinic: Clinic, distanceInKm?: number) {
   return {
@@ -59,15 +61,35 @@ export class ClinicController {
       return res.status(403).send({ message: "Voce nao pode alterar outra clinica" });
     }
 
-    const doctor = await this.addDoctorToClinicUseCase.execute({
-      clinicId: params.id,
-      doctorId: body.doctorId,
+    const doctor = await prisma.doctor.findUnique({ where: { id: body.doctorId } });
+    if (!doctor) return res.status(404).send({ message: "Medico nao encontrado" });
+    if (doctor.clinicId) return res.status(409).send({ message: "Medico ja esta vinculado a uma clinica" });
+
+    const existing = await prisma.clinicInvitation.findFirst({
+      where: { clinicId: params.id, doctorId: body.doctorId, status: "PENDING" },
+    });
+    if (existing) return res.status(409).send({ message: "Ja existe uma solicitacao pendente para este medico" });
+
+    const invitation = await prisma.clinicInvitation.create({
+      data: { id: randomUUID(), clinicId: params.id, doctorId: body.doctorId },
+      include: { clinic: true },
+    });
+    await prisma.notification.create({
+      data: {
+        id: randomUUID(),
+        userId: doctor.userId,
+        type: "CLINIC_INVITATION",
+        title: "Convite para clinica",
+        message: `A clinica ${invitation.clinic.name} solicitou sua inclusao na equipe.`,
+        data: { invitationId: invitation.id, clinicId: invitation.clinicId },
+      },
     });
 
-    return res.status(200).send({
-      message: "Doctor added to clinic",
-      doctorId: doctor.id.value,
-      clinicId: doctor.props.clinicId?.value ?? null,
+    return res.status(201).send({
+      message: "Solicitacao enviada ao medico",
+      invitationId: invitation.id,
+      doctorId: doctor.id,
+      clinicId: invitation.clinicId,
     });
   }
 

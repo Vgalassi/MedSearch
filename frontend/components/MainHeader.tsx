@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import LinkDropdown from "./LinkDropdown";
 import { useAuth } from "@/context/AuthContext";
+import { NotificationBell } from "./NotificationBell";
 
 export default function MainHeader() {
   const {user, logout} = useAuth()
@@ -43,6 +44,7 @@ export default function MainHeader() {
           </span>
           <span className="text-lg font-bold text-slate-950">MedSearch</span>
         </Link>
+        
         {!user &&
         <nav className="flex items-center gap-2">
           
@@ -59,6 +61,9 @@ export default function MainHeader() {
         </nav>
       }
 
+      
+
+      
       {user?.role === "PATIENT" &&
         <nav className="flex items-center gap-2">
           
@@ -75,6 +80,7 @@ export default function MainHeader() {
             Ver Consultas
           </Link>
           <LinkDropdown title={user.email} urls={authUrls} />
+          <NotificationBell />
         </nav>
       }
 
@@ -94,6 +100,7 @@ export default function MainHeader() {
             Agenda
           </Link>
           <LinkDropdown title={user.email} urls={authUrls} />
+          <NotificationBell />
         </nav>
       }
       {user?.role === "CLINIC" &&
@@ -105,8 +112,12 @@ export default function MainHeader() {
             Adicionar Médicos
           </Link>
           <LinkDropdown title={user.email} urls={authUrls} />
+          <NotificationBell />
         </nav>
       }
+      
+      
+      
       </div>
     </header>
   );

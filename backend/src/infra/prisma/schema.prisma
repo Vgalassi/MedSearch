@@ -42,6 +42,18 @@ enum AvailabilityMode {
   BOTH
 }
 
+enum NotificationType {
+  APPOINTMENT_REMINDER
+  CLINIC_INVITATION
+  CLINIC_INVITATION_RESPONSE
+}
+
+enum ClinicInvitationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
 model User {
   id       String @id @db.Uuid
   email    String @unique
@@ -51,6 +63,7 @@ model User {
   patient  Patient?
   doctor   Doctor?
   clinic   Clinic?
+  notifications Notification[]
 
   @@map("users")
 }
@@ -87,6 +100,7 @@ model Clinic {
   description String
 
   doctors     Doctor[]
+  invitations ClinicInvitation[]
 
   @@map("clinics")
 }
@@ -108,8 +122,39 @@ model Doctor {
   appointments Appointment[]
   settings     DoctorSettings?
   availabilities Availability[]
+  invitations ClinicInvitation[]
 
   @@map("doctors")
+}
+
+model Notification {
+  id        String @id @db.Uuid
+  userId    String @db.Uuid
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+model ClinicInvitation {
+  id        String @id @db.Uuid
+  clinicId  String @db.Uuid
+  clinic    Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  doctorId  String @db.Uuid
+  doctor    Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  status    ClinicInvitationStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  respondedAt DateTime?
+
+  @@index([doctorId, status])
+  @@index([clinicId, status])
+  @@map("clinic_invitations")
 }
 
 model Appointment {
