@@ -263,6 +263,7 @@ exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
   SCHEDULED: 'SCHEDULED',
   CANCELED: 'CANCELED',
   COMPLETED: 'COMPLETED',
+  OCURRING: 'OCURRING',
   NO_SHOW: 'NO_SHOW'
 };
 

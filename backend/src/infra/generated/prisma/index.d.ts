@@ -76,6 +76,7 @@ export const AppointmentStatus: {
   SCHEDULED: 'SCHEDULED',
   CANCELED: 'CANCELED',
   COMPLETED: 'COMPLETED',
+  OCURRING: 'OCURRING',
   NO_SHOW: 'NO_SHOW'
 };
 

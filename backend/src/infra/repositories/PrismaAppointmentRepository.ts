@@ -7,6 +7,14 @@ import { AppointmentStatus } from "../generated/prisma/client";
 
 @injectable()
 export class PrismaAppointmentRepository implements AppointmentRepository {
+  async findTodayScheduledOrOcurring(today: Date): Promise<Appointment[]> {
+    const rows = await prisma.appointment.findMany({
+    where: { status: {in: ["SCHEDULED","OCURRING"]}, day: { gte: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1), lte: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1) } },
+    include: { patient: true, doctor: true },
+  });
+    return rows.map((r) => AppointmentMapper.toDomain(r as never));
+
+  }
   async create(appointment: Appointment): Promise<Appointment> {
     const data = AppointmentMapper.toPersistence(appointment);
     const created = await prisma.appointment.create({ data });

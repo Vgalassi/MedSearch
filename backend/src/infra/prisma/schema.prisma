@@ -17,6 +17,7 @@ enum AppointmentStatus {
   SCHEDULED
   CANCELED
   COMPLETED
+  OCURRING
   NO_SHOW
 }
 
