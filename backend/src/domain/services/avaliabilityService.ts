@@ -87,6 +87,13 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
             day.toDateString()
     )
    
+    let todaySeconds = 0
+    const today = new Date()
+
+    if(today.getUTCFullYear() === day.getUTCFullYear() && today.getUTCMonth() === day.getUTCMonth() && today.getUTCDate() === day.getUTCDate()){
+        todaySeconds = today.getHours() * 3600 +  today.getMinutes() * 60 + today.getSeconds();
+    }
+
 
     const availableSlots: AvailableSlot[] = []
     const buffer = doctor.props.schedulingSettings.props.bufferBetween.value
@@ -96,24 +103,19 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
         const endSeconds = availability.props.endTime.value
 
         while(currentSeconds + defaultDuration.value   <= endSeconds){
+            if (currentSeconds < todaySeconds) {
+                currentSeconds += defaultDuration.value + buffer;
+                continue;
+            }
             const slotStart = Time.createWithSeconds(currentSeconds)
             const slotEnd =  Time.createWithSeconds(currentSeconds + defaultDuration.value)
 
             const occupied =
                 dateAppointments.some(
                     appointment =>
-
-                    slotStart.value <
-                    appointment.props
-                    .endTime
-                    .value
-
+                    slotStart.value <appointment.props.endTime.value
                     &&
-
-                    slotEnd.value >
-                    appointment.props
-                    .startTime
-                    .value
+                    slotEnd.value > appointment.props.startTime.value
                 )
 
             if(!occupied){
@@ -123,8 +125,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
                     mode: availability.props.mode.value,
                 })
             }
-            currentSeconds +=
-                defaultDuration.value + buffer
+            currentSeconds += defaultDuration.value + buffer
         }
 
     }
