@@ -17,6 +17,7 @@ import type { JoinCallUseCase } from "../app/usecases/JoinCallUseCase.js";
 import { RoomManager } from "./websocket/RoomManager.js";
 import { CallWebSocketServer } from "./websocket/CallWebsocketServer.js";
 import fs from "fs";
+import { AppointmentService } from "../app/services/AppointmentService.js";
 
 const app = Fastify({
     logger: true,
@@ -48,8 +49,10 @@ app.register(callRoutes)
 app.register(aiRoutes)
 app.register(notificationRoutes)
 
-void createDueAppointmentReminders();
-setInterval(() => void createDueAppointmentReminders().catch((error) => app.log.error(error, "Erro ao criar lembretes de consulta")), 60_000);
+const appointmentService = container.get<AppointmentService>(
+    TYPES.AppointmentService
+)
+setInterval(() => void appointmentService.updateAppointmentStatuses().catch((error) => app.log.error(error, "Erro ao criar lembretes de consulta")), 60_000);
 
 
 new CallWebSocketServer(

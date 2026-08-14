@@ -41,6 +41,10 @@ import { JoinCallUseCase } from "../../app/usecases/JoinCallUseCase";
 import type { SymptomClassifier } from "../../app/protocols/SymptomClassifier";
 import { PythonSymptomClassifier } from "../ai/PythonSymptomClassifier";
 import { FindClinicsForSymptomsUseCase } from "../../app/usecases/FindClinicsForSymptomsUseCase";
+import { NotificationService } from "../../app/services/NotificationService";
+import type { NotificationRepository } from "../../domain/repositories/NotificationRepository";
+import { PrismaNotificationRepository } from "../repositories/PrismaNotificationRepository";
+import { AppointmentService } from "../../app/services/AppointmentService";
 const container = new Container();
 
 container.bind<UserRepository>(TYPES.UserRepository).to(PrismaUserRepository);
@@ -102,5 +106,13 @@ container.bind<SymptomClassifier>(TYPES.SymptomClassifier).to(PythonSymptomClass
 container
   .bind<FindClinicsForSymptomsUseCase>(TYPES.FindClinicsForSymptomsUseCase)
   .to(FindClinicsForSymptomsUseCase);
+
+container
+.bind<NotificationService>(TYPES.NotificationService).to(NotificationService)
+
+container.bind<NotificationRepository>(TYPES.NotificationRepository).to(PrismaNotificationRepository)
+
+container.bind<AppointmentService>(TYPES.AppointmentService).to(AppointmentService)
+
 
 export { container };

@@ -1,9 +1,11 @@
+import { injectable } from "inversify";
 import { Notification } from "../../domain/entities/Notification";
 import type { NotificationRepository } from "../../domain/repositories/NotificationRepository";
 import { prisma } from "../../lib/prisma";
 import { NotificationMapper } from "../mappers/NotificationMapper";
 
 
+@injectable()
 export class PrismaNotificationRepository implements NotificationRepository{
     async save(notification: Notification): Promise<Notification> {
         const data = NotificationMapper.toPersistence(notification);

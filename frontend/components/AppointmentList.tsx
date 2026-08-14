@@ -22,6 +22,7 @@ function statusLabel(status: string) {
     CANCELED: "Cancelada",
     COMPLETED: "Concluída",
     NO_SHOW: "Não compareceu",
+    OCORRING: "Acontecendo"
   };
 
   return labels[status] ?? status;

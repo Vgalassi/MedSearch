@@ -1,10 +1,15 @@
+import { inject, injectable } from "inversify";
 import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
-import { NotificationService } from "./notificationService";
+import { NotificationService } from "./NotificationService";
+import { TYPES } from "../dto/types";
 
 
+@injectable()
 export class AppointmentService{
     constructor(
+        @inject(TYPES.AppointmentRepository)
         private readonly appointmentRepository: AppointmentRepository,
+        @inject(TYPES.NotificationService)
         private readonly notificationService: NotificationService
     ){}
 

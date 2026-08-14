@@ -1,6 +1,5 @@
 
 
-
 export const TYPES = {
     UserRepository: Symbol.for("UserRepository"),
     DoctorRepository: Symbol.for("DoctorRepository"),
@@ -32,6 +31,8 @@ export const TYPES = {
     CepService: Symbol.for("CepService"),
     GeocodingService: Symbol.for("GeocodingService")
     ,SymptomClassifier: Symbol.for("SymptomClassifier")
-    ,FindClinicsForSymptomsUseCase: Symbol.for("FindClinicsForSymptomsUseCase")
+    ,FindClinicsForSymptomsUseCase: Symbol.for("FindClinicsForSymptomsUseCase"),
+    NotificationService: Symbol.for("NotificationService"),
+    AppointmentService: Symbol.for("AppointmentService")
     
 };

@@ -1,4 +1,4 @@
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import type { Appointment } from "../../domain/Aggregates/Appointment";
 import { Notification } from "../../domain/entities/Notification";
 import type { NotificationRepository } from "../../domain/repositories/NotificationRepository";
@@ -7,6 +7,7 @@ import type { DoctorRepository } from "../../domain/repositories/DoctorRepositor
 import { NotfoundError } from "../../domain/errors/NotFoundError";
 import type { PatientRepository } from "../../domain/repositories/PatientRepository";
 
+@injectable()
 export class NotificationService {
 
     constructor(
