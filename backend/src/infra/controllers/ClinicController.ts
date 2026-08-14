@@ -149,6 +149,7 @@ export class ClinicController {
       page: query.page,
       pageSize: query.pageSize,
       ...(query.search ? { search: query.search } : {}),
+      ...(query.speciality ? { speciality: query.speciality } : {}),
       ...(typeof query.latitude === "number" ? { latitude: query.latitude } : {}),
       ...(typeof query.longitude === "number" ? { longitude: query.longitude } : {}),
     });

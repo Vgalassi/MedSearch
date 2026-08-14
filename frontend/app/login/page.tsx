@@ -51,7 +51,7 @@ export default function LoginPage() {
         <section className="bg-teal-950 p-8 text-white sm:p-10">
           <p className="section-kicker text-teal-200">Acesso MedSearch</p>
           <h1 className="mt-5 text-3xl font-bold leading-tight sm:text-4xl">
-            Entre para acompanhar consultas, medicos e clinicas.
+            Entre para acompanhar consultas, médicos e clínicas.
           </h1>
           <p className="mt-5 leading-7 text-teal-50/80">
             
@@ -92,7 +92,7 @@ export default function LoginPage() {
             </button>
 
             <p className="mt-6 text-center text-sm text-slate-500">
-              Ainda nao tem conta?{" "}
+              Ainda não tem conta?{" "}
               <Link className="font-semibold text-teal-700" href="/patient/register">
                 Cadastre-se
               </Link>

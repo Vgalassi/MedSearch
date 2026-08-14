@@ -16,7 +16,7 @@ export default function ClinicHomePage() {
 
   const loadDoctors = useCallback(async () => {
     if (!clinicId) {
-      throw new Error("Entre como clinica para gerenciar medicos");
+      throw new Error("Entre como clínica para gerenciar médicos");
     }
 
     const [allDoctorsResponse, clinicDoctorsResponse] = await Promise.all([
@@ -75,7 +75,7 @@ export default function ClinicHomePage() {
 
     if (!response.ok) {
       const data = await response.json().catch(() => null);
-      throw new Error(data?.message ?? "Nao foi possivel enviar a solicitacao");
+      throw new Error(data?.message ?? "Não foi possível enviar a solicitação");
     }
     setPendingDoctorIds((current) => new Set(current).add(doctorId));
   }
@@ -120,13 +120,13 @@ export default function ClinicHomePage() {
     <main className="page-shell">
       <div className="content-shell">
         <section className="rounded-lg bg-teal-950 px-6 py-8 text-white shadow-lg shadow-slate-200/70 sm:px-8">
-          <p className="section-kicker text-teal-200">Painel da clinica</p>
+          <p className="section-kicker text-teal-200">Painel da clínica</p>
           <div className="mt-4 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
             <div>
-              <h1 className="text-3xl font-bold">Gerencie seu corpo medico</h1>
+              <h1 className="text-3xl font-bold">Gerencie seu corpo médico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
                 Adicione médicos disponiíveis a clínica ou remova profissionais
-                que nao fazem mais parte da equipe.
+                que não fazem mais parte da equipe.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 text-center">
@@ -136,7 +136,7 @@ export default function ClinicHomePage() {
               </span>
               <span className="rounded-md bg-white/10 px-4 py-3">
                 <strong className="block text-2xl">{availableDoctors.length}</strong>
-                <span className="text-sm text-teal-50/80">disponiveis</span>
+                <span className="text-sm text-teal-50/80">disponíveis</span>
               </span>
             </div>
           </div>
@@ -153,22 +153,22 @@ export default function ClinicHomePage() {
             actionLabel="Remover"
             actionStyle="danger"
             doctors={myDoctors}
-            emptyText="Nenhum medico foi adicionado a esta clinica ainda."
+            emptyText="Nenhum médico foi adicionado a esta clínica ainda."
             isFetching={isFetching}
             kicker="Equipe atual"
             onAction={removeDoctor}
-            title="Medicos da clinica"
+            title="Médicos da clínica"
           />
 
           <ClinicDoctorSection
             actionLabel="Adicionar"
             doctors={availableDoctors}
-            emptyText="Todos os medicos ja estao vinculados a esta clinica."
+            emptyText="Todos os médicos já estão vinculados a esta clínica."
             isFetching={isFetching}
             kicker="Rede MedSearch"
             onAction={addDoctor}
             pendingDoctorIds={pendingDoctorIds}
-            title="Medicos disponiveis"
+            title="Médicos disponíveis"
           />
         </section>
       </div>

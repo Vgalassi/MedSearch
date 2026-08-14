@@ -23,6 +23,10 @@ export const doctorIdParamsSchema = z.object({
   doctorId: z.uuid(),
 });
 
+export const clinicIdParamsSchema = z.object({
+  clinicId: z.uuid(),
+});
+
 export const availableSlotsQuerySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   durationMinutes: z.coerce.number().int().positive().optional(),

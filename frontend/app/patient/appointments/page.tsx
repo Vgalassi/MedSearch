@@ -12,6 +12,16 @@ export default function PatientAppointmentsPage() {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  async function cancelAppointment(appointmentId: string) {
+    const response = await fetch(`${API_BASE_URL}/appointments/${appointmentId}/cancel`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message ?? "Não foi possível cancelar a consulta");
+    setAppointments((items) => items.map((item) => item.id === appointmentId ? { ...item, status: "CANCELED" } : item));
+  }
+
   useEffect(() => {
     if (loading) return;
 
@@ -32,7 +42,7 @@ export default function PatientAppointmentsPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message ?? "Nao foi possivel carregar consultas");
+          throw new Error(data.message ?? "Não foi possível carregar consultas");
         }
 
         setAppointments(data.appointments ?? []);
@@ -80,8 +90,9 @@ export default function PatientAppointmentsPage() {
           <section className="mt-8">
             <AppointmentList
               appointments={appointments}
-              emptyText="Voce ainda nao possui consultas agendadas."
+              emptyText="Você ainda não possui consultas agendadas."
               mode="patient"
+              onCancel={cancelAppointment}
             />
           </section>
         )}

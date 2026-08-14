@@ -58,7 +58,7 @@ export function ClinicMap({ latitude, longitude, name }: ClinicMapProps) {
   if (!isValidCoordinate(latitude, longitude)) {
     return (
       <div className="clinic-map-empty">
-        Localizacao indisponivel para esta clinica.
+        Localização indisponível para esta clínica.
       </div>
     );
   }

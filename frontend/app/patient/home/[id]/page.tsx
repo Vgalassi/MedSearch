@@ -12,7 +12,7 @@ const ClinicMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="clinic-map-empty">Carregando mapa da clinica...</div>
+      <div className="clinic-map-empty">Carregando mapa da clínica...</div>
     ),
   },
 );
@@ -68,7 +68,7 @@ export default function ClinicDetails() {
         {clinic && (
           <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-lg bg-teal-950 p-8 text-white shadow-lg shadow-slate-200/70">
-              <p className="section-kicker text-teal-200">Detalhes da clinica</p>
+              <p className="section-kicker text-teal-200">Detalhes da clínica</p>
               <h1 className="mt-4 text-4xl font-bold">{clinic.name}</h1>
               <p className="mt-5 max-w-3xl leading-8 text-teal-50/85">
                 {clinic.description}
@@ -133,7 +133,7 @@ export default function ClinicDetails() {
 
           {!isFetching && doctors.length === 0 && (
             <div className="surface mt-5 p-8 text-center text-slate-600">
-              Esta clinica ainda nao possui medicos vinculados.
+              Esta clínica ainda não possui médicos vinculados.
             </div>
           )}
         </section>

@@ -71,5 +71,12 @@ export default async function appointmentRoutes(app: FastifyInstance) {
     },
   );
 
+  app.get(
+    "/appointments/clinic/:clinicId/details",
+    async (req: FastifyRequest, res: FastifyReply) => {
+      await appointmentController.listDetailedByClinic(req, res);
+    },
+  );
+
   
 }

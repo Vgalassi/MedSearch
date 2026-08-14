@@ -36,7 +36,7 @@ export function ClinicCard({ clinic }: Props) {
       </div>
 
       <p className="mt-4 leading-7 text-slate-600">
-        {clinic.description || "Atendimento medico com equipe especializada."}
+        {clinic.description || "Atendimento médico com equipe especializada."}
       </p>
 
       <div className="mt-5 space-y-2 text-sm text-slate-600">

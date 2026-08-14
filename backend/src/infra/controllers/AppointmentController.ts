@@ -8,6 +8,7 @@ import { ListPatientAppointmentsUseCase } from "../../app/usecases/ListPatientAp
 import { ListDoctorAppointmentsUseCase } from "../../app/usecases/ListDoctorAppointmentsUseCase";
 import {
   appointmentIdParamsSchema,
+  clinicIdParamsSchema,
   createAppointmentBodySchema,
   doctorIdParamsSchema,
   patientIdParamsSchema,
@@ -65,6 +66,12 @@ function toDetailedAppointmentDto(row: Awaited<ReturnType<typeof findDetailedApp
           city: row.doctor.clinic.city,
           state: row.doctor.clinic.state,
           cep: row.doctor.clinic.cep,
+          address: [
+            row.doctor.clinic.street,
+            row.doctor.clinic.number,
+            row.doctor.clinic.city,
+            row.doctor.clinic.state,
+          ].filter(Boolean).join(", "),
         }
       : null,
     patient: {
@@ -75,7 +82,11 @@ function toDetailedAppointmentDto(row: Awaited<ReturnType<typeof findDetailedApp
   };
 }
 
-function findDetailedAppointments(where: { patientId?: string; doctorId?: string }) {
+function findDetailedAppointments(where: {
+  patientId?: string;
+  doctorId?: string;
+  doctor?: { clinicId: string };
+}) {
   return prisma.appointment.findMany({
     where,
     include: {
@@ -126,10 +137,16 @@ export class AppointmentController {
     return res.status(201).send({ appointment: toAppointmentDto(created) });
   }
 
-  @Auth("PATIENT","DOCTOR")
+  @Auth("PATIENT", "DOCTOR", "CLINIC")
   async cancel(req: FastifyRequest, res: FastifyReply) {
     const params = appointmentIdParamsSchema.parse(req.params);
-    const updated = await this.cancelAppointmentUseCase.execute(params.id);
+    if (!req.session.role || !req.session.profileId) {
+      return res.status(401).send({ message: "Sessao invalida" });
+    }
+    const updated = await this.cancelAppointmentUseCase.execute(params.id, {
+      role: req.session.role,
+      profileId: req.session.profileId,
+    });
     return res.status(200).send({ appointment: toAppointmentDto(updated) });
   }
 
@@ -207,6 +224,23 @@ export class AppointmentController {
       doctorId: params.doctorId,
     });
 
+    return res.status(200).send({
+      appointments: appointments.map(toDetailedAppointmentDto),
+    });
+  }
+
+  @Auth("CLINIC")
+  async listDetailedByClinic(req: FastifyRequest, res: FastifyReply) {
+    const params = clinicIdParamsSchema.parse(req.params);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de clinica invalida" });
+    }
+    if (req.session.profileId !== params.clinicId) {
+      return res.status(403).send({ message: "Voce nao pode acessar consultas de outra clinica" });
+    }
+    const appointments = await findDetailedAppointments({
+      doctor: { clinicId: params.clinicId },
+    });
     return res.status(200).send({
       appointments: appointments.map(toDetailedAppointmentDto),
     });

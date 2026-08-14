@@ -1,9 +1,10 @@
 "use client";
 
 import { ClinicCard } from "@/components/ClinicCard";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Clinic } from "@/components/types/Clinic";
 import { API_BASE_URL } from "@/components/appConfig";
+import { SPECIALITIES } from "@/components/constants/specialities";
 
 type Coordinates = {
   latitude: number;
@@ -14,6 +15,7 @@ export default function PatientHomePage() {
   const [clinics, setClinics] = useState<Clinic[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [search, setSearch] = useState("");
+  const [speciality, setSpeciality] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
   const [page, setPage] = useState(1);
@@ -40,13 +42,17 @@ export default function PatientHomePage() {
       params.set("search", debouncedSearch);
     }
 
+    if (speciality) {
+      params.set("speciality", speciality);
+    }
+
     if (coordinates) {
       params.set("latitude", String(coordinates.latitude));
       params.set("longitude", String(coordinates.longitude));
     }
 
     return params.toString();
-  }, [coordinates, debouncedSearch, page]);
+  }, [coordinates, debouncedSearch, page, speciality]);
 
 
   useEffect(() => {
@@ -66,7 +72,7 @@ export default function PatientHomePage() {
       },
       () => {
         setLocationError(
-          "Nao foi possivel obter sua localizacao."
+          "Não foi possível obter sua localização."
         );
       }
     );
@@ -94,60 +100,49 @@ export default function PatientHomePage() {
     fetchClinics();
   }, [queryString]);
 
-  const useCurrentLocation = useCallback(() => {
-    if (!navigator.geolocation) {
-      setLocationError("Seu navegador nao suporta geolocalizacao.");
-      return;
-    }
-
-    setLocationError(null);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCoordinates({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-        setPage(1);
-      },
-      () => setLocationError("Nao foi possivel obter sua localizacao."),
-      { enableHighAccuracy: true, timeout: 10000 },
-    );
-  }, []);
-
-
   return (
     <main className="page-shell">
       <div className="content-shell">
         <section className="rounded-lg bg-teal-950 px-6 py-8 text-white shadow-lg shadow-slate-200/70 sm:px-8">
-          <p className="section-kicker text-teal-200">Clinicas disponiveis</p>
+          <p className="section-kicker text-teal-200">Clínicas disponíveis</p>
           <div className="mt-4 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <h1 className="text-3xl font-bold">Encontre atendimento medico</h1>
+              <h1 className="text-3xl font-bold">Encontre atendimento médico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Confira clinicas cadastradas, veja detalhes de atendimento e
-                escolha a melhor opcao para sua consulta.
+                Confira clínicas cadastradas, veja detalhes de atendimento e
+                escolha a melhor opção para sua consulta.
               </p>
             </div>
             <span className="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-teal-50">
-              {totalClinics} clinicas
+              {totalClinics} clínicas
             </span>
           </div>
         </section>
 
-        <section className="mt-6 grid gap-3 md:grid-cols-[1fr_auto] md:items-end">
+        <section className="mt-6 grid gap-3 md:grid-cols-2 md:items-end">
           <label className="block">
             <span className="text-sm font-semibold text-slate-700">
-              Pesquisar clinicas
+              Pesquisar clínicas
             </span>
             <input
               className="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-100"
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Nome, cidade, endereco ou CEP"
+              placeholder="Nome, cidade, endereço ou CEP"
               type="search"
               value={search}
             />
           </label>
-         
+          <label className="block">
+            <span className="text-sm font-semibold text-slate-700">Especialidade médica</span>
+            <select
+              className="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-100"
+              onChange={(event) => { setSpeciality(event.target.value); setPage(1); }}
+              value={speciality}
+            >
+              <option value="">Todas as especialidades</option>
+              {SPECIALITIES.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
         </section>
 
         {locationError && (
@@ -158,17 +153,17 @@ export default function PatientHomePage() {
 
         {isFetching && (
           <p className="mt-8 rounded-md border border-teal-100 bg-teal-50 px-4 py-3 text-teal-800">
-            Carregando clinicas...
+            Carregando clínicas...
           </p>
         )}
 
         {!isFetching && clinics.length === 0 && (
           <div className="surface mt-8 p-8 text-center">
             <h2 className="text-xl font-bold text-slate-950">
-              Nenhuma clinica encontrada
+              Nenhuma clínica encontrada
             </h2>
             <p className="mt-2 text-slate-600">
-              Ajuste a pesquisa ou aguarde novas clinicas cadastradas.
+              Ajuste os filtros ou aguarde novas clínicas cadastradas.
             </p>
           </div>
         )}
@@ -190,7 +185,7 @@ export default function PatientHomePage() {
               Anterior
             </button>
             <span className="text-sm font-semibold text-slate-600">
-              Pagina {page} de {totalPages}
+              Página {page} de {totalPages}
             </span>
             <button
               className="btn-secondary px-4 py-2"
@@ -200,7 +195,7 @@ export default function PatientHomePage() {
               }
               type="button"
             >
-              Proxima
+              Próxima
             </button>
           </div>
         )}

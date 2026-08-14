@@ -74,7 +74,7 @@ export default function MedicAppointmentConfigPage() {
         const doctorId = user?.role === "DOCTOR" ? user.profileId : null;
 
         if (!doctorId) {
-          throw new Error("Entre como medico para configurar sua agenda");
+          throw new Error("Entre como médico para configurar sua agenda");
         }
 
         setActiveDoctorId(doctorId);
@@ -84,7 +84,7 @@ export default function MedicAppointmentConfigPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message ?? "Nao foi possivel carregar agenda");
+          throw new Error(data.message ?? "Não foi possível carregar agenda");
         }
 
         if (data.settings) {
@@ -148,7 +148,7 @@ export default function MedicAppointmentConfigPage() {
 
     try {
       if (!activeDoctorId) {
-        throw new Error("Nenhum medico selecionado para salvar");
+        throw new Error("Nenhum médico selecionado para salvar");
       }
 
       const response = await fetch(
@@ -172,7 +172,7 @@ export default function MedicAppointmentConfigPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message ?? "Nao foi possivel salvar");
+        throw new Error(data.message ?? "Não foi possível salvar");
       }
 
       setMessage("Configuracoes salvas com sucesso.");
@@ -190,7 +190,7 @@ export default function MedicAppointmentConfigPage() {
           <p className="section-kicker text-teal-200">Configuracao</p>
           <div className="mt-4 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <h1 className="text-3xl font-bold">Agenda do medico</h1>
+              <h1 className="text-3xl font-bold">Agenda do médico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
                 Ajuste disponibilidade, duracão padrão e limites de
                 agendamento.

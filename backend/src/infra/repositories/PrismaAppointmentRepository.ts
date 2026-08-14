@@ -7,6 +7,24 @@ import { AppointmentStatus } from "../generated/prisma/client";
 
 @injectable()
 export class PrismaAppointmentRepository implements AppointmentRepository {
+  async canBeManagedBy(
+    appointmentId: string,
+    actor: { role: "PATIENT" | "DOCTOR" | "CLINIC"; profileId: string },
+  ): Promise<boolean> {
+    const row = await prisma.appointment.findFirst({
+      where: {
+        id: appointmentId,
+        ...(actor.role === "PATIENT" ? { patientId: actor.profileId } : {}),
+        ...(actor.role === "DOCTOR" ? { doctorId: actor.profileId } : {}),
+        ...(actor.role === "CLINIC"
+          ? { doctor: { clinicId: actor.profileId } }
+          : {}),
+      },
+      select: { id: true },
+    });
+    return Boolean(row);
+  }
+
   async findTodayScheduledOrOcurring(today: Date): Promise<Appointment[]> {
     const rows = await prisma.appointment.findMany({
     where: { status: {in: ["SCHEDULED","OCURRING"]}, day: { gte: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1), lte: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1) } },

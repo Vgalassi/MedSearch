@@ -52,12 +52,12 @@ export default function VideoCallPage() {
     if (loading) return;
 
     if (!appointmentId) {
-      setError("Consulta nao encontrada.");
+      setError("Consulta não encontrada.");
       return;
     }
 
     if (!user?.profileId || !["DOCTOR", "PATIENT"].includes(user.role)) {
-      setError("Entre como medico ou paciente para acessar a videochamada.");
+      setError("Entre como médico ou paciente para acessar a videochamada.");
       return;
     }
 
@@ -207,7 +207,7 @@ export default function VideoCallPage() {
         };
 
         websocket.onerror = () => {
-          setError("Nao foi possivel conectar ao servidor de videochamadas.");
+          setError("Não foi possível conectar ao servidor de videochamadas.");
         };
 
         websocket.onclose = () => {
@@ -219,7 +219,7 @@ export default function VideoCallPage() {
         setError(
           err instanceof Error
             ? err.message
-            : "Nao foi possivel iniciar a videochamada.",
+            : "Não foi possível iniciar a videochamada.",
         );
       }
     }
@@ -324,7 +324,7 @@ export default function VideoCallPage() {
                 className="aspect-video w-full bg-slate-900 object-cover"
               />
               <div className="border-t border-white/10 px-4 py-3">
-                <p className="text-sm font-semibold">Voce</p>
+                <p className="text-sm font-semibold">Você</p>
                 <p className="mt-1 text-xs text-slate-400">
                   {cameraEnabled ? "Camera ligada" : "Camera desligada"} ·{" "}
                   {micEnabled ? "Microfone ligado" : "Microfone desligado"}

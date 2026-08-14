@@ -12,6 +12,16 @@ export default function MedicAppointmentsPage() {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  async function cancelAppointment(appointmentId: string) {
+    const response = await fetch(`${API_BASE_URL}/appointments/${appointmentId}/cancel`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message ?? "Não foi possível cancelar a consulta");
+    setAppointments((items) => items.map((item) => item.id === appointmentId ? { ...item, status: "CANCELED" } : item));
+  }
+
   useEffect(() => {
     if (loading) return;
 
@@ -20,7 +30,7 @@ export default function MedicAppointmentsPage() {
         const doctorId = user?.role === "DOCTOR" ? user.profileId : null;
 
         if (!doctorId) {
-          throw new Error("Entre como medico para carregar sua agenda");
+          throw new Error("Entre como médico para carregar sua agenda");
         }
 
         const response = await fetch(
@@ -32,7 +42,7 @@ export default function MedicAppointmentsPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message ?? "Nao foi possivel carregar consultas");
+          throw new Error(data.message ?? "Não foi possível carregar consultas");
         }
 
         setAppointments(data.appointments ?? []);
@@ -50,12 +60,12 @@ export default function MedicAppointmentsPage() {
     <main className="page-shell">
       <div className="content-shell">
         <section className="rounded-lg bg-teal-950 px-6 py-8 text-white shadow-lg shadow-slate-200/70 sm:px-8">
-          <p className="section-kicker text-teal-200">Consultas medicas</p>
+          <p className="section-kicker text-teal-200">Consultas médicas</p>
           <div className="mt-4 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <h1 className="text-3xl font-bold">Agenda do medico</h1>
+              <h1 className="text-3xl font-bold">Agenda do médico</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Veja os pacientes agendados e horarios das suas consultas
+                Veja os pacientes agendados e horários das suas consultas.
               </p>
             </div>
             <span className="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-teal-50">
@@ -80,8 +90,9 @@ export default function MedicAppointmentsPage() {
           <section className="mt-8">
             <AppointmentList
               appointments={appointments}
-              emptyText="Nenhuma consulta encontrada para este medico."
+              emptyText="Nenhuma consulta encontrada para este médico."
               mode="doctor"
+              onCancel={cancelAppointment}
             />
           </section>
         )}

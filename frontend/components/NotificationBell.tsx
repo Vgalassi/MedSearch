@@ -52,7 +52,7 @@ export function NotificationBell() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ accept }),
       });
-      if (!response.ok) throw new Error("Nao foi possivel responder a solicitacao");
+      if (!response.ok) throw new Error("Não foi possível responder à solicitação");
       await loadNotifications();
     } finally {
       setBusyId(null);

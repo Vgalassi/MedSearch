@@ -17,6 +17,11 @@ export interface AppointmentRepository {
 
   findById(id: string): Promise<Appointment | null>;
 
+  canBeManagedBy(
+    appointmentId: string,
+    actor: { role: "PATIENT" | "DOCTOR" | "CLINIC"; profileId: string },
+  ): Promise<boolean>;
+
   findByPatientId(patientId: string): Promise<Appointment[]>;
 
   findByDoctorId(doctorId: string): Promise<Appointment[]>;

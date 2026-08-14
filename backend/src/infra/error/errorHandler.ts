@@ -48,7 +48,7 @@ export function setupErrorHandler(app: FastifyInstance){
         }
 
         if(error instanceof UnauthorizedError ){
-            reply.status(403).send({ message: error.message})
+            return reply.status(403).send({ message: error.message})
         }
 
         console.error(error)

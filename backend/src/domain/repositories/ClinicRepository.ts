@@ -4,6 +4,7 @@ export type ClinicListParams = {
     page: number;
     pageSize: number;
     search?: string;
+    speciality?: string;
     latitude?: number;
     longitude?: number;
 }

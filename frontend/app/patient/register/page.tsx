@@ -61,7 +61,7 @@ export default function PatientRegisterPage() {
   return (
     <RegisterPageShell
       introTitle="Crie sua conta de paciente"
-      introText="Encontre clinicas, veja o corpo medico e prepare seu proximo agendamento pelo MedSearch."
+      introText="Encontre clínicas, veja o corpo médico e prepare seu próximo agendamento pelo MedSearch."
     >
       <form action={formAction}>
         <FormTitle kicker="Paciente" title="Novo paciente" />

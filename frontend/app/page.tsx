@@ -13,7 +13,7 @@ export default function Home() {
             </h1>
             <p className="mt-6 max-w-xl text-base leading-8 text-teal-50/85 sm:text-lg">
               Uma plataforma para pacientes encontrarem clínicas, conhecerem
-              médicos disponiveis e acompanharem o agendamento online. Para
+              médicos disponíveis e acompanharem o agendamento online. Para
               clínicas, o MedSearch organiza suas consultas e simplifica a
               rotina de atendimento.
             </p>
@@ -84,7 +84,7 @@ export default function Home() {
             {[
               ["Encontre", "Compare clínicas por localização, descrição e especialidades disponíveis."],
               ["Agende", "Escolha o médico e acompanhe os horários livres com regras claras de agenda."],
-              ["Gerencie", "Clinicas adicionam e removem medicos do time sem perder visibilidade."],
+              ["Gerencie", "Clínicas adicionam e removem médicos do time sem perder visibilidade."],
             ].map(([title, text]) => (
               <article className="surface p-6" key={title}>
                 <h2 className="text-xl font-bold text-slate-950">{title}</h2>

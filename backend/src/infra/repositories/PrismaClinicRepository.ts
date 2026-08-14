@@ -74,16 +74,20 @@ export class PrismaClinicRepository implements ClinicRepository {
     const hasLocation =
       typeof params.latitude === "number" && typeof params.longitude === "number";
 
-    const where: Prisma.ClinicWhereInput | undefined = search
-      ? {
-          OR: [
+    const where: Prisma.ClinicWhereInput | undefined =
+      search || params.speciality
+        ? {
+          ...(search ? { OR: [
             { name: { contains: search, mode: "insensitive" as const } },
             { description: { contains: search, mode: "insensitive" as const } },
             { street: { contains: search, mode: "insensitive" as const } },
             { city: { contains: search, mode: "insensitive" as const } },
             { state: { contains: search, mode: "insensitive" as const } },
             { cep: { contains: search, mode: "insensitive" as const } },
-          ],
+          ] } : {}),
+          ...(params.speciality
+            ? { doctors: { some: { speciality: params.speciality } } }
+            : {}),
         }
       : undefined;
 

@@ -63,11 +63,11 @@ export default function MedicRegisterPage() {
 
   return (
     <RegisterPageShell
-      introTitle="Cadastre seu perfil medico"
-      introText="Fique visivel para clinicas e pacientes, com especialidade e CRM organizados dentro do MedSearch."
+      introTitle="Cadastre seu perfil médico"
+      introText="Fique visível para clínicas e pacientes, com especialidade e CRM organizados dentro do MedSearch."
     >
       <form action={formAction}>
-        <FormTitle kicker="Medico" title="Novo medico" />
+        <FormTitle kicker="Médico" title="Novo médico" />
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           <FormField
@@ -134,7 +134,7 @@ export default function MedicRegisterPage() {
         </div>
 
         <button className="btn-primary mt-7 w-full" disabled={pending} type="submit">
-          {pending ? "Criando..." : "Registrar medico"}
+          {pending ? "Criando..." : "Registrar médico"}
         </button>
       </form>
 

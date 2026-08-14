@@ -5,7 +5,7 @@ import MainHeader from "@/components/MainHeader";
 import { AuthProvider } from "@/context/AuthContext";
 export const metadata: Metadata = {
   title: "MedSearch",
-  description: "Agendamento e gerenciamento online de consultas medicas.",
+  description: "Agendamento e gerenciamento online de consultas médicas.",
 };
 
 export default function RootLayout({

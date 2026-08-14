@@ -16,11 +16,11 @@ export default function MainHeader() {
     },
     {
       href: "/medic/register",
-      label: "Sou medico",
+      label: "Sou médico",
     },
     {
       href: "/clinic/register",
-      label: "Sou clinica",
+      label: "Sou clínica",
     },
   ];
 
@@ -105,6 +105,9 @@ export default function MainHeader() {
       }
       {user?.role === "CLINIC" &&
         <nav className="flex items-center gap-2">
+          <Link className="btn-primary px-3 py-2" href="/clinic/appointments">
+            Ver consultas
+          </Link>
           <Link
             className="hidden rounded-md px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 sm:inline-flex"
             href="/clinic/home"

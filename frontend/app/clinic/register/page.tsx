@@ -65,11 +65,11 @@ export default function ClinicRegisterPage() {
 
   return (
     <RegisterPageShell
-      introTitle="Cadastre sua clinica"
-      introText="Apresente sua estrutura, gerencie medicos vinculados e facilite o acesso de pacientes ao atendimento."
+      introTitle="Cadastre sua clínica"
+      introText="Apresente sua estrutura, gerencie médicos vinculados e facilite o acesso de pacientes ao atendimento."
     >
       <form action={formAction}>
-        <FormTitle kicker="Clinica" title="Nova clinica" />
+        <FormTitle kicker="Clínica" title="Nova clínica" />
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           <FormField
@@ -131,7 +131,7 @@ export default function ClinicRegisterPage() {
         </div>
 
         <button className="btn-primary mt-7 w-full" disabled={pending} type="submit">
-          {pending ? "Criando..." : "Registrar clinica"}
+          {pending ? "Criando..." : "Registrar clínica"}
         </button>
       </form>
 

@@ -27,12 +27,12 @@ export default function PatientAiPage() {
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setLocationError("Seu navegador não suporta geolocalizacao.");
+      setLocationError("Seu navegador não suporta geolocalização.");
       return;
     }
     navigator.geolocation.getCurrentPosition(
       (position) => setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude }),
-      () => setLocationError("Precisamos da sua localizacao para ordenar as clínicas mais próximas."),
+      () => setLocationError("Precisamos da sua localização para ordenar as clínicas mais próximas."),
       { enableHighAccuracy: true, timeout: 10000 },
     );
   }, []);
@@ -104,7 +104,7 @@ export default function PatientAiPage() {
           <h2 className="mt-2 text-2xl font-bold text-teal-950">{result.speciality}</h2>
           <p className="mt-3 text-sm leading-6 text-teal-900">{result.disclaimer}</p>
         </div>
-        {result.clinics.length > 0 ? <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{result.clinics.map((clinic) => <ClinicCard clinic={clinic} key={clinic.id} />)}</section> : <div className="surface mt-6 p-8 text-center"><h2 className="text-xl font-bold text-slate-950">Nenhuma clínica encontrada</h2><p className="mt-2 text-slate-600">Ainda não há clinicas cadastradas com médicos de {result.speciality}.</p></div>}
+        {result.clinics.length > 0 ? <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{result.clinics.map((clinic) => <ClinicCard clinic={clinic} key={clinic.id} />)}</section> : <div className="surface mt-6 p-8 text-center"><h2 className="text-xl font-bold text-slate-950">Nenhuma clínica encontrada</h2><p className="mt-2 text-slate-600">Ainda não há clínicas cadastradas com médicos de {result.speciality}.</p></div>}
       </section>}
     </div></main>
   );

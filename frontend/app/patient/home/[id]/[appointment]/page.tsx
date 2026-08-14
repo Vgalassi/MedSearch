@@ -106,7 +106,7 @@ export default function AppointmentPage() {
           (await schedulingResponse.json()) as SchedulingResponse;
 
         if (!daysResponse.ok) {
-          throw new Error(daysData.message ?? "Nao foi possivel carregar dias");
+          throw new Error(daysData.message ?? "Não foi possível carregar dias");
         }
 
         setDoctor(
@@ -148,7 +148,7 @@ export default function AppointmentPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message ?? "Nao foi possivel carregar horarios");
+          throw new Error(data.message ?? "Não foi possível carregar horários");
         }
 
         setHours(data.hours ?? []);
@@ -201,7 +201,7 @@ export default function AppointmentPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message ?? "Nao foi possivel criar a consulta");
+        throw new Error(data.message ?? "Não foi possível criar a consulta");
       }
 
       router.push("/patient/appointments");
@@ -349,8 +349,8 @@ export default function AppointmentPage() {
                 Agendar para {selectedHour.startTime}?
               </h2>
               <p className="mt-3 text-slate-600">
-                A consulta sera criada para {formatDay(selectedDay,"long")} com{" "}
-                {doctor?.name ?? "este medico"}.
+                A consulta será criada para {formatDay(selectedDay,"long")} com{" "}
+                {doctor?.name ?? "este médico"}.
               </p>
               {selectedHour.mode === "BOTH" ? (
                 <label className="mt-5 block">

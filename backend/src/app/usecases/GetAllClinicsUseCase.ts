@@ -29,6 +29,10 @@ export class GetAllClinicsUseCase {
       listParams.search = params.search;
     }
 
+    if (params.speciality) {
+      listParams.speciality = params.speciality;
+    }
+
     if (typeof params.latitude === "number") {
       listParams.latitude = params.latitude;
     }
