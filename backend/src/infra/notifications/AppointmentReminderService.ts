@@ -28,7 +28,6 @@ export async function createDueAppointmentReminders() {
   });
 
  
-
   for (const appointment of appointments) {
 
     const startsAt = appointmentStartsAt(appointment.day, appointment.startTime);

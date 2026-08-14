@@ -1,10 +1,11 @@
 import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
-import type { NotificationSender } from "../protocols/NotificationSender";
+import { NotificationService } from "./notificationService";
+
 
 export class AppointmentService{
     constructor(
         private readonly appointmentRepository: AppointmentRepository,
-        private readonly notifcationSender: NotificationSender
+        private readonly notificationService: NotificationService
     ){}
 
     async updateAppointmentStatuses(){
@@ -17,12 +18,12 @@ export class AppointmentService{
             appointment.updateStatus()
             const newStatus = appointment.props.status;
             if(oldStatus !== newStatus){
-                await this.appointmentRepository.create(appointment);
-                await this.notifcationSender.sendAppointmentStatusUpdateNotification(newStatus)
+                await this.appointmentRepository.update(appointment);
+                if(newStatus == "OCURRING"){
+                    await this.notificationService.createAppointmentReminderNotification(appointment)
+                }
             }
         }
-
-
     }
 }
 

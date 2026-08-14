@@ -6,6 +6,7 @@ export const TYPES = {
     DoctorRepository: Symbol.for("DoctorRepository"),
     PatientRepository: Symbol.for("PatientRepository"),
     ClinicRepository: Symbol.for("ClinicRepository"),
+    NotificationRepository: Symbol.for("NotificationRepository"),
     RegisterUserUseCase: Symbol.for("RegisterUserUseCase"),
     AddDoctorToClinicUseCase: Symbol.for("AddDoctorToClinicUseCase"),
     RemoveDoctorFromClinicUseCase: Symbol.for("RemoveDoctorFromClinicUseCase"),
