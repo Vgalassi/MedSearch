@@ -2,6 +2,7 @@ import { AgregateRoot } from "../value-objects/AgregateRoot";
 import type { Identifier } from "../value-objects/Identifier";
 import { CannotCancelAppointmentError } from "../errors/CannotCancelAppointmentError";
 import { Time } from "../value-objects/Time";
+import { TimeZoneDate } from "../value-objects/TimeZoneDate";
 
 export type AppointmentStatusValue =
   | "SCHEDULED"
@@ -17,7 +18,7 @@ export type AppointmentProps = {
   doctorId: Identifier;
   startTime: Time;
   endTime: Time;
-  day: Date;
+  day: TimeZoneDate;
   status: AppointmentStatusValue;
   reason?: string | null;
   notes?: string | null;
@@ -31,7 +32,7 @@ export class Appointment extends AgregateRoot<AppointmentProps> {
     doctorId: Identifier;
     startTime: Time;
     endTime: Time;
-    day: Date;
+    day: TimeZoneDate;
     reason?: string | null;
     notes?: string | null;
     type: appointmentType
@@ -56,12 +57,11 @@ export class Appointment extends AgregateRoot<AppointmentProps> {
 
   updateStatus(){
     const APPOINTMENT_EXTRA_DURATION = 600
-    const today = new Date()
-    if(today.getUTCFullYear() != this.props.day.getUTCFullYear() || today.getUTCMonth() != this.props.day.getUTCMonth()
-       || today.getUTCDate() != this.props.day.getUTCDate()){
+    const today = new TimeZoneDate()
+    if(!this.props.day.isSameDay(today)){
         return
     }
-    const currentTime = today.getHours() * 3600 +  today.getMinutes() * 60 + today.getSeconds();
+    const currentTime = today.secondsSinceMidnight;
     const timeUntilAppointmentStart = this.props.startTime.value - currentTime
     if(this.props.status == "SCHEDULED"){
 

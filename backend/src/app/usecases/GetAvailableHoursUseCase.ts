@@ -5,8 +5,9 @@ import { NotfoundError } from "../../domain/errors/NotFoundError";
 import type { UseCase } from "../../domain/value-objects/UseCase";
 import { getAvaliableDayTimes, type AvailableSlot} from "../../domain/services/avaliabilityService";
 import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
+import { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
 type Input= {
-    day: Date,
+    day: TimeZoneDate,
     doctorId: string
 }
 
@@ -25,6 +26,7 @@ export class GetDoctorAvailableHoursUseCase
       throw new NotfoundError("Doctor", input.doctorId);
     }
     const appointments = await this.appointmentRepository.findScheduledByDoctor(input.doctorId)
+
     const hours = getAvaliableDayTimes(appointments,input.day,doctor);
 
     if(hours.length === 0){

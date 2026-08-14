@@ -5,6 +5,7 @@ import { WeekDayRange } from "../value-objects/WeekDayRange";
 import { Appointment } from "../Aggregates/Appointment";
 import { Time } from "../value-objects/Time";
 import type { AvailabilityMode } from "../value-objects/AvailabilityMode";
+import { TimeZoneDate } from "../value-objects/TimeZoneDate";
 
 export type AvailableSlot = {
     startTime: Time
@@ -64,7 +65,7 @@ function addAvailableSlot(slots: AvailableSlot[], nextSlot: AvailableSlot){
     slots.push(nextSlot)
 }
 
-export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doctor: Doctor): AvailableSlot[]{
+export function getAvaliableDayTimes(appointments: Appointment[], day: TimeZoneDate, doctor: Doctor): AvailableSlot[]{
     if(!doctor.props.schedulingSettings || !doctor.props.Availabilities){
         throw Error("Doctor scheduling settings or availabilities not found")
     }
@@ -73,27 +74,33 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
         return []
     }
     const dayAvailabilities = doctor.props.Availabilities.filter((availability) => {
-        return isOnDayRange(day.getUTCDay(), availability.props.weekDayRange)
+        return isOnDayRange(day.dayOfWeek, availability.props.weekDayRange)
     })
+
+
     if(dayAvailabilities.length == 0){
         return []
     }
 
-    const dateAppointments =
-    appointments.filter(
-        appointment =>
-            appointment.props.day
-            .toDateString() ===
-            day.toDateString()
-    )
-   
+
+    const dateAppointments = appointments.filter(
+        appointment =>{
+            return(
+            appointment.props.day.year === day.year &&
+            appointment.props.day.month === day.month &&
+            appointment.props.day.day === day.day
+            );
+        }
+    );
+
+
     let todaySeconds = 0
-    const today = new Date()
+    const today = new TimeZoneDate()
 
-    if(today.getUTCFullYear() === day.getUTCFullYear() && today.getUTCMonth() === day.getUTCMonth() && today.getUTCDate() === day.getUTCDate()){
-        todaySeconds = today.getHours() * 3600 +  today.getMinutes() * 60 + today.getSeconds();
+    if(day.isSameDay(today)){
+        todaySeconds = today.secondsSinceMidnight;
     }
-
+    
 
     const availableSlots: AvailableSlot[] = []
     const buffer = doctor.props.schedulingSettings.props.bufferBetween.value
@@ -129,28 +136,32 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: Date, doc
         }
 
     }
+
     return availableSlots
 }
 
 
 export function getAvaliableDays(doctor: Doctor, appointments: Appointment[]){
+    
     if(!doctor.props.schedulingSettings || !doctor.props.Availabilities){
         throw Error("Doctor scheduling settings or availabilities not found")
     }
-    const today = new Date()
+    const today = new TimeZoneDate()
+
+   
     const { maxSchedulingDays } = doctor.props.schedulingSettings.props
     const avaliabilities = doctor.props.Availabilities
-    const avaliableDays: Date[] = []
+    const avaliableDays: TimeZoneDate[] = []
     const weekDays = getWeekDaysFromAvaliabilities(avaliabilities)
     for(let i = 0; i < maxSchedulingDays; i++){
-        const current = new Date(today)
-        current.setDate(today.getDate() + i)
-        if(isOnDayRange(current.getUTCDay(),weekDays) && getAvaliableDayTimes(appointments,current,doctor).length > 0){
+        const current = today.addDays(i);
+        
+        if(isOnDayRange(current.dayOfWeek,weekDays) && getAvaliableDayTimes(appointments,current,doctor).length > 0){
             avaliableDays.push(current)
         }
-
+        
     }
 
-
+   
     return avaliableDays
 }

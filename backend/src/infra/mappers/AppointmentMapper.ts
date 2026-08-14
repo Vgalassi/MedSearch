@@ -1,6 +1,7 @@
 import { Appointment, type appointmentType } from "../../domain/Aggregates/Appointment";
 import { Identifier } from "../../domain/value-objects/Identifier";
 import { Time } from "../../domain/value-objects/Time";
+import { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
 import { AppointmentStatus } from "../generated/prisma/client";
 
 type PrismaAppointment = {
@@ -24,7 +25,7 @@ export class AppointmentMapper {
         doctorId: new Identifier(raw.doctorId),
         startTime: Time.createWithSeconds(raw.startTime),
         endTime: Time.createWithSeconds(raw.endTime),
-        day: raw.day,
+        day: new TimeZoneDate(raw.day,false),
         status: raw.status as Appointment["props"]["status"],
         reason: raw.reason,
         notes: raw.notes,
@@ -52,7 +53,7 @@ export class AppointmentMapper {
       doctorId: appointment.props.doctorId.value,
       startTime: appointment.props.startTime.value,
       endTime: appointment.props.endTime.value,
-      day: appointment.props.day,
+      day: appointment.props.day.date,
       status: appointment.props.status as AppointmentStatus,
       reason: appointment.props.reason ?? null,
       notes: appointment.props.notes ?? null,

@@ -5,16 +5,17 @@ import { NotfoundError } from "../../domain/errors/NotFoundError";
 import type { UseCase } from "../../domain/value-objects/UseCase";
 import { getAvaliableDays } from "../../domain/services/avaliabilityService";
 import type { AppointmentRepository } from "../../domain/repositories/AppointmentRepository";
+import type { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
 @injectable()
 export class GetDoctorAvailableDaysUseCase
-  implements UseCase<string, Promise<Date[]>>
+  implements UseCase<string, Promise<TimeZoneDate[]>>
 {
   constructor(
     @inject(TYPES.DoctorRepository) private readonly doctorRepository: DoctorRepository,
     @inject(TYPES.AppointmentRepository) private readonly appointmentRepository: AppointmentRepository
   ) {}
 
-  async execute(doctorId: string): Promise<Date[]> {
+  async execute(doctorId: string): Promise<TimeZoneDate[]> {
     const doctor = await this.doctorRepository.findById(doctorId);
     if (!doctor) {
       throw new NotfoundError("Doctor", doctorId);

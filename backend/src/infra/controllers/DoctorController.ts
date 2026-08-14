@@ -12,6 +12,7 @@ import { GetDoctorAvailableHoursUseCase } from "../../app/usecases/GetAvailableH
 import { GetDoctorSchedulingUseCase } from "../../app/usecases/GetDoctorSchedulingUseCase";
 import { UpdateDoctorSchedulingUseCase } from "../../app/usecases/UpdateDoctorSchedulingUseCase";
 import { Auth } from "../auth/authDecorator";
+import { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
 
 function toSchedulingDto(
   doctor: Awaited<ReturnType<GetDoctorSchedulingUseCase["execute"]>>,
@@ -83,7 +84,7 @@ export class DoctorController {
 
     return res.status(200).send({
       doctorId: params.id,
-      days: days.map((day) => day.toISOString()),
+      days: days.map((day) => day.date),
     });
   }
 
@@ -91,9 +92,9 @@ export class DoctorController {
   async getAvailableHours(req: FastifyRequest,res: FastifyReply){
     const params = doctorIdParamSchema.parse(req.params)
     const body = doctorAvailableHoursSchema.parse(req.body)
-
+   
     const hours = await this.getDoctorAvailableHoursUseCase.execute({
-      day: new Date(body.date),
+      day: TimeZoneDate.fromDateString(body.date),
       doctorId: params.id
      })
 

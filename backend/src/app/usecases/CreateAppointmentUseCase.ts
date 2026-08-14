@@ -12,6 +12,7 @@ import { getAvaliableDayTimes } from "../../domain/services/avaliabilityService"
 import { Identifier } from "../../domain/value-objects/Identifier";
 import { Time } from "../../domain/value-objects/Time";
 import { AppointmentOutsideAvailabilityError } from "../../domain/errors/AppointmentOutsideAvailabilityError";
+import { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
 export type CreateAppointmentInput = {
   patientId: string;
   doctorId: string;
@@ -55,10 +56,12 @@ export class CreateAppointmentUseCase {
     if (!settings) {
       throw new DoctorSettingsNotFoundError(input.doctorId);
     }
-
-
+    
+    
+    const appointmentDate = new TimeZoneDate(input.day,false)
+    
     const appointments = await this.appointmentRepository.findScheduledByDoctor(input.doctorId)
-    const slots = getAvaliableDayTimes(appointments,input.day,doctor)
+    const slots = getAvaliableDayTimes(appointments,appointmentDate,doctor)
 
     const startTime = Time.createWithString(input.startTime)
     const endTime = Time.createWithString(input.endTime)
@@ -72,7 +75,7 @@ export class CreateAppointmentUseCase {
       doctorId: new Identifier(input.doctorId),
       startTime: startTime,
       endTime: endTime,
-      day: input.day,
+      day: appointmentDate,
       reason: input.reason ?? null,
       notes: input.notes ?? null,
       type: input.type,

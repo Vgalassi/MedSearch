@@ -22,7 +22,7 @@ function toAppointmentDto(appointment: Appointment) {
     doctorId: appointment.props.doctorId.value,
     startTime: appointment.props.startTime.toString(),
     endTime: appointment.props.endTime.toString(),
-    day: appointment.props.day.toISOString(),
+    day: appointment.props.day.date.toISOString(),
     status: appointment.props.status,
     reason: appointment.props.reason ?? null,
     notes: appointment.props.notes ?? null,
