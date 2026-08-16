@@ -61,8 +61,6 @@ export default function VideoCallPage() {
       return;
     }
 
-    const profileId = user.profileId;
-    const role = user.role;
     let closed = false;
 
     async function startCall() {
@@ -141,8 +139,6 @@ export default function VideoCallPage() {
             JSON.stringify({
               type: "join-room",
               appointmentId,
-              profileId,
-              role,
             }),
           );
         };

@@ -13,6 +13,7 @@ import { InvalidAppointmentTimeOrderError } from "../../domain/errors/InvalidApp
 import type { FastifyInstance } from "fastify";
 import { UnauthorizedError } from "../../domain/errors/UnauthorizedError.js";
 import { LowConfidenceClassificationError } from "../../domain/errors/LowConfidenceClassificationError.js";
+import { PatientAlreadyHasScheduledAppointmentError } from "../../domain/errors/PatientAlreadyHasScheduledAppointmentError.js";
 
 
 export function setupErrorHandler(app: FastifyInstance){
@@ -36,6 +37,10 @@ export function setupErrorHandler(app: FastifyInstance){
 
         if (error instanceof LowConfidenceClassificationError) {
             return reply.status(422).send({ message: error.message });
+        }
+
+        if (error instanceof PatientAlreadyHasScheduledAppointmentError) {
+            return reply.status(409).send({ message: error.message });
         }
 
         if (error instanceof ZodError) {

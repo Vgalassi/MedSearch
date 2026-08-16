@@ -56,27 +56,53 @@ export default function PatientHomePage() {
 
 
   useEffect(() => {
+    let active = true;
 
     if (!navigator.geolocation) {
-      return;
+      queueMicrotask(() => {
+        if (active) {
+          setLocationError("Seu navegador não oferece suporte à localização.");
+        }
+      });
+
+      return () => {
+        active = false;
+      };
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        if (!active) return;
 
         setCoordinates({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
+        setLocationError(null);
 
       },
-      () => {
-        setLocationError(
-          "Não foi possível obter sua localização."
-        );
-      }
+      (error) => {
+        if (!active) return;
+
+        const message =
+          error.code === error.PERMISSION_DENIED
+            ? "A permissão de localização foi negada. Autorize o acesso nas configurações do navegador."
+            : error.code === error.TIMEOUT
+              ? "A localização demorou para responder. Recarregue a página para tentar novamente."
+              : "Não foi possível obter sua localização. Verifique se a localização do dispositivo está ativada.";
+
+        setLocationError(message);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 15_000,
+        maximumAge: 5 * 60_000,
+      },
     );
 
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {

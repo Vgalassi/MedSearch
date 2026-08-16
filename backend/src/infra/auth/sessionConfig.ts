@@ -1,6 +1,12 @@
 import type { FastifyInstance } from "fastify";
+import type { IncomingMessage } from "node:http";
 import cookie from "@fastify/cookie";
 import session from "@fastify/session";
+
+export type WebSocketSessionUser = {
+    profileId: string;
+    role: "DOCTOR" | "PATIENT";
+};
 
 
 export async function setupSession(app:FastifyInstance){
@@ -23,4 +29,44 @@ export async function setupSession(app:FastifyInstance){
 
     saveUninitialized: false
     });
+}
+
+export function createWebSocketAuthenticator(app: FastifyInstance) {
+    return async (request: IncomingMessage): Promise<WebSocketSessionUser | null> => {
+        const cookieHeader = request.headers.cookie;
+        if (!cookieHeader) {
+            return null;
+        }
+
+        const sessionId = app.parseCookie(cookieHeader).sessionId;
+        if (!sessionId) {
+            return null;
+        }
+
+        const sessionRequest: { session?: import("fastify").Session } = {};
+
+        await new Promise<void>((resolve, reject) => {
+            app.decryptSession(sessionId, sessionRequest, (error) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                resolve();
+            });
+        });
+
+        const currentSession = sessionRequest.session;
+        if (
+            !currentSession?.userId ||
+            !currentSession.profileId ||
+            (currentSession.role !== "DOCTOR" && currentSession.role !== "PATIENT")
+        ) {
+            return null;
+        }
+
+        return {
+            profileId: currentSession.profileId,
+            role: currentSession.role,
+        };
+    };
 }

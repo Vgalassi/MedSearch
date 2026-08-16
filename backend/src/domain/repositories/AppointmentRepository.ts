@@ -32,6 +32,11 @@ export interface AppointmentRepository {
     doctorId: string,
   ): Promise<Appointment[]>;
 
+  hasScheduledByPatientAndDoctor(
+    patientId: string,
+    doctorId: string,
+  ): Promise<boolean>;
+
   countScheduledByDoctorBetween(
     doctorId: string,
     rangeStart: Date,

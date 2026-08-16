@@ -10,13 +10,12 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import { createDueAppointmentReminders } from "./notifications/AppointmentReminderService.js";
 import cors from '@fastify/cors'
 import { setupErrorHandler } from "./error/errorHandler.js";
-import { setupSession } from "./auth/sessionConfig.js";
+import { createWebSocketAuthenticator, setupSession } from "./auth/sessionConfig.js";
 import { container } from "./di/container.js";
 import { TYPES } from "../app/dto/types.js";
 import type { JoinCallUseCase } from "../app/usecases/JoinCallUseCase.js";
 import { RoomManager } from "./websocket/RoomManager.js";
 import { CallWebSocketServer } from "./websocket/CallWebsocketServer.js";
-import fs from "fs";
 import { AppointmentService } from "../app/services/AppointmentService.js";
 
 const app = Fastify({
@@ -56,9 +55,10 @@ setInterval(() => void appointmentService.updateAppointmentStatuses().catch((err
 
 
 new CallWebSocketServer(
-    app.server as import("node:https").Server,
+    app.server,
     new RoomManager(),
     container.get<JoinCallUseCase>(TYPES.JoinCallUseCase),
+    { authenticate: createWebSocketAuthenticator(app) },
 );
 
 

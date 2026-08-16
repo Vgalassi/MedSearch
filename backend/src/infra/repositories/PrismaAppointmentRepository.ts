@@ -4,6 +4,7 @@ import type { AppointmentRepository } from "../../domain/repositories/Appointmen
 import { prisma } from "../../lib/prisma";
 import { AppointmentMapper } from "../mappers/AppointmentMapper";
 import { AppointmentStatus } from "../generated/prisma/client";
+import { PatientAlreadyHasScheduledAppointmentError } from "../../domain/errors/PatientAlreadyHasScheduledAppointmentError";
 
 @injectable()
 export class PrismaAppointmentRepository implements AppointmentRepository {
@@ -35,7 +36,20 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
   }
   async create(appointment: Appointment): Promise<Appointment> {
     const data = AppointmentMapper.toPersistence(appointment);
-    const created = await prisma.appointment.create({ data });
+    let created;
+    try {
+      created = await prisma.appointment.create({ data });
+    } catch (error) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        error.code === "P2002"
+      ) {
+        throw new PatientAlreadyHasScheduledAppointmentError();
+      }
+      throw error;
+    }
 
     return AppointmentMapper.toDomain(created as never);
   }
@@ -92,6 +106,22 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
       orderBy: { startTime: "asc" },
     });
     return rows.map((r) => AppointmentMapper.toDomain(r as never));
+  }
+
+  async hasScheduledByPatientAndDoctor(
+    patientId: string,
+    doctorId: string,
+  ): Promise<boolean> {
+    const appointment = await prisma.appointment.findFirst({
+      where: {
+        patientId,
+        doctorId,
+        status: AppointmentStatus.SCHEDULED,
+      },
+      select: { id: true },
+    });
+
+    return appointment !== null;
   }
 
   async countScheduledByDoctorBetween(

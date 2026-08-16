@@ -13,6 +13,7 @@ import { Identifier } from "../../domain/value-objects/Identifier";
 import { Time } from "../../domain/value-objects/Time";
 import { AppointmentOutsideAvailabilityError } from "../../domain/errors/AppointmentOutsideAvailabilityError";
 import { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
+import { PatientAlreadyHasScheduledAppointmentError } from "../../domain/errors/PatientAlreadyHasScheduledAppointmentError";
 export type CreateAppointmentInput = {
   patientId: string;
   doctorId: string;
@@ -55,6 +56,15 @@ export class CreateAppointmentUseCase {
     );
     if (!settings) {
       throw new DoctorSettingsNotFoundError(input.doctorId);
+    }
+
+    const alreadyScheduled =
+      await this.appointmentRepository.hasScheduledByPatientAndDoctor(
+        input.patientId,
+        input.doctorId,
+      );
+    if (alreadyScheduled) {
+      throw new PatientAlreadyHasScheduledAppointmentError();
     }
     
     

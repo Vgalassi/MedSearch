@@ -2,7 +2,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { RoomManager } from "./RoomManager";
 import { JoinCallUseCase } from "../../app/usecases/JoinCallUseCase";
 import type { IncomingMessage as HttpIncomingMessage } from "node:http";
-import type { Server as HttpsServer } from "node:https";
+import type { Server as HttpServer } from "node:http";
 type ParticipantRole =
     | "DOCTOR"
     | "PATIENT";
@@ -27,8 +27,6 @@ type IceCandidatePayload = {
 type JoinRoomMessage = {
     type: "join-room";
     appointmentId: string;
-    profileId?: string;
-    role?: ParticipantRole;
 };
 
 type OfferMessage = {
@@ -66,25 +64,25 @@ type AuthenticateSocket = (
 ) => SocketUser | null | Promise<SocketUser | null>;
 
 type CallWebSocketServerOptions = {
-    authenticate?: AuthenticateSocket;
+    authenticate: AuthenticateSocket;
 };
 
 export class CallWebSocketServer {
 
     private readonly wss: WebSocketServer;
-    private readonly authenticate: AuthenticateSocket | undefined;
+    private readonly authenticate: AuthenticateSocket;
 
     constructor(
-        httpsServer: HttpsServer,
+        httpServer: HttpServer,
         private readonly roomManager: RoomManager,
         private readonly joinCallUseCase: JoinCallUseCase,
-        options: CallWebSocketServerOptions = {}
+        options: CallWebSocketServerOptions
     ) {
 
         this.authenticate = options.authenticate;
 
         this.wss = new WebSocketServer({
-            server: httpsServer,
+            server: httpServer,
             path: "/ws"
         });
 
@@ -100,12 +98,17 @@ export class CallWebSocketServer {
                     "WebSocket connected"
                 );
 
-                if (this.authenticate) {
+                try {
                     const user = await this.authenticate(request);
-
-                    if (user) {
-                        socket.user = user;
+                    if (!user) {
+                        socket.close(1008, "Authentication required");
+                        return;
                     }
+                    socket.user = user;
+                } catch (error) {
+                    console.error("WebSocket authentication error", error);
+                    socket.close(1011, "Authentication failed");
+                    return;
                 }
 
                 socket.on(
@@ -202,9 +205,7 @@ export class CallWebSocketServer {
         socket: AuthenticatedSocket,
         message: JoinRoomMessage
     ) {
-        const user =
-            socket.user ??
-            this.getUserFromJoinMessage(message);
+        const user = socket.user;
 
         if (!user) {
 
@@ -359,21 +360,6 @@ export class CallWebSocketServer {
             "answer",
             "ice-candidate"
         ].includes(type);
-    }
-
-    private getUserFromJoinMessage(message: JoinRoomMessage): SocketUser | null {
-        if (!message.profileId || !message.role) {
-            return null;
-        }
-
-        if (message.role !== "DOCTOR" && message.role !== "PATIENT") {
-            return null;
-        }
-
-        return {
-            profileId: message.profileId,
-            role: message.role
-        };
     }
 
     private send(socket: WebSocket | undefined, payload: unknown) {

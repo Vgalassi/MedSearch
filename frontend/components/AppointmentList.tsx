@@ -88,7 +88,7 @@ export function AppointmentList({ appointments, emptyText, mode, onCancel, onSav
           </div>
           <div className="flex flex-col gap-3">
             <span className="inline-flex justify-center rounded-md bg-teal-50 px-4 py-2 text-sm font-semibold text-teal-700">{statusLabel(appointment.status)}</span>
-            {appointment.type === "ONLINE" && appointment.status === "SCHEDULED" && <Link className="btn-primary px-4 py-2" href={`/call/${appointment.id}`}>Entrar na videochamada</Link>}
+            {appointment.type === "ONLINE" && ["SCHEDULED", "OCURRING"].includes(appointment.status) && <Link className="btn-primary px-4 py-2" href={`/call/${appointment.id}`}>Entrar na videochamada</Link>}
             {onCancel && appointment.status === "SCHEDULED" && (
               <button className="btn-danger px-4 py-2" disabled={cancelingId === appointment.id} onClick={() => void handleCancel(appointment.id)} type="button">
                 {cancelingId === appointment.id ? "Cancelando..." : "Cancelar consulta"}
