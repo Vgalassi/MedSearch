@@ -22,6 +22,18 @@ export default function MedicAppointmentsPage() {
     setAppointments((items) => items.map((item) => item.id === appointmentId ? { ...item, status: "CANCELED" } : item));
   }
 
+  async function saveNotes(appointmentId: string, notes: string) {
+    const response = await fetch(`${API_BASE_URL}/appointments/${appointmentId}/notes`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ notes }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message ?? "Não foi possível salvar a anotação");
+    setAppointments((items) => items.map((item) => item.id === appointmentId ? { ...item, notes } : item));
+  }
+
   useEffect(() => {
     if (loading) return;
 
@@ -93,6 +105,7 @@ export default function MedicAppointmentsPage() {
               emptyText="Nenhuma consulta encontrada para este médico."
               mode="doctor"
               onCancel={cancelAppointment}
+              onSaveNotes={saveNotes}
             />
           </section>
         )}

@@ -71,6 +71,13 @@ export default async function appointmentRoutes(app: FastifyInstance) {
     },
   );
 
+  app.patch(
+    "/appointments/:id/notes",
+    async (req: FastifyRequest, res: FastifyReply) => {
+      await appointmentController.updateNotes(req, res);
+    },
+  );
+
   app.get(
     "/appointments/clinic/:clinicId/details",
     async (req: FastifyRequest, res: FastifyReply) => {

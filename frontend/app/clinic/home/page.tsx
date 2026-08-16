@@ -1,17 +1,24 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Doctor } from "@/components/types/Doctor";
 import { ClinicDoctorSection } from "@/components/ClinicDoctorSection";
 import { API_BASE_URL } from "@/components/appConfig";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function ClinicHomePage() {
   const { user, loading } = useAuth();
+  const router = useRouter();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [myDoctors, setMyDoctors] = useState<Doctor[]>([]);
   const [pendingDoctorIds, setPendingDoctorIds] = useState<Set<string>>(new Set());
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalAvailable, setTotalAvailable] = useState(0);
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const clinicId = user?.role === "CLINIC" ? user.profileId : null;
 
   const loadDoctors = useCallback(async () => {
@@ -20,7 +27,11 @@ export default function ClinicHomePage() {
     }
 
     const [allDoctorsResponse, clinicDoctorsResponse] = await Promise.all([
-      fetch(`${API_BASE_URL}/doctors/all`),
+      fetch(`${API_BASE_URL}/doctors/available?${new URLSearchParams({
+        page: String(page),
+        pageSize: "6",
+        ...(search ? { search } : {}),
+      })}`, { credentials: "include" }),
       fetch(`${API_BASE_URL}/clinics/doctors/${clinicId}`),
     ]);
 
@@ -30,8 +41,9 @@ export default function ClinicHomePage() {
     return {
       allDoctors: allDoctorsData.doctors ?? [],
       clinicDoctors: clinicDoctorsData.doctors ?? [],
+      pagination: allDoctorsData.pagination,
     };
-  }, [clinicId]);
+  }, [clinicId, page, search]);
 
   useEffect(() => {
     if (loading) return;
@@ -41,6 +53,8 @@ export default function ClinicHomePage() {
         const data = await loadDoctors();
         setDoctors(data.allDoctors);
         setMyDoctors(data.clinicDoctors);
+        setTotalPages(data.pagination?.totalPages ?? 0);
+        setTotalAvailable(data.pagination?.total ?? 0);
       } catch (err) {
         console.error(err);
       } finally {
@@ -51,12 +65,13 @@ export default function ClinicHomePage() {
     fetchInitialDoctors();
   }, [loading, loadDoctors]);
 
-  const myDoctorIds = useMemo(
-    () => new Set(myDoctors.map((doctor) => doctor.id)),
-    [myDoctors],
-  );
+  const availableDoctors = doctors;
 
-  const availableDoctors = doctors.filter((doctor) => !myDoctorIds.has(doctor.id));
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPage(1);
+    setSearch(searchInput.trim());
+  }
 
   async function addDoctor(doctorId: string) {
     if (!clinicId) return;
@@ -109,6 +124,8 @@ export default function ClinicHomePage() {
       const data = await loadDoctors();
       setDoctors(data.allDoctors);
       setMyDoctors(data.clinicDoctors);
+      setTotalPages(data.pagination?.totalPages ?? 0);
+      setTotalAvailable(data.pagination?.total ?? 0);
     } catch (err) {
       console.error(err);
     } finally {
@@ -135,7 +152,7 @@ export default function ClinicHomePage() {
                 <span className="text-sm text-teal-50/80">na clínica</span>
               </span>
               <span className="rounded-md bg-white/10 px-4 py-3">
-                <strong className="block text-2xl">{availableDoctors.length}</strong>
+                <strong className="block text-2xl">{totalAvailable}</strong>
                 <span className="text-sm text-teal-50/80">disponíveis</span>
               </span>
             </div>
@@ -157,6 +174,8 @@ export default function ClinicHomePage() {
             isFetching={isFetching}
             kicker="Equipe atual"
             onAction={removeDoctor}
+            secondaryActionLabel="Editar horários"
+            onSecondaryAction={(doctorId) => router.push(`/medic/appointment-config?doctorId=${doctorId}`)}
             title="Médicos da clínica"
           />
 
@@ -168,6 +187,25 @@ export default function ClinicHomePage() {
             kicker="Rede MedSearch"
             onAction={addDoctor}
             pendingDoctorIds={pendingDoctorIds}
+            toolbar={(
+              <form className="mt-5 flex gap-2" onSubmit={submitSearch}>
+                <input
+                  aria-label="Pesquisar médicos disponíveis"
+                  className="input"
+                  onChange={(event) => setSearchInput(event.target.value)}
+                  placeholder="Nome, CRM ou especialidade"
+                  value={searchInput}
+                />
+                <button className="btn-secondary" type="submit">Pesquisar</button>
+              </form>
+            )}
+            footer={totalPages > 1 ? (
+              <div className="mt-5 flex items-center justify-between gap-3">
+                <button className="btn-secondary" disabled={page <= 1} onClick={() => setPage((current) => current - 1)} type="button">Anterior</button>
+                <span className="text-sm font-medium text-slate-600">Página {page} de {totalPages}</span>
+                <button className="btn-secondary" disabled={page >= totalPages} onClick={() => setPage((current) => current + 1)} type="button">Próxima</button>
+              </div>
+            ) : null}
             title="Médicos disponíveis"
           />
         </section>

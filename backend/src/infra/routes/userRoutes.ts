@@ -8,7 +8,12 @@ import { LoginUserUseCase } from '../../app/usecases/LoginUserUseCase';
 
 const registerUserUseCase = container.get<RegisterUserUseCase>(TYPES.RegisterUserUseCase);
 const loginUserUseCase = container.get<LoginUserUseCase>(TYPES.LoginUserUseCase);
-const userController = new UserController(registerUserUseCase,loginUserUseCase)
+const userController = new UserController(
+  registerUserUseCase,
+  loginUserUseCase,
+  container.get(TYPES.CepService),
+  container.get(TYPES.GeocodingService),
+)
 export default async function userRoutes(app: FastifyInstance){
  app.post('/users/register', async (req: FastifyRequest, res: FastifyReply) => {
    await userController.register(req,res)
@@ -19,6 +24,12 @@ export default async function userRoutes(app: FastifyInstance){
  })
  app.get("/me", async(req:FastifyRequest, res: FastifyReply)=>{
   await userController.me(req,res)
+ })
+ app.get("/users/profile", async(req:FastifyRequest, res: FastifyReply)=>{
+  await userController.profile(req,res)
+ })
+ app.patch("/users/profile", async(req:FastifyRequest, res: FastifyReply)=>{
+  await userController.updateProfile(req,res)
  })
 
 

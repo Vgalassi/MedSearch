@@ -4,6 +4,12 @@ export const doctorIdParamSchema = z.object({
   id: z.uuid(),
 });
 
+export const availableDoctorsQuerySchema = z.object({
+  search: z.string().trim().max(120).optional(),
+  page: z.coerce.number().int().positive().default(1),
+  pageSize: z.coerce.number().int().min(1).max(20).default(6),
+});
+
 export const doctorAvailableHoursSchema = z.object({
   date: z.iso.date()
 })

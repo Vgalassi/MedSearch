@@ -15,6 +15,10 @@ export const appointmentIdParamsSchema = z.object({
   id: z.uuid(),
 });
 
+export const updateAppointmentNotesSchema = z.object({
+  notes: z.string().trim().min(1).max(5000),
+});
+
 export const patientIdParamsSchema = z.object({
   patientId: z.uuid(),
 });

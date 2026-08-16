@@ -7,12 +7,14 @@ import {
   doctorAvailableHoursSchema,
   doctorIdParamSchema,
   updateDoctorSchedulingSchema,
+  availableDoctorsQuerySchema,
 } from "../schemas/doctorSchemas";
 import { GetDoctorAvailableHoursUseCase } from "../../app/usecases/GetAvailableHoursUseCase";
 import { GetDoctorSchedulingUseCase } from "../../app/usecases/GetDoctorSchedulingUseCase";
 import { UpdateDoctorSchedulingUseCase } from "../../app/usecases/UpdateDoctorSchedulingUseCase";
 import { Auth } from "../auth/authDecorator";
 import { TimeZoneDate } from "../../domain/value-objects/TimeZoneDate";
+import { prisma } from "../../lib/prisma";
 
 function toSchedulingDto(
   doctor: Awaited<ReturnType<GetDoctorSchedulingUseCase["execute"]>>,
@@ -77,6 +79,45 @@ export class DoctorController {
       })),
     });
   }
+
+  @Auth("CLINIC")
+  async listAvailable(req: FastifyRequest, res: FastifyReply) {
+    const query = availableDoctorsQuerySchema.parse(req.query);
+    const search = query.search || undefined;
+    const where = {
+      clinicId: null,
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: "insensitive" as const } },
+              { crm: { contains: search, mode: "insensitive" as const } },
+              { speciality: { contains: search, mode: "insensitive" as const } },
+            ],
+          }
+        : {}),
+    };
+
+    const [total, doctors] = await Promise.all([
+      prisma.doctor.count({ where }),
+      prisma.doctor.findMany({
+        where,
+        orderBy: { name: "asc" },
+        skip: (query.page - 1) * query.pageSize,
+        take: query.pageSize,
+        select: { id: true, name: true, phone: true, crm: true, speciality: true },
+      }),
+    ]);
+
+    return res.status(200).send({
+      doctors,
+      pagination: {
+        total,
+        page: query.page,
+        pageSize: query.pageSize,
+        totalPages: Math.ceil(total / query.pageSize),
+      },
+    });
+  }
   @Auth("PATIENT")
   async getAvailableDays(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamSchema.parse(req.params);
@@ -108,7 +149,7 @@ export class DoctorController {
     });
   }
 
-  @Auth("DOCTOR")
+  @Auth("DOCTOR", "CLINIC")
   async updateScheduling(req: FastifyRequest, res: FastifyReply) {
     const params = doctorIdParamSchema.parse(req.params);
     const body = updateDoctorSchedulingSchema.parse(req.body);
@@ -116,8 +157,17 @@ export class DoctorController {
       return res.status(401).send({ message: "Sessao de medico invalida" });
     }
 
-    if (req.session.profileId !== params.id) {
+    if (req.session.role === "DOCTOR" && req.session.profileId !== params.id) {
       return res.status(403).send({ message: "Voce nao pode alterar agenda de outro medico" });
+    }
+    if (req.session.role === "CLINIC") {
+      const doctor = await prisma.doctor.findFirst({
+        where: { id: params.id, clinicId: req.session.profileId },
+        select: { id: true },
+      });
+      if (!doctor) {
+        return res.status(403).send({ message: "Este medico nao pertence a sua clinica" });
+      }
     }
 
     const doctor = await this.updateDoctorSchedulingUseCase.execute({

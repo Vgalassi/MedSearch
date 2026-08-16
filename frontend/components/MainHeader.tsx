@@ -26,6 +26,10 @@ export default function MainHeader() {
 
   const authUrls = [
     {
+      href: "/profile",
+      label: "Ver/alterar dados",
+    },
+    {
       label: "Sair",
       onClick: async () => {
         await logout();

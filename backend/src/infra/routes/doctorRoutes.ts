@@ -42,6 +42,10 @@ export default async function doctorRoutes(app: FastifyInstance) {
     await doctorController.getAll(req, res);
   });
 
+  app.get("/doctors/available", async (req: FastifyRequest, res: FastifyReply) => {
+    await doctorController.listAvailable(req, res);
+  });
+
   app.get(
     "/doctors/days/:id",
     async (req: FastifyRequest, res: FastifyReply) => {

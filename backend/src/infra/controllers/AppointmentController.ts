@@ -12,6 +12,7 @@ import {
   createAppointmentBodySchema,
   doctorIdParamsSchema,
   patientIdParamsSchema,
+  updateAppointmentNotesSchema,
 } from "../schemas/appointmentSchemas";
 import { prisma } from "../../lib/prisma";
 import { Auth } from "../auth/authDecorator";
@@ -227,6 +228,36 @@ export class AppointmentController {
     return res.status(200).send({
       appointments: appointments.map(toDetailedAppointmentDto),
     });
+  }
+
+  @Auth("DOCTOR")
+  async updateNotes(req: FastifyRequest, res: FastifyReply) {
+    const params = appointmentIdParamsSchema.parse(req.params);
+    const body = updateAppointmentNotesSchema.parse(req.body);
+    if (!req.session.profileId) {
+      return res.status(401).send({ message: "Sessao de medico invalida" });
+    }
+
+    const appointment = await prisma.appointment.findUnique({
+      where: { id: params.id },
+      select: { doctorId: true, status: true },
+    });
+    if (!appointment) {
+      return res.status(404).send({ message: "Consulta nao encontrada" });
+    }
+    if (appointment.doctorId !== req.session.profileId) {
+      return res.status(403).send({ message: "Voce nao pode anotar consulta de outro medico" });
+    }
+    if (appointment.status !== "OCURRING" && appointment.status !== "COMPLETED") {
+      return res.status(409).send({ message: "A anotacao so pode ser adicionada durante ou depois da consulta" });
+    }
+
+    const updated = await prisma.appointment.update({
+      where: { id: params.id },
+      data: { notes: body.notes },
+      select: { id: true, notes: true },
+    });
+    return res.status(200).send({ appointment: updated, message: "Anotacao salva com sucesso" });
   }
 
   @Auth("CLINIC")

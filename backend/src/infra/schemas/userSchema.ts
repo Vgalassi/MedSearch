@@ -36,3 +36,20 @@ export const registerUserSchema = z.discriminatedUnion("role", [
   patientSchema,
   clinicSchema,
 ]);
+
+const editableProfileSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  phone: z.string().trim().min(8).max(20),
+});
+
+export const updatePatientProfileSchema = editableProfileSchema;
+
+export const updateDoctorProfileSchema = editableProfileSchema.extend({
+  speciality: z.string().trim().min(2).max(80),
+});
+
+export const updateClinicProfileSchema = editableProfileSchema.extend({
+  cep: z.string().trim().min(8).max(9),
+  number: z.string().trim().min(1).max(20),
+  description: z.string().trim().min(5).max(2000),
+});

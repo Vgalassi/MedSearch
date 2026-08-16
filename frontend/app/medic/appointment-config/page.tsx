@@ -71,15 +71,21 @@ export default function MedicAppointmentConfigPage() {
 
     async function fetchScheduling() {
       try {
-        const doctorId = user?.role === "DOCTOR" ? user.profileId : null;
+        const requestedDoctorId = new URLSearchParams(window.location.search).get("doctorId");
+        const doctorId = user?.role === "DOCTOR"
+          ? user.profileId
+          : user?.role === "CLINIC"
+            ? requestedDoctorId
+            : null;
 
         if (!doctorId) {
-          throw new Error("Entre como médico para configurar sua agenda");
+          throw new Error("Selecione um médico da clínica para configurar a agenda");
         }
 
         setActiveDoctorId(doctorId);
         const response = await fetch(
           `${API_BASE_URL}/doctors/${doctorId}/scheduling`,
+          { credentials: "include" },
         );
         const data = await response.json();
 
@@ -190,7 +196,7 @@ export default function MedicAppointmentConfigPage() {
           <p className="section-kicker text-teal-200">Configuracao</p>
           <div className="mt-4 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <h1 className="text-3xl font-bold">Agenda do médico</h1>
+              <h1 className="text-3xl font-bold">{user?.role === "CLINIC" ? "Agenda do médico da clínica" : "Agenda do médico"}</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
                 Ajuste disponibilidade, duracão padrão e limites de
                 agendamento.

@@ -6,6 +6,8 @@ type DoctorRowProps = {
   actionStyle?: "primary" | "danger";
   onAction: () => void;
   disabled?: boolean;
+  secondaryActionLabel?: string;
+  onSecondaryAction?: () => void;
 };
 
 export function DoctorRow({
@@ -14,6 +16,8 @@ export function DoctorRow({
   actionStyle = "primary",
   onAction,
   disabled = false,
+  secondaryActionLabel,
+  onSecondaryAction,
 }: DoctorRowProps) {
   return (
     <article className="surface flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -24,14 +28,21 @@ export function DoctorRow({
           CRM {doctor.crm} | {doctor.phone}
         </p>
       </div>
-      <button
-        className={actionStyle === "danger" ? "btn-danger" : "btn-primary"}
-        disabled={disabled}
-        onClick={onAction}
-        type="button"
-      >
-        {actionLabel}
-      </button>
+      <div className="flex flex-wrap gap-2">
+        {secondaryActionLabel && onSecondaryAction && (
+          <button className="btn-secondary" onClick={onSecondaryAction} type="button">
+            {secondaryActionLabel}
+          </button>
+        )}
+        <button
+          className={actionStyle === "danger" ? "btn-danger" : "btn-primary"}
+          disabled={disabled}
+          onClick={onAction}
+          type="button"
+        >
+          {actionLabel}
+        </button>
+      </div>
     </article>
   );
 }

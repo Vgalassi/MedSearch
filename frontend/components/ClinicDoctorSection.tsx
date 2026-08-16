@@ -1,6 +1,7 @@
 import { DoctorRow } from "./DoctorRow";
 import { Doctor } from "./types/Doctor";
 import { EmptyState } from "./ui/EmptyState";
+import type { ReactNode } from "react";
 
 type ClinicDoctorSectionProps = {
   kicker: string;
@@ -12,6 +13,10 @@ type ClinicDoctorSectionProps = {
   actionStyle?: "primary" | "danger";
   onAction: (doctorId: string) => void;
   pendingDoctorIds?: Set<string>;
+  secondaryActionLabel?: string;
+  onSecondaryAction?: (doctorId: string) => void;
+  toolbar?: ReactNode;
+  footer?: ReactNode;
 };
 
 export function ClinicDoctorSection({
@@ -24,6 +29,10 @@ export function ClinicDoctorSection({
   actionStyle,
   onAction,
   pendingDoctorIds,
+  secondaryActionLabel,
+  onSecondaryAction,
+  toolbar,
+  footer,
 }: ClinicDoctorSectionProps) {
   return (
     <div>
@@ -34,6 +43,8 @@ export function ClinicDoctorSection({
         </div>
       </div>
 
+      {toolbar}
+
       <div className="mt-5 space-y-4">
         {doctors.map((doctor) => (
           <DoctorRow
@@ -43,11 +54,14 @@ export function ClinicDoctorSection({
             key={doctor.id}
             disabled={pendingDoctorIds?.has(doctor.id)}
             onAction={() => onAction(doctor.id)}
+            secondaryActionLabel={secondaryActionLabel}
+            {...(onSecondaryAction ? { onSecondaryAction: () => onSecondaryAction(doctor.id) } : {})}
           />
         ))}
 
         {!isFetching && doctors.length === 0 && <EmptyState text={emptyText} />}
       </div>
+      {footer}
     </div>
   );
 }
