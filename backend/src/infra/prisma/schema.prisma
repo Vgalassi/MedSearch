@@ -197,7 +197,7 @@ model DoctorSettings {
 
   bufferBetween        Int   
   maxSchedullingDays   Int
-  advanceBookingHours  Int   
+  minimumBookingNotice Int @default(0)
 
   maxDailyAppointments Int?  
   @@map("doctor_settings")

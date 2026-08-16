@@ -11,6 +11,7 @@ import { Time } from "../../domain/value-objects/Time";
 import { WeekDay } from "../../domain/value-objects/WeekDay";
 import { WeekDayRange } from "../../domain/value-objects/WeekDayRange";
 import { AvailabilityMode } from "../../domain/value-objects/AvailabilityMode";
+import { Period } from "../../domain/value-objects/Period";
 
 type AvailabilityInput = {
   weekdays: string[];
@@ -25,7 +26,7 @@ type UpdateDoctorSchedulingInput = {
     isAvaliable: boolean;
     defaultDuration: string;
     bufferBetween: string;
-    advanceBookingHours: number;
+    minimumBookingNotice: string;
     maxSchedulingDays: number;
     maxDailyAppointments: number | null;
   };
@@ -55,7 +56,9 @@ export class UpdateDoctorSchedulingUseCase {
           input.settings.defaultDuration,
         ),
         bufferBetween: Time.createWithString(input.settings.bufferBetween),
-        advanceBookingHours: input.settings.advanceBookingHours,
+        minimumBookingNotice: Period.createWithString(
+          input.settings.minimumBookingNotice,
+        ),
         maxSchedulingDays: input.settings.maxSchedulingDays,
         maxDailyAppointments: input.settings.maxDailyAppointments,
       },

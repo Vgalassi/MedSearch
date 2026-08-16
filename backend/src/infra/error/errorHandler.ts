@@ -3,7 +3,6 @@ import { NotfoundError } from "../../domain/errors/NotFoundError.js";
 import { DoctorAlreadyOnClinic } from "../../domain/errors/DoctorAlreadyOnClinic.js";
 import { DoctorNotOnClinic } from "../../domain/errors/DoctorNotOnClinic.js";
 import { AppointmentInPastError } from "../../domain/errors/AppointmentInPastError.js";
-import { AdvanceBookingViolationError } from "../../domain/errors/AdvanceBookingViolationError.js";
 import { InvalidAppointmentDurationError } from "../../domain/errors/InvalidAppointmentDurationError.js";
 import { AppointmentOutsideAvailabilityError } from "../../domain/errors/AppointmentOutsideAvailabilityError.js";
 import { DoctorSettingsNotFoundError } from "../../domain/errors/DoctorSettingsNotFoundError.js";
@@ -24,7 +23,6 @@ export function setupErrorHandler(app: FastifyInstance){
             error instanceof DoctorAlreadyOnClinic ||
             error instanceof DoctorNotOnClinic ||
             error instanceof AppointmentInPastError ||
-            error instanceof AdvanceBookingViolationError ||
             error instanceof InvalidAppointmentDurationError ||
             error instanceof AppointmentOutsideAvailabilityError ||
             error instanceof DoctorSettingsNotFoundError ||

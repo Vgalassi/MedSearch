@@ -9942,7 +9942,7 @@ export namespace Prisma {
     defaultDuration: number | null
     bufferBetween: number | null
     maxSchedullingDays: number | null
-    advanceBookingHours: number | null
+    minimumBookingNotice: number | null
     maxDailyAppointments: number | null
   }
 
@@ -9950,7 +9950,7 @@ export namespace Prisma {
     defaultDuration: number | null
     bufferBetween: number | null
     maxSchedullingDays: number | null
-    advanceBookingHours: number | null
+    minimumBookingNotice: number | null
     maxDailyAppointments: number | null
   }
 
@@ -9961,7 +9961,7 @@ export namespace Prisma {
     defaultDuration: number | null
     bufferBetween: number | null
     maxSchedullingDays: number | null
-    advanceBookingHours: number | null
+    minimumBookingNotice: number | null
     maxDailyAppointments: number | null
   }
 
@@ -9972,7 +9972,7 @@ export namespace Prisma {
     defaultDuration: number | null
     bufferBetween: number | null
     maxSchedullingDays: number | null
-    advanceBookingHours: number | null
+    minimumBookingNotice: number | null
     maxDailyAppointments: number | null
   }
 
@@ -9983,7 +9983,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice: number
     maxDailyAppointments: number
     _all: number
   }
@@ -9993,7 +9993,7 @@ export namespace Prisma {
     defaultDuration?: true
     bufferBetween?: true
     maxSchedullingDays?: true
-    advanceBookingHours?: true
+    minimumBookingNotice?: true
     maxDailyAppointments?: true
   }
 
@@ -10001,7 +10001,7 @@ export namespace Prisma {
     defaultDuration?: true
     bufferBetween?: true
     maxSchedullingDays?: true
-    advanceBookingHours?: true
+    minimumBookingNotice?: true
     maxDailyAppointments?: true
   }
 
@@ -10012,7 +10012,7 @@ export namespace Prisma {
     defaultDuration?: true
     bufferBetween?: true
     maxSchedullingDays?: true
-    advanceBookingHours?: true
+    minimumBookingNotice?: true
     maxDailyAppointments?: true
   }
 
@@ -10023,7 +10023,7 @@ export namespace Prisma {
     defaultDuration?: true
     bufferBetween?: true
     maxSchedullingDays?: true
-    advanceBookingHours?: true
+    minimumBookingNotice?: true
     maxDailyAppointments?: true
   }
 
@@ -10034,7 +10034,7 @@ export namespace Prisma {
     defaultDuration?: true
     bufferBetween?: true
     maxSchedullingDays?: true
-    advanceBookingHours?: true
+    minimumBookingNotice?: true
     maxDailyAppointments?: true
     _all?: true
   }
@@ -10132,7 +10132,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice: number
     maxDailyAppointments: number | null
     _count: DoctorSettingsCountAggregateOutputType | null
     _avg: DoctorSettingsAvgAggregateOutputType | null
@@ -10162,7 +10162,7 @@ export namespace Prisma {
     defaultDuration?: boolean
     bufferBetween?: boolean
     maxSchedullingDays?: boolean
-    advanceBookingHours?: boolean
+    minimumBookingNotice?: boolean
     maxDailyAppointments?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctorSettings"]>
@@ -10174,7 +10174,7 @@ export namespace Prisma {
     defaultDuration?: boolean
     bufferBetween?: boolean
     maxSchedullingDays?: boolean
-    advanceBookingHours?: boolean
+    minimumBookingNotice?: boolean
     maxDailyAppointments?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctorSettings"]>
@@ -10186,7 +10186,7 @@ export namespace Prisma {
     defaultDuration?: boolean
     bufferBetween?: boolean
     maxSchedullingDays?: boolean
-    advanceBookingHours?: boolean
+    minimumBookingNotice?: boolean
     maxDailyAppointments?: boolean
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["doctorSettings"]>
@@ -10198,11 +10198,11 @@ export namespace Prisma {
     defaultDuration?: boolean
     bufferBetween?: boolean
     maxSchedullingDays?: boolean
-    advanceBookingHours?: boolean
+    minimumBookingNotice?: boolean
     maxDailyAppointments?: boolean
   }
 
-  export type DoctorSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "isAvaliable" | "defaultDuration" | "bufferBetween" | "maxSchedullingDays" | "advanceBookingHours" | "maxDailyAppointments", ExtArgs["result"]["doctorSettings"]>
+  export type DoctorSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "doctorId" | "isAvaliable" | "defaultDuration" | "bufferBetween" | "maxSchedullingDays" | "minimumBookingNotice" | "maxDailyAppointments", ExtArgs["result"]["doctorSettings"]>
   export type DoctorSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     doctor?: boolean | DoctorDefaultArgs<ExtArgs>
   }
@@ -10225,7 +10225,7 @@ export namespace Prisma {
       defaultDuration: number
       bufferBetween: number
       maxSchedullingDays: number
-      advanceBookingHours: number
+      minimumBookingNotice: number
       maxDailyAppointments: number | null
     }, ExtArgs["result"]["doctorSettings"]>
     composites: {}
@@ -10657,7 +10657,7 @@ export namespace Prisma {
     readonly defaultDuration: FieldRef<"DoctorSettings", 'Int'>
     readonly bufferBetween: FieldRef<"DoctorSettings", 'Int'>
     readonly maxSchedullingDays: FieldRef<"DoctorSettings", 'Int'>
-    readonly advanceBookingHours: FieldRef<"DoctorSettings", 'Int'>
+    readonly minimumBookingNotice: FieldRef<"DoctorSettings", 'Int'>
     readonly maxDailyAppointments: FieldRef<"DoctorSettings", 'Int'>
   }
     
@@ -12318,7 +12318,7 @@ export namespace Prisma {
     defaultDuration: 'defaultDuration',
     bufferBetween: 'bufferBetween',
     maxSchedullingDays: 'maxSchedullingDays',
-    advanceBookingHours: 'advanceBookingHours',
+    minimumBookingNotice: 'minimumBookingNotice',
     maxDailyAppointments: 'maxDailyAppointments'
   };
 
@@ -13095,7 +13095,7 @@ export namespace Prisma {
     defaultDuration?: IntFilter<"DoctorSettings"> | number
     bufferBetween?: IntFilter<"DoctorSettings"> | number
     maxSchedullingDays?: IntFilter<"DoctorSettings"> | number
-    advanceBookingHours?: IntFilter<"DoctorSettings"> | number
+    minimumBookingNotice?: IntFilter<"DoctorSettings"> | number
     maxDailyAppointments?: IntNullableFilter<"DoctorSettings"> | number | null
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
   }
@@ -13107,7 +13107,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrderInput | SortOrder
     doctor?: DoctorOrderByWithRelationInput
   }
@@ -13122,7 +13122,7 @@ export namespace Prisma {
     defaultDuration?: IntFilter<"DoctorSettings"> | number
     bufferBetween?: IntFilter<"DoctorSettings"> | number
     maxSchedullingDays?: IntFilter<"DoctorSettings"> | number
-    advanceBookingHours?: IntFilter<"DoctorSettings"> | number
+    minimumBookingNotice?: IntFilter<"DoctorSettings"> | number
     maxDailyAppointments?: IntNullableFilter<"DoctorSettings"> | number | null
     doctor?: XOR<DoctorScalarRelationFilter, DoctorWhereInput>
   }, "id" | "doctorId">
@@ -13134,7 +13134,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrderInput | SortOrder
     _count?: DoctorSettingsCountOrderByAggregateInput
     _avg?: DoctorSettingsAvgOrderByAggregateInput
@@ -13153,7 +13153,7 @@ export namespace Prisma {
     defaultDuration?: IntWithAggregatesFilter<"DoctorSettings"> | number
     bufferBetween?: IntWithAggregatesFilter<"DoctorSettings"> | number
     maxSchedullingDays?: IntWithAggregatesFilter<"DoctorSettings"> | number
-    advanceBookingHours?: IntWithAggregatesFilter<"DoctorSettings"> | number
+    minimumBookingNotice?: IntWithAggregatesFilter<"DoctorSettings"> | number
     maxDailyAppointments?: IntNullableWithAggregatesFilter<"DoctorSettings"> | number | null
   }
 
@@ -13790,7 +13790,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice?: number
     maxDailyAppointments?: number | null
     doctor: DoctorCreateNestedOneWithoutSettingsInput
   }
@@ -13802,7 +13802,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice?: number
     maxDailyAppointments?: number | null
   }
 
@@ -13812,7 +13812,7 @@ export namespace Prisma {
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
     maxSchedullingDays?: IntFieldUpdateOperationsInput | number
-    advanceBookingHours?: IntFieldUpdateOperationsInput | number
+    minimumBookingNotice?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
     doctor?: DoctorUpdateOneRequiredWithoutSettingsNestedInput
   }
@@ -13824,7 +13824,7 @@ export namespace Prisma {
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
     maxSchedullingDays?: IntFieldUpdateOperationsInput | number
-    advanceBookingHours?: IntFieldUpdateOperationsInput | number
+    minimumBookingNotice?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -13835,7 +13835,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice?: number
     maxDailyAppointments?: number | null
   }
 
@@ -13845,7 +13845,7 @@ export namespace Prisma {
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
     maxSchedullingDays?: IntFieldUpdateOperationsInput | number
-    advanceBookingHours?: IntFieldUpdateOperationsInput | number
+    minimumBookingNotice?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -13856,7 +13856,7 @@ export namespace Prisma {
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
     maxSchedullingDays?: IntFieldUpdateOperationsInput | number
-    advanceBookingHours?: IntFieldUpdateOperationsInput | number
+    minimumBookingNotice?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -14648,7 +14648,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
@@ -14656,7 +14656,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
@@ -14667,7 +14667,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
@@ -14678,7 +14678,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
@@ -14686,7 +14686,7 @@ export namespace Prisma {
     defaultDuration?: SortOrder
     bufferBetween?: SortOrder
     maxSchedullingDays?: SortOrder
-    advanceBookingHours?: SortOrder
+    minimumBookingNotice?: SortOrder
     maxDailyAppointments?: SortOrder
   }
 
@@ -16489,7 +16489,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice?: number
     maxDailyAppointments?: number | null
   }
 
@@ -16499,7 +16499,7 @@ export namespace Prisma {
     defaultDuration: number
     bufferBetween: number
     maxSchedullingDays: number
-    advanceBookingHours: number
+    minimumBookingNotice?: number
     maxDailyAppointments?: number | null
   }
 
@@ -16669,7 +16669,7 @@ export namespace Prisma {
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
     maxSchedullingDays?: IntFieldUpdateOperationsInput | number
-    advanceBookingHours?: IntFieldUpdateOperationsInput | number
+    minimumBookingNotice?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -16679,7 +16679,7 @@ export namespace Prisma {
     defaultDuration?: IntFieldUpdateOperationsInput | number
     bufferBetween?: IntFieldUpdateOperationsInput | number
     maxSchedullingDays?: IntFieldUpdateOperationsInput | number
-    advanceBookingHours?: IntFieldUpdateOperationsInput | number
+    minimumBookingNotice?: IntFieldUpdateOperationsInput | number
     maxDailyAppointments?: NullableIntFieldUpdateOperationsInput | number | null
   }
 

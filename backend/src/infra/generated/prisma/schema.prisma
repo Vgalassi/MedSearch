@@ -193,9 +193,9 @@ model DoctorSettings {
 
   defaultDuration Int
 
-  bufferBetween       Int
-  maxSchedullingDays  Int
-  advanceBookingHours Int
+  bufferBetween        Int
+  maxSchedullingDays   Int
+  minimumBookingNotice Int @default(0)
 
   maxDailyAppointments Int?
 

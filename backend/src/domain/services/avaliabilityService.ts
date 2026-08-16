@@ -97,6 +97,7 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: TimeZoneD
     let todaySeconds = 0
     const today = new TimeZoneDate()
 
+
     if(day.isSameDay(today)){
         todaySeconds = today.secondsSinceMidnight;
     }
@@ -114,6 +115,16 @@ export function getAvaliableDayTimes(appointments: Appointment[], day: TimeZoneD
                 currentSeconds += defaultDuration.value + buffer;
                 continue;
             }
+
+            const secondsUntilSlot = (day.date.getTime() - today.date.getTime()) / 1000
+            + currentSeconds - today.secondsSinceMidnight;
+
+            if (secondsUntilSlot < doctor.props.schedulingSettings.props.minimumBookingNotice.value) {
+                currentSeconds += defaultDuration.value + buffer;
+                continue;
+            }
+
+
             const slotStart = Time.createWithSeconds(currentSeconds)
             const slotEnd =  Time.createWithSeconds(currentSeconds + defaultDuration.value)
 

@@ -15,6 +15,9 @@ export const doctorAvailableHoursSchema = z.object({
 })
 
 const timeSchema = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
+const periodSchema = z.string().regex(/^\d+:[0-5]\d$/, {
+  message: "minimumBookingNotice must use HH:mm and may exceed 24 hours",
+});
 const availabilityModeSchema = z.enum(["ONLINE", "OFFLINE", "BOTH"]);
 
 export const updateDoctorSchedulingSchema = z.object({
@@ -24,7 +27,7 @@ export const updateDoctorSchedulingSchema = z.object({
       message: "defaultDuration must be greater than 00:00",
     }),
     bufferBetween: timeSchema,
-    advanceBookingHours: z.number().int().nonnegative(),
+    minimumBookingNotice: periodSchema,
     maxSchedulingDays: z.number().int().positive(),
     maxDailyAppointments: z.number().int().positive().nullable(),
   }),

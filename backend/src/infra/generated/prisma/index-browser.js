@@ -202,7 +202,7 @@ exports.Prisma.DoctorSettingsScalarFieldEnum = {
   defaultDuration: 'defaultDuration',
   bufferBetween: 'bufferBetween',
   maxSchedullingDays: 'maxSchedullingDays',
-  advanceBookingHours: 'advanceBookingHours',
+  minimumBookingNotice: 'minimumBookingNotice',
   maxDailyAppointments: 'maxDailyAppointments'
 };
 

@@ -4,6 +4,7 @@ import { DoctorSchedulingSettings } from "../../domain/entities/DoctorScheduling
 import { Identifier } from "../../domain/value-objects/Identifier";
 import { PhoneNumber } from "../../domain/value-objects/PhoneNumber";
 import { Time } from "../../domain/value-objects/Time";
+import { Period } from "../../domain/value-objects/Period";
 import { WeekDay as DomainWeekDay } from "../../domain/value-objects/WeekDay";
 import { WeekDayRange } from "../../domain/value-objects/WeekDayRange";
 import { AvailabilityMode } from "../../domain/value-objects/AvailabilityMode";
@@ -16,7 +17,7 @@ type PrismaDoctorSettings = {
   defaultDuration: number;
   bufferBetween: number;
   maxSchedullingDays: number;
-  advanceBookingHours: number;
+  minimumBookingNotice: number;
   maxDailyAppointments: number | null;
 };
 
@@ -65,7 +66,9 @@ export class DoctorMapper {
                   raw.settings.bufferBetween,
                 ),
                 maxSchedulingDays: raw.settings.maxSchedullingDays,
-                advanceBookingHours: raw.settings.advanceBookingHours,
+                minimumBookingNotice: Period.createWithSeconds(
+                  raw.settings.minimumBookingNotice,
+                ),
                 maxDailyAppointments: raw.settings.maxDailyAppointments,
               },
               new Identifier(raw.settings.id),
@@ -116,7 +119,7 @@ export class DoctorMapper {
             maxSchedullingDays: settings.props.maxSchedulingDays,
             defaultDuration: settings.props.defaultDuration.value,
             bufferBetween: settings.props.bufferBetween.value,
-            advanceBookingHours: settings.props.advanceBookingHours,
+            minimumBookingNotice: settings.props.minimumBookingNotice.value,
             maxDailyAppointments: settings.props.maxDailyAppointments,
           }
         : null,

@@ -26,7 +26,7 @@ type SettingsForm = {
   isAvaliable: boolean;
   defaultDuration: string;
   bufferBetween: string;
-  advanceBookingHours: number;
+  minimumBookingNotice: string;
   maxSchedulingDays: number;
   maxDailyAppointments: number | "";
 };
@@ -42,7 +42,7 @@ const defaultSettings: SettingsForm = {
   isAvaliable: true,
   defaultDuration: "00:30",
   bufferBetween: "00:10",
-  advanceBookingHours: 24,
+  minimumBookingNotice: "00:00",
   maxSchedulingDays: 90,
   maxDailyAppointments: "",
 };
@@ -98,7 +98,7 @@ export default function MedicAppointmentConfigPage() {
             isAvaliable: data.settings.isAvaliable,
             defaultDuration: data.settings.defaultDuration,
             bufferBetween: data.settings.bufferBetween,
-            advanceBookingHours: data.settings.advanceBookingHours,
+            minimumBookingNotice: data.settings.minimumBookingNotice,
             maxSchedulingDays: data.settings.maxSchedulingDays,
             maxDailyAppointments: data.settings.maxDailyAppointments ?? "",
           });
@@ -295,6 +295,25 @@ export default function MedicAppointmentConfigPage() {
                     type="number"
                     value={settings.maxSchedulingDays}
                   />
+                </label>
+                <label>
+                  <span className="label">Antecedência mínima (HH:MM)</span>
+                  <input
+                    className="input"
+                    inputMode="numeric"
+                    onChange={(event) =>
+                      setSettings((current) => ({
+                        ...current,
+                        minimumBookingNotice: event.target.value,
+                      }))
+                    }
+                    pattern="[0-9]+:[0-5][0-9]"
+                    placeholder="Ex.: 48:00"
+                    required
+                    type="text"
+                    value={settings.minimumBookingNotice}
+                  />
+      
                 </label>
                 
               </div>

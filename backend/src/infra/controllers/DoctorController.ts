@@ -28,8 +28,8 @@ function toSchedulingDto(
             doctor.props.schedulingSettings.props.defaultDuration.toString(),
           bufferBetween:
             doctor.props.schedulingSettings.props.bufferBetween.toString(),
-          advanceBookingHours:
-            doctor.props.schedulingSettings.props.advanceBookingHours,
+          minimumBookingNotice:
+            doctor.props.schedulingSettings.props.minimumBookingNotice.toString(),
           maxSchedulingDays:
             doctor.props.schedulingSettings.props.maxSchedulingDays,
           maxDailyAppointments:
