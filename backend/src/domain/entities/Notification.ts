@@ -1,4 +1,3 @@
-import type { AppointmentStatus } from "../../infra/generated/prisma";
 import type { Appointment } from "../Aggregates/Appointment";
 import { Entity } from "../value-objects/Entity";
 import type { Identifier } from "../value-objects/Identifier";
@@ -12,8 +11,7 @@ export type NotificationData = {
 export type NotificationType = 
     "APPOINTMENT_REMINDER" |
     "CLINIC_INVITATION_RESPONSE" |
-    "CLINIC_INVITATION" |
-    "STATUS_NOTIFICATION"
+    "CLINIC_INVITATION"
 
 
 export type notificationProps = {
@@ -29,8 +27,8 @@ export type notificationProps = {
 
 export class Notification extends Entity<notificationProps>{
 
-    constructor(props: notificationProps){
-        super(props)
+    constructor(props: notificationProps, id?: Identifier){
+        super(props, id)
     }
 
     static createAppointmentReminderNotification(targetUserId: Identifier, appointment: Appointment): Notification{
