@@ -5,4 +5,5 @@ export type SymptomClassification = {
 
 export interface SymptomClassifier {
   classify(symptoms: string): Promise<SymptomClassification>;
+  shutdown?(): void;
 }

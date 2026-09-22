@@ -18,6 +18,8 @@ import { RoomManager } from "./websocket/RoomManager.js";
 import { CallWebSocketServer } from "./websocket/CallWebsocketServer.js";
 import { AppointmentService } from "../app/services/AppointmentService.js";
 
+import type { SymptomClassifier } from "../app/protocols/SymptomClassifier.js";
+
 const app = Fastify({
     logger: true,
 })
@@ -51,6 +53,14 @@ app.register(notificationRoutes)
 const appointmentService = container.get<AppointmentService>(
     TYPES.AppointmentService
 )
+const symptomClassifier = container.get<SymptomClassifier>(
+    TYPES.SymptomClassifier
+)
+
+app.addHook("onClose", async () => {
+    symptomClassifier.shutdown?.()
+})
+
 setInterval(() => void appointmentService.updateAppointmentStatuses().catch((error) => app.log.error(error, "Erro ao criar lembretes de consulta")), 60_000);
 
 

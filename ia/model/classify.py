@@ -35,12 +35,37 @@ def predict(symptoms: str) -> dict[str, object]:
     return {"speciality": str(speciality), "confidence": float(confidence.item())}
 
 
-def main() -> None:
-    request = json.loads(sys.stdin.read())
+def classify_request(request: dict[str, object]) -> dict[str, object]:
     symptoms = str(request.get("symptoms", "")).strip()
     if not symptoms:
         raise ValueError("Os sintomas devem ser informados.")
-    print(json.dumps(predict(symptoms), ensure_ascii=False))
+    return predict(symptoms)
+
+
+def run_once() -> None:
+    request = json.loads(sys.stdin.read())
+    print(json.dumps(classify_request(request), ensure_ascii=False))
+
+
+def run_worker() -> None:
+    for line in sys.stdin:
+        request_id = None
+        try:
+            request = json.loads(line)
+            request_id = request.get("id")
+            response = {"id": request_id, **classify_request(request)}
+        except Exception as error:
+            response = {"id": request_id, "error": str(error)}
+
+        print(json.dumps(response, ensure_ascii=False), flush=True)
+
+
+def main() -> None:
+    if "--worker" in sys.argv:
+        run_worker()
+        return
+
+    run_once()
 
 
 if __name__ == "__main__":

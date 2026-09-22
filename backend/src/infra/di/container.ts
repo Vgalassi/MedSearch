@@ -102,7 +102,10 @@ container
   .to(NominatimGeocodingService);
 
 container.bind<JoinCallUseCase>(TYPES.JoinCallUseCase).to(JoinCallUseCase)
-container.bind<SymptomClassifier>(TYPES.SymptomClassifier).to(PythonSymptomClassifier);
+container
+  .bind<SymptomClassifier>(TYPES.SymptomClassifier)
+  .to(PythonSymptomClassifier)
+  .inSingletonScope();
 container
   .bind<FindClinicsForSymptomsUseCase>(TYPES.FindClinicsForSymptomsUseCase)
   .to(FindClinicsForSymptomsUseCase);
