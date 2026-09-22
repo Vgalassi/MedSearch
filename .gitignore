@@ -5,3 +5,15 @@
 /backend/generated/prisma
 /frontend/node_modules
 frontend/.next
+
+# Local trained models and checkpoints
+/ia/bert_model/
+/ia/bert_model2/
+/ia/bert_test/
+/ia/**/checkpoint-*/
+/ia/**/*.safetensors
+/ia/**/*.pt
+/ia/**/*.pth
+/ia/**/training_args.bin
+/ia/**/label_encoder.pkl
+/ia/**/model.joblib
