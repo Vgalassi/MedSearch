@@ -3,6 +3,7 @@ import { RoomManager } from "./RoomManager";
 import { JoinCallUseCase } from "../../app/usecases/JoinCallUseCase";
 import type { IncomingMessage as HttpIncomingMessage } from "node:http";
 import type { Server as HttpServer } from "node:http";
+import type { Server as HttpsServer } from "node:https";
 type ParticipantRole =
     | "DOCTOR"
     | "PATIENT";
@@ -73,7 +74,7 @@ export class CallWebSocketServer {
     private readonly authenticate: AuthenticateSocket;
 
     constructor(
-        httpServer: HttpServer,
+        httpServer: HttpServer | HttpsServer,
         private readonly roomManager: RoomManager,
         private readonly joinCallUseCase: JoinCallUseCase,
         options: CallWebSocketServerOptions

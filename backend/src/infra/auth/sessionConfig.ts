@@ -21,7 +21,7 @@ export async function setupSession(app:FastifyInstance){
         secret,
         
     cookie: {
-        secure: false, 
+        secure: true,
         httpOnly: true,
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24

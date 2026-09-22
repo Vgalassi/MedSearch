@@ -17,11 +17,19 @@ import type { JoinCallUseCase } from "../app/usecases/JoinCallUseCase.js";
 import { RoomManager } from "./websocket/RoomManager.js";
 import { CallWebSocketServer } from "./websocket/CallWebsocketServer.js";
 import { AppointmentService } from "../app/services/AppointmentService.js";
-
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import type { SymptomClassifier } from "../app/protocols/SymptomClassifier.js";
+
+const tlsKeyPath = resolve(process.env.TLS_KEY_PATH ?? "certs/localhost-key.pem");
+const tlsCertificatePath = resolve(process.env.TLS_CERT_PATH ?? "certs/localhost-cert.pem");
 
 const app = Fastify({
     logger: true,
+    https: {
+        key: readFileSync(tlsKeyPath),
+        cert: readFileSync(tlsCertificatePath),
+    },
 })
 
 /*
@@ -72,7 +80,7 @@ new CallWebSocketServer(
 );
 
 
-app.listen({ port: 3000 }, (err,address) =>{
+app.listen({ port: 3000, host: "0.0.0.0" }, (err,address) =>{
     if(err){
         app.log.error(err)
         process.exit(1)
