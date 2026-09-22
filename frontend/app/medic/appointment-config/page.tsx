@@ -198,7 +198,7 @@ export default function MedicAppointmentConfigPage() {
             <div>
               <h1 className="text-3xl font-bold">{user?.role === "CLINIC" ? "Agenda do médico da clínica" : "Agenda do médico"}</h1>
               <p className="mt-3 max-w-2xl leading-7 text-teal-50/80">
-                Ajuste disponibilidade, duracão padrão e limites de
+                Ajuste disponibilidade, duração padrão e limites de
                 agendamento.
               </p>
             </div>

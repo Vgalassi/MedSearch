@@ -182,7 +182,7 @@ export default function ClinicHomePage() {
           <ClinicDoctorSection
             actionLabel="Adicionar"
             doctors={availableDoctors}
-            emptyText="Todos os médicos já estão vinculados a esta clínica."
+            emptyText="Não há médicos disponíveis para serem adicionados"
             isFetching={isFetching}
             kicker="Rede MedSearch"
             onAction={addDoctor}
