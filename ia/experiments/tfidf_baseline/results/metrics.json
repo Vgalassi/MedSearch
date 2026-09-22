@@ -1,0 +1,59 @@
+{
+  "dataset": "datasets\\dataset_augmented.csv",
+  "dataset_sha256": "6e490b2d41edaf0095e65aab3386a57de0414c509db0e2af1f12cdd404efeefe",
+  "examples": 192715,
+  "train_examples": 154172,
+  "evaluation_examples": 38543,
+  "classes": [
+    "Alergologia",
+    "Angiologia",
+    "Cardiologia",
+    "Cirurgia Bucomaxilofacial",
+    "Cirurgia Geral",
+    "Clínica Geral",
+    "Coloproctologia",
+    "Dermatologia",
+    "Endocrinologia",
+    "Gastroenterologia",
+    "Ginecologia",
+    "Hematologia",
+    "Medicina de Emergência",
+    "Nefrologia",
+    "Neurologia",
+    "Odontologia",
+    "Oftalmologia",
+    "Ortopedia",
+    "Otorrinolaringologia",
+    "Pediatria",
+    "Pneumologia",
+    "Psiquiatria",
+    "Reumatologia",
+    "Urologia"
+  ],
+  "random_state": 42,
+  "test_size": 0.2,
+  "python": "3.13.14",
+  "sklearn": "1.9.0",
+  "numpy": "2.5.1",
+  "pandas": "3.0.3",
+  "training_seconds": 12.32228819996817,
+  "prediction_seconds": 0.4316806999850087,
+  "features": 706,
+  "iterations": [
+    90
+  ],
+  "warnings": [],
+  "evaluation_rows_with_exact_text_in_training": 610,
+  "baseline_metrics": {
+    "accuracy": 0.953921594063773,
+    "f1_weighted": 0.9537312401093315,
+    "f1_macro": 0.9388901228739875
+  },
+  "bert_recorded_metrics": {
+    "accuracy": 0.9732506551124718,
+    "f1_weighted": 0.9732152817587879,
+    "f1_macro": 0.9639698375615767
+  },
+  "bert_metrics_source": "bert_model2\\checkpoint-28908\\trainer_state.json",
+  "bert_re_evaluated": false
+}
